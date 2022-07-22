@@ -1,0 +1,140 @@
+<script src="new-leader.component.ts"></script>
+<div class="p-grid p-col-12" style="text-align: right; direction: rtl;">
+    <div class="p-col-12 page-title">مشخصات راهبر</div>
+    <div class="p-col-12">
+        <form #leader [formGroup]="leaderForm" class="editForm p-grid p-col-12" (ngSubmit)="createNewLeader()">
+
+            <div class="p-col-12 p-xl-3 p-lg-3 p-md-3 p-sm-12"></div>
+            <div class="p-col-12 p-xl-6 p-lg-6 p-md-6 p-sm-12">
+                <div class="p-col-12">
+                    <label for="name">نام</label>
+                    <input id="name" class="round form-control" formControlName="name"
+                           [(ngModel)]="userProfile.firstName"/>
+                    <small class="form-text text-muted danger" *ngIf="!leaderForm.controls['name'].valid
+                && (leaderForm.controls['name'].dirty || leaderForm.controls['name'].touched)">
+                        این فیلد الزامی است.
+                    </small>
+                </div>
+                <div class="p-col-12">
+                    <label for="family">نام خانوادگی</label>
+                    <input class="round form-control" id="family" formControlName="familyName"
+                           [(ngModel)]="userProfile.lastName"/>
+                    <small class="form-text text-muted danger" *ngIf="!leaderForm.controls['familyName'].valid
+                && (leaderForm.controls['familyName'].dirty || leaderForm.controls['familyName'].touched)">
+                        این فیلد الزامی است.
+                    </small>
+                </div>
+                <div class="p-col-12">
+                    <label for="national">کد ملی</label>
+                    <input
+                            id="national"
+                            class="round form-control"
+                            maxlength="10"
+                            formControlName="nationalCode" [(ngModel)]="userProfile.nationalCode">
+                    <small style="text-align: right" class="form-text text-muted danger" *ngIf="!leaderForm.get('nationalCode').valid
+                                &&leaderForm.get('nationalCode').errors.required
+                                && (leaderForm.get('nationalCode').dirty || leaderForm.get('nationalCode').touched)">
+                        این فیلد الزامی است.
+                    </small>
+
+                    <small style="text-align: right" class="form-text text-muted danger" *ngIf="!leaderForm.get('nationalCode').valid
+                                &&!leaderForm.get('nationalCode').errors.required
+                                &&leaderForm.get('nationalCode').errors.notValidNational
+                                && (leaderForm.get('nationalCode').dirty || leaderForm.get('nationalCode').touched)">
+                        کد ملی صحیح نیست.
+                    </small>
+
+                </div>
+                <div class="p-col-12" style="margin-top: 12px">
+                    <div class="custom-control custom-radio custom-control-inline float-left">
+                        <input checked="true" [(ngModel)]="gender"
+                               value=1
+                               type="radio"
+                               name="gender"
+                               [ngModelOptions]="{standalone: true}"
+                               id="gender-man"
+                               class="custom-control-input">
+                        <label class="custom-control-label"
+                               for="gender-man">مرد</label>
+                    </div>
+
+                    <div class="custom-control custom-radio custom-control-inline  float-left">
+                        <input [(ngModel)]="gender"
+                               value=0
+                               type="radio"
+                               name="gender"
+                               [ngModelOptions]="{standalone: true}"
+                               id="gender-woman"
+                               class="custom-control-input">
+                        <label class="custom-control-label" for="gender-woman">زن</label>
+                    </div>
+                </div>
+                <div class="p-col-12" style="margin-top: 22px">
+                    <label for="username">نام کاربری</label>
+                    <input id="username" maxlength="30" class="round form-control" formControlName="username"
+                           [(ngModel)]="userProfile.userName"/>
+                    <small class="form-text text-muted danger" *ngIf="!leaderForm.controls['username'].valid
+                && leaderForm.controls['username'].errors.required
+                && (leaderForm.controls['username'].dirty || leaderForm.controls['username'].touched)">
+                        این فیلد الزامی است.
+
+                    </small>
+                    <small class="form-text text-muted danger" *ngIf="!leaderForm.controls['username'].valid
+                &&leaderForm.get('username').errors.minlength
+                && (leaderForm.controls['username'].dirty || leaderForm.controls['username'].touched)">
+                        نام کاربری باید حداقل ۳ کاراکتر باشد.
+
+                    </small>
+                </div>
+                <div class="p-col-12">
+                    <label for="pass">رمز عبور</label>
+                    <input id="pass" maxlength="40" type="password" class="round form-control"
+                           formControlName="password" [(ngModel)]="userProfile.password"/>
+
+                    <small style="text-align: right" class="form-text text-muted danger" *ngIf="!leaderForm.get('password').valid
+                                &&leaderForm.get('password').errors.required
+                                && (leaderForm.get('password').dirty || leaderForm.get('password').touched)">
+                        این فیلد الزامی است.
+                    </small>
+                    <small style="text-align: right" class="form-text text-muted danger" *ngIf="!leaderForm.get('password').valid
+                                &&leaderForm.get('password').errors.minlength
+                                && (leaderForm.get('password').dirty || leaderForm.get('password').touched)">
+                        {{passworderrorLength}}
+                    </small>
+                    <small style="text-align: right" class="form-text text-muted danger" *ngIf="!leaderForm.get('password').valid
+                                &&leaderForm.get('password').errors.pattern && !leaderForm.get('password').errors.minlength
+                                && (leaderForm.get('password').dirty || leaderForm.get('password').touched)">
+                        {{passworderror}}
+                    </small>
+                </div>
+            </div>
+            <div class="p-col-12 p-xl-3 p-lg-3 p-md-3 p-sm-12"></div>
+            <div class="p-col-12 p-grid">
+
+                <div class="p-col-12 p-grid" style="margin-top: 30px">
+                    <div class="p-col-6" style="text-align: left">
+                        <button class="btn btn-primary fix-back-btn"
+                                [routerLink]="['/user/leader-list']"
+                                type="button">
+                            بازگشت
+                            <i class="ft-arrow-right"></i>
+                        </button>
+                    </div>
+                    <div class="p-col-6">
+                        <button style="padding-right: 20px;padding-left: 20px" [disabled]="!leaderForm.valid"
+                                class="btn btn-primary btn-raised"
+                                type="submit">
+                            ثبت
+                            <i class="ft-save"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+
+

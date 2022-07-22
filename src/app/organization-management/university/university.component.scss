@@ -1,0 +1,15 @@
+.nav-item{
+  padding-top: 20px;
+  padding-bottom: 20px;
+  color:black;
+  font-weight: normal;
+  border: 1px solid #d9d1d1;
+  border-radius: 9px;
+  box-shadow: 1px 4px 10px gray;
+  cursor: pointer;
+}
+.nav-selected{
+  background-image: linear-gradient(#336668, #1c4648);
+  color: white;
+  font-weight: bold;
+}

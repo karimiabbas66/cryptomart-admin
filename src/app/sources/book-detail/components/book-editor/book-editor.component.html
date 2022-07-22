@@ -1,0 +1,116 @@
+<div class="p-grid p-col-12">
+    <div class="p-col-12 text-center">
+        <h1>متن کتاب</h1>
+    </div>
+    <div class="p-grid p-col-12">
+        <div class="p-col-6">
+            <label class="d-block" style="float: right;">نوع نمایش</label>
+            <div class="custom-control custom-radio custom-control-inline float-left">
+                <input [value]="true" type="radio" [(ngModel)]="editorMode"
+                       [disabled]="sourceModel && sourceModel.fileType !== 'word'"
+                       id="customRadioInline1"
+                       class="custom-control-input">
+                <label class="custom-control-label"
+                       for="customRadioInline1">ویرایش</label>
+            </div>
+            <div class="custom-control custom-radio custom-control-inline  float-left">
+                <input [value]="false" type="radio" [(ngModel)]="editorMode"
+                       id="customRadioInline2"
+                       class="custom-control-input">
+                <label class="custom-control-label"
+                       for="customRadioInline2">نمایش</label>
+            </div>
+        </div>
+        <div class="p-col-6" style="float: left;">
+            <label for="pageNumber">شماره صفحه: </label>
+            <input [(ngModel)]="selectPageNumber" style="width: 70px;margin-right: 15px;margin-left: 15px;"
+                   type="number" id="pageNumber">
+            <button [disabled]="!selectPageNumber" type="button" (click)="selectedPageNumber()"
+                    class="btn btn-raised btn-info"
+                    style="margin-bottom: 0;">
+                جستجو
+            </button>
+        </div>
+
+    </div>
+
+</div>
+
+<div *ngIf="editorModel && editorMode" class="p-grid p-col-12">
+    <div class="p-grid p-col-12">
+        <div class="p-col-2">
+        </div>
+        <div class="p-col-8">
+            <editor apiKey="7o42g2bctetwc3r5g261nf49n8zbt6r7ldwdsy63wdgg9vfk"
+                    [(ngModel)]="editorModel" [init]="{
+     height: 800,
+     menubar: false,
+     plugins: [
+       'advlist autolink lists link image charmap print preview anchor',
+       'searchreplace visualblocks code fullscreen',
+       'insertdatetime media table paste code help wordcount'
+     ],
+     toolbar:
+       'undo redo | formatselect | bold italic backcolor | \
+       alignleft aligncenter alignright alignjustify | \
+       bullist numlist outdent indent | removeformat | help'
+   }"></editor>
+        </div>
+        <div class="p-col-2">
+        </div>
+    </div>
+</div>
+
+<div *ngIf="editorModel && !editorMode" class="p-grid p-col-12">
+    <div class="p-grid p-col-12">
+        <div class="p-col-1">
+        </div>
+
+        <div class="p-col-10" style="background-color: white;height: 1180px;overflow: hidden;">
+            <div *ngIf="sourceModel.fileType === 'word'" [innerHTML]="editorModel | safeHtml:'body'"></div>
+            <img *ngIf="sourceModel.fileType === 'pdf'" [src]="editorModel"/>
+        </div>
+
+        <div class="p-col-1">
+        </div>
+    </div>
+</div>
+
+<div *ngIf="editorModel" class="p-grid p-col-12">
+    <div class="p-col-3">
+    </div>
+    <div class="p-grid p-col-6">
+        <div class="p-col-4">
+            <button [disabled]="pageNumber == 1" type="button" (click)="pereviusPage()" class="btn btn-raised btn-info"
+                    style="margin-bottom: 0; float: right;">
+                قبلی
+                <span>
+                  <i class="ft-chevron-right"></i>
+                </span>
+            </button>
+        </div>
+        <div class="p-col-4 text-center">
+            <button [disabled]="!editorMode" type="button" (click)="savePage()" class="btn btn-primary fix-submit-btn"
+                    style="margin-bottom: 0;color: white !important;">
+                ذخیره
+            </button>
+        </div>
+        <div class="p-col-4">
+            <button [disabled]="!this.sourceModel || this.sourceModel.nextPage == null" type="button"
+                    (click)="nextPage()"
+                    class="btn btn-raised btn-info" style="margin-bottom: 0;">
+                بعدی
+                <span>
+                  <i class="ft-chevron-left"></i>
+                </span>
+            </button>
+        </div>
+    </div>
+    <div class="p-col-3">
+    </div>
+
+</div>
+
+<div style="position: relative;">
+    <img *ngIf="showProgress" src="assets/img/gif/loading.gif" style="position: absolute;width: 10vw;left: 50%">
+</div>

@@ -1,0 +1,94 @@
+::ng-deep nav {
+  position: fixed;
+  width: 100%;
+  top: 0;
+  padding: 16px;
+  z-index: 100;
+  .up {
+    font: bold 14px/1 sans-serif;
+    color: white;
+    width: 92px;
+    padding: 8px;
+    background-color: hsla(350,80,50,.8);
+    float: left;
+    cursor: pointer;
+    &:hover {
+      background-color: hsla(350,80,40,.8);
+    }
+  }
+}
+::ng-deep .feature {
+  position: relative;
+  width: 80vw;
+  height: 500px;
+  margin:  1px;
+  //background: #aaa;
+  overflow: hidden;
+}
+::ng-deep .feature .node {
+  position: absolute;
+
+  //border: 1px white solid;
+  overflow: hidden;
+  opacity: 0.8;
+  transition: opacity .8s;
+  cursor: pointer;
+  .label {
+    display: inline;
+    font-family: iransans;
+    font-weight: bold;
+    color: hsla(0,0,100,.6);
+    //white-space: nowrap;
+    position: absolute;
+    padding: 0;
+    margin: 0;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    transition: color .4s, opacity .8s, filter .8s;
+  }
+  &.hide { // zoom in
+    opacity: 0;
+    pointer-events: none;
+    .label {
+      filter: blur(10px);
+    }
+  }
+  &:hover {
+    //background-color: #222 !important;
+    //opacity: 1;
+    .label {
+      color: hsla(0,0,100,1);
+    }
+  }
+  &.level-0 {
+    z-index: 4;
+    font-size: 15vmin;
+    display: none;
+  }
+  &.level-1 {
+    z-index: 3;
+    font-size: 10vmin;
+  }
+  &.level-2 {
+    z-index: 2;
+    font-size: 5vmin;
+  }
+  &.level-3 {
+    z-index: 1;
+    font-size: 2.5vmin;
+  }
+
+}
+.btn-primary.btn-raised, .btn-primary.btn-fab {
+  background-color: #ef5369 !important;
+  color: #fff !important;
+  border-color: #ef5369;
+  font-size: 13px;
+}
+::ng-deep .container-wrapper{
+  padding: 0 !important;
+}
+::ng-deep .container-fluid{
+  padding: 0 !important;
+}

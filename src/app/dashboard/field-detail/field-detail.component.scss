@@ -1,0 +1,35 @@
+.search-bot{
+  position: absolute;
+  left: 0;
+  border-radius: 5px 0 0 4px;
+  top: 0;
+  height: 99%;
+}
+button{
+  color: white !important;
+}
+::ng-deep form .form-control{
+  font-weight: inherit;
+}
+::ng-deep .tag__text{
+  font-family: iransans, serif;
+  margin-left: 10px;
+}
+::ng-deep .bootstrap.ng2-tag-input{
+  width: 100% !important;
+}
+::ng-deep .ng2-tag-input__text-input{
+  min-width: 28.8vw !important;
+  font-family: iransans !important;
+  font-weight: lighter !important;
+}
+::ng-deep .bootstrap.ng2-tag-input ::placeholder {
+  color: #bdc3c9;
+  font-size: 1rem;
+  font-weight: normal;
+}
+@media (max-width: 768px) {
+  .fix-key{
+    margin-top: 35px;
+  }
+}

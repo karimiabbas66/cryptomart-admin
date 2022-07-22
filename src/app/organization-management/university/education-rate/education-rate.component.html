@@ -1,0 +1,164 @@
+<div class="p-grid p-col-12">
+    <div class="p-col-12">
+        <div class="new-btn-container p-grid p-col-12 ui-sm-12">
+            <button title="جدید"
+                    (click)="openAddAndEditPage(addNew)"
+                    type="button" class="btn-new btn btn-raised " aria-label="Add">
+                <i class="ft-plus"></i>
+            </button>
+        </div>
+        <table style="text-align: center" class="table table-striped">
+            <thead>
+            <tr>
+                <th>عنوان</th>
+                <th>تاریخ ایجاد</th>
+                <th>نوع</th>
+                <th>اولویت</th>
+                <th>عملیات</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let item of dataItems" class='clickable-row'>
+                <td><strong>{{ item.name }}</strong></td>
+                <td><strong>{{ item.createDate | persianDate}}</strong></td>
+                <td><strong>{{ item.degreeType | educationRateType}}</strong></td>
+                <td><strong>{{ item.priority}}</strong></td>
+                <td>
+                    <a title="ویرایش" class="tbl-btn-new"
+                       (click)="edit(item,addNew)">
+                        <i class="fa ft-edit table-operation"></i>
+                    </a>
+
+                    <a title="حذف" class="tbl-btn-del" (click)="remove(item.degreeId)">
+                        <i class="fa ft-trash-2 table-operation"></i>
+                    </a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+        <ngb-pagination [collectionSize]="dataLength" [page]="1" [pageSize]="5"
+                        [maxSize]="5"
+                        [rotate]="true" [ellipses]="false" [boundaryLinks]="true"
+                        (pageChange)="getDegreeItems($event,5)"
+        >
+        </ngb-pagination>
+    </div>
+</div>
+<ng-template #addNew let-modal>
+    <div class="modal-header">
+        <h5 class="modal-title">مشخصات مدرک تحصیلی/تدریسی</h5>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true" style="color: black; float:left;">&times;</span>
+        </button>
+    </div>
+    <div class="p-col-12 p-grid" style="text-align: right">
+        <form [formGroup]="educationRateTypeForm" class="editForm p-grid p-col-12" (ngSubmit)="addNewRate()">
+            <div class="p-col-12 p-grid">
+                <div class="p-col-3"></div>
+                <div class="p-col-6 form-group">
+                    <label for="title">عنوان</label>
+                    <input id="title" class="round form-control" formControlName="title"
+                           [(ngModel)]="newEducationRate.name"
+                    />
+                    <small class="form-text text-muted danger"
+                           *ngIf="!educationRateTypeForm.get('title').valid &&
+                       (educationRateTypeForm.get('title').dirty
+               || educationRateTypeForm.get('title').touched)">
+                        این فیلد الزامی است.
+                    </small>
+                </div>
+                <div class="p-col-3"></div>
+            </div>
+
+            <div class="form-group p-grid p-col-12">
+                <div class="p-grid p-col-12">
+                    <div class="p-col-3"></div>
+                    <div class="p-col-6" style="text-align: right">
+                        <label class="d-block">نوع مدرک</label>
+                        <div class="custom-control custom-radio custom-control-inline">
+                            <input [checked]='!newEducationRate || newEducationRate.degreeType == 1'
+                                   [(ngModel)]="newEducationRate.degreeType"
+                                   value=1
+                                   formControlName="rateType"
+                                   type="radio"
+                                   id="customRadioInline1"
+                                   class="custom-control-input">
+                            <label class="custom-control-label"
+                                   for="customRadioInline1">تحصیلی</label>
+                        </div>
+                        <div class="custom-control custom-radio custom-control-inline ">
+                            <input value=2
+                                   [checked]="newEducationRate && newEducationRate.degreeType == 2"
+                                   [(ngModel)]="newEducationRate.degreeType"
+                                   formControlName="rateType"
+                                   type="radio"
+                                   id="customRadioInline2"
+                                   class="custom-control-input">
+                            <label class="custom-control-label" for="customRadioInline2">تدریسی</label>
+                        </div>
+                    </div>
+                    <div class="p-col-3"></div>
+                </div>
+            </div>
+            <div class="p-col-12 p-grid" style="text-align: right">
+                <div class="p-col-3"></div>
+                <div class="p-col-6">
+                    <div class="p-col-12" style="position: relative">
+                            <span (click)="decreasePriority()"
+                                  style="position: absolute;cursor:pointer;color: gray; right: 0; bottom: -3px">
+                                <i class="fa ft-minus-square"></i>
+                            </span>
+                        <span (click)="increasePriority()"
+                              style="position: absolute;cursor:pointer;color: gray; left: 0; bottom: -3px">
+                                <i class="fa ft-plus-square"></i>
+                            </span>
+                        <label for="vol">اولویت {{newEducationRate.priority}}</label>
+                        <input style="width: 100%" formControlName="priority" class="slider"
+                               [(ngModel)]="newEducationRate.priority" type="range" id="vol"
+                               name="vol" min="0" max="100">
+                    </div>
+                </div>
+                <div class="p-col-3"></div>
+                <div class="p-col-3"></div>
+                <div class="p-col-6">
+                    <fieldset class="form-group">
+                        <label for="rate">نوع واحد علمی</label>
+                        <ng-select notFoundText="موردی یافت نشد"
+                                   id="rate"
+                                   [multiple]="true"
+                                   [ngModelOptions]="{standalone: true}"
+                                   bindValue="id"
+                                   (remove)="deleteTypes($event)"
+                                   (add)="addType($event)"
+                                   [items]="typeList" bindLabel="name"
+                                   placeholder="انتخاب کنید"
+                                   [(ngModel)]="selectedTypes">
+                        </ng-select>
+                    </fieldset>
+                </div>
+            </div>
+
+            <div class="p-col-12 p-grid">
+                <div class="p-col-6" style="text-align: left">
+                    <button class="btn btn-primary fix-back-btn"
+                            (click)="modalService.dismissAll()"
+                            type="button">
+                        بازگشت
+                        <i class="ft-arrow-right"></i>
+                    </button>
+                </div>
+                <div class="p-col-6" style="text-align: right;">
+                    <button [disabled]="!educationRateTypeForm.valid"
+                            class="btn btn-primary fix-submit-btn"
+                            type="submit">
+                        ثبت
+                        <i class="ft-save"></i>
+                    </button>
+                </div>
+
+
+            </div>
+        </form>
+    </div>
+</ng-template>

@@ -1,0 +1,27 @@
+<div class="p-grid p-col-12 bg-white px-4 pt-3" style="text-align: right">
+    <div class="p-col-12 page-title">مشخصات نشریه</div>
+    <div class="p-col-12">
+        <aw-wizard #wizard navBarLayout="large-empty-symbols" navBarDirection="ltr">
+            <aw-wizard-step stepTitle="مرحله اول"
+                            [navigationSymbol]="{symbol: '&#xf249;', fontFamily: 'FontAwesome'}">
+                <app-educational-info *ngIf="step >= 1" [model]="educational"
+                                      (educationalEmitter)="onInfo($event)">
+                </app-educational-info>
+            </aw-wizard-step>
+
+            <aw-wizard-step [stepTitle]="'منبع یا کتاب'"
+                            [navigationSymbol]="{ symbol: '&#xf1ad;', fontFamily: 'FontAwesome' }">
+                <app-educational-source *ngIf="step >= 2" [model]="educational"
+                                        (educationalEmitter)="onSource($event)">
+                </app-educational-source>
+                <div class="form-group text-center space-20">
+                    <button uiSref="personal" type="button" class="btn btn-raised btn-secondary mr-1" awPreviousStep>
+                                  <span>
+                                      <i class="ft-chevron-right"></i>
+                                  </span> قبلی
+                    </button>
+                </div>
+            </aw-wizard-step>
+        </aw-wizard>
+    </div>
+</div>

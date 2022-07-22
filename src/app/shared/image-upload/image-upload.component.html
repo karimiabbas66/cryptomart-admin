@@ -1,0 +1,58 @@
+<div class="container">
+    <div class="p-grid p-col-12">
+        <div class="p-col-12" style="text-align: center">
+            <label for="files" class="btn"
+                   style="cursor: pointer;display:block;
+                   margin: 20px auto 0;
+                   width: 20%;
+                   border: 1px solid #3f9ea1;background-color: #3f9ea1;color: white;">انتخاب
+                تصویر</label>
+            <input id="files" style="float: right;visibility: hidden" type="file" title="انتخاب تصویر"
+                   (change)="fileChangeEvent($event)">
+        </div>
+        <div *ngIf="showItems" class="p-col-7 p-grid" style="text-align: center">
+
+            <div style="text-align: center;font-weight: bold;color: #3f9ea1;font-size: 17px;" class="p-col-12">عکس اصلی</div>
+            <image-cropper
+                    [imageChangedEvent]="imageChangedEvent"
+                    [maintainAspectRatio]="enableRatio"
+                    [aspectRatio]="aspectRatio"
+                    [resizeToWidth]="resizeWidth"
+                    format="png"
+                    (imageCropped)="imageCropped($event)"
+                    (imageLoaded)="imageLoaded()"
+                    (cropperReady)="cropperReady()"
+                    (loadImageFailed)="loadImageFailed()"></image-cropper>
+
+        </div>
+        <div class="p-col-1"></div>
+        <div *ngIf="showItems" class="p-col-4" style="text-align: center;">
+            <div  style="text-align: center;margin-bottom: 12px; font-weight: bold;color: #3f9ea1;font-size: 17px;">پیش نمایش</div>
+            <img style="width: 100%" *ngIf="shape==='rect'" [src]="croppedImage"/>
+            <img style="border-radius: 100%; width:100%" *ngIf="shape==='circle'" [src]="croppedImage"/>
+        </div>
+
+
+
+        <div class="p-col-12 p-grid">
+            <div class="p-col-6" style="text-align: left">
+                <button class="btn btn-primary fix-back-btn"
+                        (click)="closeAll()"
+                        type="button">
+                    بازگشت
+                    <i class="ft-arrow-right"></i>
+                </button>
+            </div>
+            <div class="p-col-6" style="text-align: right;">
+                <button
+                        (click)="saveAndClose()"
+                        class="btn btn-primary fix-submit-btn"
+                        type="button">
+                    ثبت
+                    <i class="ft-save"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+

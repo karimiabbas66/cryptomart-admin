@@ -1,0 +1,39 @@
+.form-input{
+  width: 90%;
+  font-family:iransans;
+  font-weight: normal;
+  padding-right: 10px;
+}
+
+input{
+  margin-bottom: 15px;
+}
+button{
+  color: white !important;
+}
+
+:host ::ng-deep .modal-content {
+  direction: rtl;
+  float: right;
+}
+::ng-deep .modal-header .close{
+  margin-left: 0;
+  border: 1px solid white;
+}
+::ng-deep .modal-dialog{
+  direction: rtl;
+}
+::ng-deep  .aw-wizard-navigation-bar.horizontal ul.steps-indicator li {
+  position: relative;
+  direction: ltr;
+}
+
+::ng-deep  aw-wizard-navigation-bar.horizontal.large-empty-symbols ul.steps-indicator li:not(:last-child):before {
+  width: calc(100% - 50px);
+  left: calc(-50% + 50px / 2);
+}
+
+::ng-deep  aw-wizard-navigation-bar.horizontal.large-empty-symbols ul.steps-indicator li.current .step-indicator {
+  color: #e51b1b;
+  border: 2px solid #e12323;
+}

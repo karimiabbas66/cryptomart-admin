@@ -1,0 +1,130 @@
+<div class="email-application">
+  <div #contentOverlay class="content-overlay" (click)="onContentOverlay()"></div>
+  <div #emailSidebar class="email-app-sidebar float-left d-none d-xl-block">
+    <div [perfectScrollbar] class="email-app-sidebar-content">
+      <div class="email-app-menu">
+        <div class="form-group form-group-compose text-center">
+          <button type="button" class="btn btn-raised btn-danger btn-block my-2" (click)="open(content)">
+            <i class="ft-mail"></i> ساختن</button>
+        </div>
+        <h6 class="text-muted text-bold-500 mb-1 text-left">پیام</h6>
+        <div class="list-group list-group-messages">
+          <a class="list-group-item active no-border text-left" (click)="GetInboxEmail()">
+            <i class="ft-inbox mr-1 pr-1 float-left"></i> صندوق ورودی
+            <span class="badge badge-dark badge-pill float-right">{{emailCountMeta.importantCount}}</span>
+          </a>
+          <a class="list-group-item list-group-item-action no-border text-left" (click)="GetInboxEmail()">
+            <i class="fa fa-paper-plane-o mr-1 pr-1 float-left"></i> صندوق ارسال</a>
+          <a class="list-group-item list-group-item-action no-border text-left" (click)="GetInboxEmail()">
+            <i class="ft-file mr-1 pr-1 float-left"></i> پیش نویس</a>
+          <a class="list-group-item list-group-item-action no-border text-left" (click)="GetInboxEmail()">
+            <i class="ft-star mr-1 pr-1 float-left"></i> ستاره دار
+            <span class="badge badge-danger badge-pill float-right">{{emailCountMeta.importantCount}}</span>
+          </a>
+          <a class="list-group-item list-group-item-action no-border text-left" (click)="GetInboxEmail()">
+            <i class="ft-trash-2 mr-1 pr-1 float-left"></i> زباله ها</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="email-app-content row">
+    <div class="email-search-box w-100 bg-white p-2">
+      <div class="media">
+        <span class="email-app-sidebar-toggle ft-align-justify font-large-1 mr-2 d-xl-none" (click)="onSidebarToggle()"></span>
+        <div class="media-body">
+          <input type="text" class="form-control round" placeholder="جستجو در ایمیل ها" [(ngModel)]="searchQuery">
+        </div>
+      </div>
+    </div>
+    <div class="email-app-content-area w-100">
+      <div class="email-app-list-mails p-0" (click)="onListItemClick()">
+        <div [perfectScrollbar] class="email-app-list">
+          <div id="users-list">
+            <div class="list-group">
+              <div class="users-list-padding">
+                <a class="list-group-item list-group-item-action no-border"
+                  *ngFor="let mail of mail">
+                  <span class="media">
+                    <span class="avatar avatar-md mr-2">
+                      <span [style.background-color]="mail.avatarColor" class="media-object rounded-circle text-circle d-flex mr-2 ml-0 justify-content-center align-items-center">
+                        {{mail.avatarText }}</span>
+                    </span>
+                    <div class="media-body text-left">
+                      <h6 [ngClass]="mail.isSee === false ? 'list-group-item-heading text-bold-400' : 'list-group-item-heading' ">{{
+                        mail.createUserFullName }}
+                        <span class="float-right">
+                          <i class="fa-paperclip fa" *ngIf="mail.hasAttachment"></i>
+                          <span [ngClass]="mail.isSee === false ? 'font-small-2 primary' : 'font-small-2 float-right'">{{
+                            mail.createDate | persianDate }}</span>
+                        </span>
+                      </h6>
+                      <p [ngClass]="mail.isSee === false ? 'list-group-item-text text-truncate text-bold-500' : 'list-group-item-text text-truncate' ">{{
+                        mail.title }}</p>
+                      <p class="list-group-item-text">
+                        <span class="float-right primary">
+                          <span class="badge mr-1"></span>
+                          <i *ngIf="mail.isImportant" class="float-right font-medium-1 ft-star warning"></i>
+                          <!-- <i [ngClass]="mail.isImportant === false ? 'font-medium-1 ft-star blue-grey lighten-3' : 'font-medium-1 ft-star warning'"></i> -->
+                        </span>
+                      </p>
+
+                    </div>
+                  </span>
+                  <hr style="margin-top:0.4rem; margin-bottom: 0.2rem; background-color: #e1d9d9; height: 1px; border: none">
+                </a>
+                <p class="primary text-center" *ngIf="emailCountMeta && emailCountMeta.importantCount===0">هیچ پیامی وجود ندارد</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="d-flex justify-content-between p-2">
+        <ngb-pagination #ngbPagination [collectionSize]="emailCountMeta.inboxCount" [page]="1" [pageSize]="5" (pageChange)="getEmailSummary($event)">
+        </ngb-pagination>
+      </div>
+    </div>
+  </div>
+  <ng-template #content let-c="close" let-d="dismiss">
+    <div class="modal-header px-4">
+      <h4 class="modal-title">نوشتن ایمیل</h4>
+      <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body px-4">
+      <form role="form" class="form form-horizontal">
+        <div class="form-group row">
+          <label class="col-md-2 label-control" for="emailTo">به </label>
+          <div class="col-md-10">
+            <input type="text" id="emailTo" class="form-control" name="emailTo">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-md-2 label-control" for="emailCC">Cc / Bcc </label>
+          <div class="col-md-10">
+            <input type="text" id="emailCC" class="form-control" name="emailCC">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-md-2 label-control" for="emailSubject">عنوان </label>
+          <div class="col-md-10">
+            <input type="text" id="emailSubject" class="form-control" name="emailSubject">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-md-2 label-control">پیام</label>
+          <div class="col-md-10">
+<!--            <quill-editor [style]="{height: '200px'}"></quill-editor>-->
+          </div>
+        </div>
+
+      </form>
+    </div>
+    <div class="modal-footer px-4">
+      <i class="fa-paperclip fa font-large-1 mr-3"></i>
+      <button type="button" class="btn btn-outline-dark" (click)="c('Close click')">انصراف</button>
+      <button type="button" class="btn btn-raised btn-danger" (click)="c('Close click')">ذخیره در پیش نویس</button>
+      <button type="button" class="btn btn-raised btn-primary" (click)="c('Close click')">ارسال</button>
+    </div>
+  </ng-template>
+</div>

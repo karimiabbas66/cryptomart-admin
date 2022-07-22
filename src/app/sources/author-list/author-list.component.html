@@ -1,0 +1,50 @@
+
+<div class="p-grid bg-white px-4 pt-3" style="text-align: right">
+    <div class="p-col-12 page-title">لیست پدید آورندگان</div>
+    <div class="p-col-12">
+
+    <div class="new-btn-container p-col-12 ui-sm-12">
+        <button title="جدید" routerLink="/sources/author-detail" type="button" class="btn-new btn btn-raised " aria-label="Add">
+            <i class="ft-plus"></i>
+        </button>
+    </div>
+
+    <div class="p-col-12 ui-sm-12 table-responsive">
+        <table class="table table-striped text-center">
+            <thead>
+            <tr>
+                <th>نام</th>
+                <th>نام خانوادگی</th>
+                <th>عملیات</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let item of authorList" class='clickable-row'>
+                <td>
+                    <i *ngIf="item.profileId" title="کاربر کریپتومارت" class="fa ft-check-circle table-operation" style="padding-left: 10px;"></i>
+                    <strong>{{ item.firstName }}</strong>
+                </td>
+                <td><strong>{{ item.lastName }}</strong></td>
+                <td>
+                    <a title="ویرایش" class="tbl-btn-new"
+                            [routerLink]="['/sources/author-detail']" [queryParams]="{ id: item.authorId}">
+                        <i class="fa ft-edit table-operation"></i>
+                    </a>
+
+                    <a title="حذف" class="tbl-btn-del" (click)="removeAuthor(item.authorId)">
+                        <i class="fa ft-trash-2 table-operation"></i>
+                    </a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <div class="d-flex justify-content-between p-2">
+            <ngb-pagination [collectionSize]="totalRecords" [page]="1" [pageSize]="tableSize"
+                            (pageChange)="getAuthorList($event)">
+            </ngb-pagination>
+        </div>
+
+    </div>
+
+</div>
+</div>

@@ -1,0 +1,48 @@
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.btn-outline-primary{
+  background-color: #336668 !important
+}
+.btn-outline-primary{
+  margin-bottom: 0;
+}
+::ng-deep .show > .btn-outline-primary.dropdown-toggle{
+  color: white !important;
+}
+.menu-btn-item{
+  display: block;
+  color: black;
+  text-align: right;
+  font-weight: bold;
+  padding-right: 6px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+.bg-primary{
+  background-image: linear-gradient(#ff8d60, #aa3304);
+  box-shadow: 3px 5px 6px gray;
+}
+.bg-success{
+  background-image: linear-gradient(#007bff, #03376c);
+  box-shadow: 3px 5px 6px gray;
+}
+.bg-gold{
+  background-image: linear-gradient(#fac11c, #aa8721);
+  box-shadow: 3px 5px 6px gray;
+}
+button{
+  color: white !important;
+}
+::ng-deep .ng-select.ng-select-single .ng-select-container .ng-value-container .ng-value{
+  padding-right: 5px;
+}
+.bg-warning{
+  background-image: linear-gradient(#20c997, #056c4d);
+  box-shadow: 3px 5px 6px gray;
+}
+::ng-deep .modal.show .modal-dialog{
+  direction: rtl;
+}

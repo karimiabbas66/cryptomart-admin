@@ -1,0 +1,98 @@
+<div class="col-lg-12 col-md-12 bg-white px-4 pt-3">
+    <div class="p-col-12 page-title"> لیست کاربران</div>
+    <br/>
+    <div class="p-col-12 p-grid header-search" style="background-color: #589a94; padding-top: 20px;
+     padding-bottom: 20px" ngbPanelTitle>
+        <h5 (click)="this.showSearchPanel = !showSearchPanel" class="mb-0" style="font-weight: bold; color: white;
+cursor: pointer"><i class="fa fa-search"></i> جستجوی کاربر </h5>
+    </div>
+    <div *ngIf="showSearchPanel" class="contain-form editForm p-grid p-col-12" style="background-color: #eef0f7">
+        <form class="p-col-12 p-grid editForm form-group">
+            <div class="p-col-3">
+                <input class="round form-control" placeholder="نام" (focusout)="test('firstName',$event.target.value)"/>
+            </div>
+            <div class="p-col-1">
+            </div>
+            <div class="p-col-3">
+                <input class="round form-control" placeholder="نام خانوادگی" (focusout)="test('lastName',$event.target.value)"/>
+            </div>
+            <div class="p-col-1"></div>
+            <div class="p-col-3">
+                <input class="round form-control" placeholder="کد ملی" (focusout)="test('nationalCode',$event.target.value)"/>
+            </div>
+            <div class="p-col-1"></div>
+            <div class="p-col-3">
+                <input class="round form-control" placeholder="نام کاربری" (focusout)="test('userName',$event.target.value)"/>
+            </div>
+            <div class="p-col-1"></div>
+            <div class="p-col-3">
+                <persian-date-picker id="createDate" (passEntry)="test('createDate',$event)" placeholder="تاریخ">
+                </persian-date-picker>
+            </div>
+            <div class="p-col-12 p-grid">
+                <div  class="p-col-6" style="text-align: left">
+                    <button style="padding-right: 16px;padding-left: 12px"
+                            (click)="onRefreshTable()"
+                            class="btn btn-danger btn-raised"
+                            type="submit">
+                        انصراف
+                        <i class="ft-arrow-right"></i>
+                    </button>
+                </div>
+                <div class="p-col-6" style="text-align: right">
+                    <button style="padding-right: 15px;padding-left: 10px"
+                            (click)="onSearchItems()"
+                            [disabled]="disableSearchButton()"
+                            class="btn btn-primary btn-raised"
+                            type="submit">
+                        جستجو
+                        <i class="ft-search"></i>
+                    </button>
+                </div>
+            </div>
+        </form>
+
+    </div>
+
+    <div class="p-col-12 p-grid">
+        <img *ngIf="showProgress" src="assets/img/gif/loading.gif" style="position: absolute;width: 10vw;left: 50%;top: 50%;">
+        <div class="p-col-12 p-xl-4 p-lg-4 p-md-6 p-sm-12" style="padding-right: 20px;padding-left: 20px" *ngFor="let profile of profiles">
+            <div class="card-container">
+                <i *ngIf="profile.gender" class="fa fa-male gender-icon"></i>
+                <i *ngIf="!profile.gender" class="fa fa-female gender-icon"></i>
+                <div class="no-img-profile" *ngIf="!profile.photo">
+                    <img routerLink="/profile/profile-detail" [queryParams]="{id: profile.id}" *ngIf="!profile.photo"
+                         class="round no-profile-image"
+                         src="../../../assets/img/portrait/avatars/profile-avatar.png" alt="user"/>
+                </div>
+                <div class="parent-img" *ngIf="profile.photo">
+                    <img routerLink="/profile/profile-detail" [queryParams]="{id: profile.id}" *ngIf="profile.photo"
+                         class="round profile-image"
+                         [src]="downloadUrl + profile.photo" alt="user"/>
+                </div>
+                <h6 style="font-size: 19px;margin-top: 10px">{{profile.firstName + ' ' + profile.lastName }}</h6>
+                <div class="p-col-12">
+                    <div class="p-col-12 p-grid card-container-border">
+                        <div class="p-col-6 row-highlight">کد ملی</div>
+                        <div class="p-col-6 row-highlight">{{profile.nationalCode}}</div>
+                        <div class="p-col-6">شماره تماس</div>
+                        <div class="p-col-6"><span>{{profile.mainPhone ? profile.mainPhone : 'بدون شماره'}}</span></div>
+                        <div class="p-col-6 row-highlight">ثبت نام</div>
+                        <div class="p-col-6 row-highlight" style="font-size: 11px; font-weight: bold">
+                            <span>{{profile.createDate | persianDate}}</span></div>
+                        <div class="p-col-6">وضعیت اکانت</div>
+                        <div class="p-col-6">
+                            <ui-switch (valueChange)="setEnable($event,profile.id)" size="small"
+                                       [checked]="profile.isEnable"></ui-switch>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="d-flex justify-content-between p-2">
+        <ngb-pagination #ngbPagination [collectionSize]="profileCount" [page]="1" [pageSize]="9" (pageChange)="loadProfiles($event)">
+        </ngb-pagination>
+    </div>
+</div>

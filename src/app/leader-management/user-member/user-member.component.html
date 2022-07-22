@@ -1,0 +1,74 @@
+<div class="p-col-12 p-grid">
+    <div class="p-col-6" style="background-color: #f3f3e9">
+        <span style="float: right">لیست اعضای گروه</span>
+        <div class="table-responsive">
+            <table class="table table-striped " style="cursor: pointer; ">
+                <thead>
+                <tr>
+                    <th style="text-align: center;">نام</th>
+                    <th style="text-align: center">نام خانوادگی</th>
+                    <th style="text-align: center;">کدملی</th>
+                    <th style="text-align: center;">عملیات</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                <img *ngIf="showProgress" src="assets/img/gif/loading.gif"
+                     style="position: absolute;width: 10vw;left: 50%">
+                <tr *ngFor="let item of userMembersItems" style="text-align: center">
+                    <td><strong>{{item.firstName}}</strong></td>
+                    <td><strong>{{item.lastName}}</strong></td>
+                    <td><strong>{{item.nationalCode}}</strong></td>
+                    <td><a title="حذف" class="tbl-btn-del"
+
+                           (click)="deleteUserMember(item.userAccountId)"><i class="fa ft-trash-2 table-operation"></i></a
+                    ></td>
+                </tr>
+                </tbody>
+
+            </table>
+            <div class="d-flex justify-content-between p-2">
+                <ngb-pagination #UserMemberPage [collectionSize]="userMemberstotalRecords" [page]="1" [pageSize]="pagesize"
+                                (pageChange)="getUserMembersItems($event,pagesize)">
+                </ngb-pagination>
+            </div>
+        </div>
+    </div>
+
+    <div class="p-col-6" style="background-color: #ebfbf0">
+        <span style="float: right">لیست مابقی راهبران</span>
+        <div class="table-responsive">
+
+            <table class="table table-striped " style="cursor: pointer; ">
+                <thead>
+                <tr>
+                    <th style="text-align: center;">نام</th>
+                    <th style="text-align: center">نام خانوادگی</th>
+                    <th style="text-align: center;">کدملی</th>
+                    <th style="text-align: center;">عملیات</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                <img *ngIf="showProgress" src="assets/img/gif/loading.gif"
+                     style="position: absolute;width: 10vw;left: 50%">
+                <tr *ngFor="let item of notmembersItems" style="text-align: center">
+                    <td><strong>{{item.firstName}}</strong></td>
+                    <td><strong>{{item.lastName}}</strong></td>
+                    <td><strong>{{item.nationalCode}}</strong></td>
+                    <td><a title="افزودن به گروه" class="tbl-btn-new"
+                           (click)="addUserMember(item.userAccountId)"><i class="ft-plus"></i></a
+                    ></td>
+                </tr>
+                </tbody>
+
+            </table>
+            <div class="d-flex justify-content-between p-2">
+                <ngb-pagination #NotUserMemberPage [collectionSize]="notmemberstotalRecords" [page]="1" [pageSize]="pagesize"
+                                (pageChange)="getNotMembersItems($event,pagesize)">
+                </ngb-pagination>
+            </div>
+        </div>
+    </div>
+
+</div>

@@ -1,0 +1,95 @@
+<div class="p-grid p-col-12 bg-white px-4 pt-3" style="text-align: right;direction: rtl; margin: 0">
+    <div class="p-col-12 page-title">رتبه</div>
+    <div class="p-col-12 basic-container">
+        <form [formGroup]="scoreForm" class="editForm p-grid p-col-12" style=" margin: 0" (ngSubmit)="edit()">
+            <div class="p-col-12 ui-sm-12 table-responsive">
+                <table class="table table-striped text-center">
+                    <thead>
+                    <tr>
+                        <th>ISI</th>
+                        <th>ISC</th>
+                        <th>Scopus</th>
+                        <th>H Index</th>
+                        <th>Eigenfactor</th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                    <tr>
+                        <td><strong>
+                            <input type="number" id="isiScore" class="round form-control"
+                                   formControlName="isiScore"
+                                   [(ngModel)]="journalScoreModel.isiScore" placeholder="امتیاز ISI">
+                        </strong></td>
+                        <td><strong>
+                            <div class="custom-control custom-checkbox custom-control-inline mb-3">
+                                <label class="btn-raised btn-primary" ngbButtonLabel>
+                                    <input id="iscScore" formControlName="iscScore" type="checkbox" ngbButton
+                                           [(ngModel)]="journalScoreModel.iscScore">امتیاز ISC</label>
+                            </div>
+                        </strong></td>
+                        <td><strong>
+                            <input type="number" id="scopusScore" class="round form-control"
+                                   formControlName="scopusScore"
+                                   [(ngModel)]="journalScoreModel.scopusScore" placeholder="امتیاز Scopus">
+                        </strong></td>
+                        <td><strong>
+                            <input type="number" id="hIndexScore" class="round form-control"
+                                   formControlName="hIndexScore"
+                                   [(ngModel)]="journalScoreModel.hIndexScore" placeholder="امتیاز H-INDEX">
+                        </strong></td>
+                        <td><strong>
+                            <input type="number" id="eigenFactorScore" class="round form-control"
+                                   formControlName="eigenFactorScore"
+                                   [(ngModel)]="journalScoreModel.eigenFactorScore" placeholder="امتیاز EigenFactor">
+                        </strong></td>
+                    </tr>
+                    </tbody>
+                </table>
+                <table class="table table-striped text-center">
+                    <thead>
+                    <tr>
+                        <th>Scimago</th>
+                        <th>وزارت علوم/جدید</th>
+                        <th>وزارت علوم/قدیم</th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                    <tr>
+                        <td><strong>
+                            <ng-select id="scimagoType" formControlName="scimagoScoreId" [items]="scimagoType"
+                                       notFoundText="موردی یافت نشد" [(ngModel)]="journalScoreModel.scimagoScoreId"
+                                       bindLabel="name" bindValue="id" placeholder="Scimago امتیاز"
+                                       style="width: 100%;">
+                            </ng-select>
+                        </strong></td>
+                        <td><strong>
+                            <ng-select id="scienceNewScore" formControlName="scienceNewScore" [items]="newType"
+                                       notFoundText="موردی یافت نشد" [(ngModel)]="journalScoreModel.scienceNewScore"
+                                       bindLabel="name" bindValue="id" placeholder="وزارت علوم/جدید"
+                                       style="width: 100%;">
+                            </ng-select>
+                        </strong></td>
+                        <td><strong>
+                            <ng-select id="scienceOldScore" formControlName="scienceOldScore" [items]="oldType"
+                                       notFoundText="موردی یافت نشد" [(ngModel)]="journalScoreModel.scienceOldScore"
+                                       bindLabel="name" bindValue="id" placeholder="وزارت علوم/قدیم"
+                                       style="width: 100%;">
+                            </ng-select>
+                        </strong></td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div class="text-center">
+                    <button type="submit" class="btn btn-raised btn-info"
+                            style="margin-bottom: 0;">بعدی
+                        <span>
+                        <i class="ft-chevron-left"></i>
+                    </span>
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

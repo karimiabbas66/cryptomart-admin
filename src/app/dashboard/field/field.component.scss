@@ -1,0 +1,9 @@
+
+@media (max-width: 768px) {
+  .content-wrapper{
+    padding: 0 !important;
+  }
+  ::ng-deep .container-fluid{
+    padding: 0 !important;
+  }
+}

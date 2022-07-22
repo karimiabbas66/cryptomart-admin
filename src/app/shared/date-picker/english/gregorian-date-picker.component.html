@@ -1,0 +1,14 @@
+<form autocomplete="off"  class="form-inline p-col-12">
+    <div style="position: relative">
+        <input
+               autocomplete="off"
+               class="hebrew rtl form-control cal-input"
+               (click)="d2.toggle()"
+               [placeholder]="placeholder" name="dp" [(ngModel)]="model"
+               ngbDatepicker  [dayTemplate]="" [firstDayOfWeek]="7"
+               (dateSelect)="checkResult()"
+               id="test"
+               #d2="ngbDatepicker">
+        <i title="پاک کردن" (click)="emitValue()" class="fa fa-remove value-remove"></i>
+    </div>
+</form>

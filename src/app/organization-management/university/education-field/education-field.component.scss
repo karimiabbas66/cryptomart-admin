@@ -1,0 +1,60 @@
+::ng-deep .btn-link{
+  color: white;
+  &:hover, :focus{
+    color: white;
+  }
+}
+::ng-deep .card{
+  background-color: #336668;
+  color: white;
+  text-align: center;
+  border: 1px solid white;
+}
+::ng-deep .card .card-header{
+  text-align: center;
+}
+::ng-deep .card-body{
+  color: black;
+  background-color: white;
+}
+
+::ng-deep .modal-dialog{
+  direction: rtl;
+}
+::ng-deep .pi-fw{
+  text-align: center;
+  font-size: 11px;
+  font-weight: bold;
+}
+
+button{
+  color: white !important;
+}
+::ng-deep .modal-header .close{
+  margin-left: 0;
+  border: 1px solid white;
+}
+
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.btn-outline-primary{
+  background-color: #336668 !important
+}
+.btn-outline-primary{
+  margin-bottom: 0;
+}
+::ng-deep .show > .btn-outline-primary.dropdown-toggle{
+  color: white !important;
+}
+.menu-btn-item{
+  display: block;
+  text-align: right;
+  font-weight: bold;
+  padding-right: 6px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}

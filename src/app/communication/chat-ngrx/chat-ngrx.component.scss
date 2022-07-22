@@ -1,0 +1,238 @@
+.chat-application {
+  .chat-app-form {
+    position: relative;
+    padding: 10px 10px;
+    overflow: hidden;
+    margin-top: -21px;
+
+    .form-group {
+      i.fa.fa-paper-plane-o {
+        padding: 0.25rem;
+      }
+
+    }
+  }
+}
+
+.create-gr {
+  padding: 2px 5px;
+  background-color: #45204d;
+  border-radius: 4px;
+  cursor: pointer;
+  color: white;
+  box-shadow: 2px 1px 7px gray;
+  font-weight: bold;
+}
+
+.left-gr {
+  float: left;
+  background-color: #ffe724;
+  color: #443d3d;
+  padding: 5px 9px;
+  border-radius: 3px;
+  cursor: pointer;
+  box-shadow: 2px 2px 2px gray;
+  display: block;
+  margin-right: 9px;
+}
+
+::ng-deep .btn-outline-primary {
+  background-color: #009DA0;
+  color: white;
+}
+
+.menu-btn-item {
+  display: block;
+  text-align: right;
+  font-weight: bold;
+  padding-right: 6px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+.remove-it {
+  padding: 2px 11px;
+  background-color: #341b42;
+  border-radius: 3px;
+  color: white;
+}
+.remove-icon-trash{
+  cursor: pointer;
+  color: #ff586b;
+  font-size: 17px;
+}
+.items-chat{
+  background-color: #e8e8e8;
+  border-radius: 4px;
+  box-shadow: 2px 2px 4px gray;
+  position: relative;
+}
+.chat-group-from {
+  margin-bottom: 5px;
+  margin-right: -5px;
+  font-size: 11px;
+  text-decoration: underline;
+  cursor: pointer;
+  color: blue;
+}
+
+.status-container {
+  height: 40px;
+  padding-top: 9px;
+  background-color: #45204d;
+  position: relative;
+  text-align: center;
+}
+
+.online {
+  position: absolute;
+  color: white;
+  right: 40px;
+  font-weight: bold;
+}
+
+.offline {
+  position: absolute;
+  color: white;
+  left: 40px;
+  font-weight: bold;
+}
+
+.waiting {
+  position: absolute;
+  height: 50px;
+  width: 50px;
+  left: 50%;
+  top: 50%;
+  background-color: #f37d02;
+  text-align: center;
+  padding-top: 16px;
+  border-radius: 50%;
+  box-shadow: 2px 2px 33px 718px #0000008f;
+}
+
+.up-but {
+  height: 33px;
+  width: 33px;
+  text-align: center;
+  border-radius: 100%;
+}
+
+.upload-contain {
+  position: absolute;
+  left: -23px;
+  top: -21px;
+  background-color: transparent;
+  width: 22px;
+  color: white;
+  cursor: pointer;
+}
+
+.file-color {
+  background-color: #ff586b;
+}
+
+.movie-color {
+  background-color: #f07d02;
+}
+
+.music-color {
+  background-color: #ecc348;
+}
+
+.chat-application .chat-app-window {
+  background-color: #fff6eb;
+  background-image: url("../../../assets/img/chat/chat.jpg");
+  background-size: contain;
+}
+
+.emoji-mart {
+  float: right !important;
+}
+
+.other-chat {
+  float: left;
+  background-color: white;
+  padding-left: 10px;
+  padding-top: 10px;
+  padding-right: 10px;
+  text-align: right;
+  min-height: 50px;
+  border-radius: 6px;
+  position: relative;
+}
+
+.other-chat:before {
+  content: "";
+  width: 0;
+  height: 0;
+  position: absolute;
+  border-left: 10px solid transparent;
+  border-right: 10px solid white;
+  border-top: 10px solid white;
+  border-bottom: 10px solid transparent;
+  left: -13px;
+  top: 0px;
+}
+
+
+.my-chat {
+  float: right;
+  background-color: #dcf8c6;
+  padding-left: 10px;
+  padding-top: 10px;
+  padding-right: 10px;
+  text-align: right;
+  min-height: 50px;
+  border-radius: 6px;
+  position: relative;
+}
+
+.my-chat:before {
+  content: "";
+  width: 0;
+  height: 0;
+  position: absolute;
+  border-left: 10px solid #dcf8c6;
+  border-right: 10px solid transparent;
+  border-top: 10px solid #dcf8c6;
+  border-bottom: 10px solid transparent;
+  right: -13px;
+  top: 0px;
+}
+
+.chat-time {
+  float: left;
+  font-size: 9px;
+  color: #423c3c;
+  font-weight: bold;
+}
+
+.list-group-item {
+  background-color: white !important;
+}
+
+.media .media-body, .media .media-left, .media .media-right {
+  padding-top: 10px;
+}
+
+.task-search-profile-image {
+  height: 40px;
+  width: 40px;
+  border-radius: 100%;
+  box-shadow: 1px 1px 5px grey;
+  margin-left: 5px;
+}
+
+::ng-deep .modal-header .close {
+  margin-left: 0;
+  border: 1px solid white;
+}
+
+::ng-deep .modal-dialog {
+  direction: rtl;
+}
+
+.btn-primary {
+  color: white !important;
+}

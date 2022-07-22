@@ -1,0 +1,35 @@
+<div class="p-grid p-col-12" style="margin: 0;">
+    <form [formGroup]="formGroup" class="p-col-12">
+        <div class="p-col-4">
+            <ng-select formControlName="fileType"
+                       notFoundText="موردی یافت نشد" [items]="fileTypes" bindLabel="name" placeholder="نوع فایل"
+                       bindValue="name" [(ngModel)]="selectedType" style="padding-bottom: 30px;">
+            </ng-select>
+
+            <div class="p-col-12">
+                <div class="p-col-12">{{placeholder}}</div>
+                <app-uploader (fileUuid)="afterUploadFile($event)"
+                              [patch]="selectedType"></app-uploader>
+            </div>
+        </div>
+    </form>
+    <div class="p-col-6 custom-control custom-checkbox custom-control-inline mb-3 p-col-2">
+        <label class="btn-raised btn-primary" ngbButtonLabel>
+            <input type="checkbox" ngbButton [(ngModel)]="confirmed"> تایید شده
+        </label>
+    </div>
+    <div class="p-col-12 fg-actions d-flex text-center">
+        <div class="p-col-4"></div>
+        <div class="p-col-4 recover-pass">
+            <span *ngIf="warning" class="text-info">{{warning}}</span>
+            <div class="p-col-12 text-center">
+                <button [disabled]="!fileUuid" type="button" (click)="addFile()"
+                        class="btn btn-primary fix-submit-btn" style="margin-bottom: 0;">
+                    <a class="text-decoration-none text-white">ثبت و ذخیره</a>
+                    <i class="ft-save" style="padding-right: 5px; color: white;"></i>
+                </button>
+            </div>
+        </div>
+        <div class="p-col-4"></div>
+    </div>
+</div>

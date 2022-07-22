@@ -1,0 +1,78 @@
+.user-cont{
+  background-color: #a4ffc3;
+  text-align: center;
+  margin-top: 20px;
+  border-radius: 11px;
+  box-shadow: 2px 2px 8px gray;
+}
+.admin-cont{
+  background-color: #afcbe3;
+  text-align: center;
+  margin-top: 20px;
+  border-radius: 11px;
+  box-shadow: 2px 2px 8px gray;
+}
+.stat-cont{
+  margin-top: 22px;
+  text-align: center;
+  background-color: #f0f0f0;
+  font-weight: bold;
+}
+button{
+  color: white !important;
+}
+.date-cont{
+  text-align: center;
+  direction: rtl;
+  background-color: #a4ffc3;
+  border-radius: 4px;
+  box-shadow: 2px 2px 4px gray;
+  font-weight: bold;
+}
+::ng-deep .modal-header .close{
+  margin-left: 0;
+  border: 1px solid white;
+}
+::ng-deep .modal-header{
+  direction: rtl !important;
+}
+
+.user-title-cont{
+  text-align: right;
+  margin-top: 14px;
+  font-size: 18px;
+  margin-bottom: -20px;
+}
+
+
+* {box-sizing: border-box;}
+
+.img-zoom-container {
+  position: relative;
+}
+
+.img-zoom-lens {
+  position: absolute;
+  border: 1px solid #d4d4d4;
+  /*set the size of the lens:*/
+  width: 40px;
+  height: 40px;
+}
+
+.img-zoom-result {
+  border: 1px solid #d4d4d4;
+  /*set the size of the result div:*/
+  width: 300px;
+  height: 300px;
+}
+.down-cont{
+  font-weight: bold;
+  color: white;
+  display: block;
+  cursor: pointer;
+  padding: 10px 20px;
+  background-color: #4acc6a;
+  width: 77px;
+  margin: 10px auto;
+  border-radius: 7px;
+}

@@ -1,0 +1,382 @@
+.sheet-up-span{
+  display: block;
+  margin-bottom: 6px;
+  font-size: 13px;
+  background-color: #f9eded;
+
+}
+.p-xl-1,
+.p-xl-2,
+.p-xl-3,
+.p-xl-4,
+.p-xl-5,
+.p-xl-6,
+.p-xl-7,
+.p-xl-8,
+.p-xl-9,
+.p-xl-10,
+.p-xl-11,
+.p-xl-1,
+.p-grid {
+  direction: rtl !important;
+}
+
+.fa-arrow-down {
+  padding-top: 5px;
+  padding-right: 5px;
+  color: black;
+}
+
+.fa-plus {
+  padding-top: 17px;
+  padding-right: 5px;
+  color: #0080ff;
+  font-size: 21px;
+  cursor: pointer;
+  padding-left: 15px;
+}
+
+.fa-trash {
+  padding-top: 1px;
+  padding-right: 20px;
+  color: red;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+::ng-deep .btn-link {
+  width: 100%;
+}
+
+::ng-deep .card {
+  padding-bottom: 15px;
+  border-bottom: 0;
+  border-left: unset;
+  border-right: unset;
+  position: relative;
+}
+
+::ng-deep .card-header {
+  box-shadow: 1px 1px #888888;
+  min-height: 135px;
+}
+
+.items {
+  background-color: white;
+  border-top: 1px solid #ececec;
+}
+
+.padding-20 {
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.title-info {
+  color: black;
+}
+
+.detail-info {
+  font-size: large;
+  font-weight: 600;
+  padding-top: 20px;
+}
+
+.profile-style {
+  //width: 150px;
+  float: right;
+}
+
+.rating-list li {
+  color: #ddd;
+  padding: 0 5px;
+
+}
+
+.rating-list li.selected {
+  color: orange;
+}
+
+.rating-list {
+  display: inline-block;
+  list-style: none;
+  padding: 0 5px 0 10px;
+}
+
+.fa-star {
+  font-size: 30px;
+}
+
+@media screen and (max-width: 980px) {
+  .items {
+    height: unset;
+  }
+}
+
+@media screen and (max-width: 640px) {
+  .profile-style {
+    width: 60px;
+  }
+
+  .items {
+    height: unset;
+  }
+}
+
+
+
+
+//////////////////////////////////////
+
+::ng-deep  .p-tabview .p-tabview-nav {
+  background-color: white;
+  margin-bottom: 35px;
+  border: 0;
+}
+
+::ng-deep  .p-tabview .p-tabview-nav li:not(.p-highlight):not(.p-disabled):hover .p-tabview-nav-link {
+  background: unset;
+  border-color: unset;
+  color: unset;
+}
+
+::ng-deep .p-tabview .p-tabview-nav li .p-tabview-nav-link {
+  background: unset;
+  color: unset;
+  border: 0;
+}
+
+::ng-deep .p-tabview .p-tabview-panels {
+  padding: 0;
+}
+
+::ng-deep .p-tabview .p-tabview-nav li.p-highlight .p-tabview-nav-link {
+  background: white;
+  border-bottom: 5px solid #2ecc71;
+  color: #2ecc71;
+}
+
+::ng-deep .p-tabview .p-tabview-panels {
+  background: #ececec;
+  color: unset;
+}
+
+::ng-deep .p-tabview .p-tabview-nav li .p-tabview-nav-link:not(.p-disabled):focus {
+  box-shadow: unset;
+}
+
+.inline-middle {
+  display: inline-block;
+  vertical-align: middle;
+  margin-bottom: 0.0rem;
+}
+
+.panel-heading {
+  padding: 10px 15px;
+  border-bottom: 1px solid transparent;
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
+}
+
+.candidate-settings[_ngcontent-c52] .settings-body .panel-group .panel .panel-heading {
+  padding-right: 0;
+  padding-left: 0;
+}
+
+.panel-group .panel-heading {
+  border-bottom: 0;
+}
+
+textarea.form-control {
+  min-height: 145px;
+  max-height: 250px;
+}
+
+.input-group-addon {
+  background-color: #ececec;
+}
+.form-control:focus {
+  color: #495057;
+  background-color: #fff;
+  border-color: #ececec;
+  outline: 0;
+  box-shadow: unset;
+}
+
+.inner-item {
+  background-color: white;
+  margin-bottom: 15px !important;
+  margin-top: 15px !important;
+  margin-left: 0;
+  margin-right: 0;
+  box-shadow: 2px 2px 4px gray;
+}
+.inner-tab-panel {
+  background-color: white;
+  box-shadow: 2px 2px 4px gray;
+}
+
+.content-item {
+  background-color: white;
+  border-top: 1px solid #ececec;
+}
+
+.list-items {
+  padding: 0;
+  margin-right: -0.5rem;
+  margin-left: -0.5rem;
+}
+.description {
+  padding-top: 24px;
+  padding-bottom: 24px;
+  position: relative;
+}
+
+.work-experiences.list-timeline-items :before {
+  position: absolute;
+  top: -106px;
+  left: 44%;
+  bottom: 0;
+  width: 3px;
+  margin-left: -1px;
+  background-color: #777777;
+  content: "";
+}
+.work-experiences.description .time-line {
+  list-style: none outside none;
+}
+
+.list-timeline-items {
+  position: relative;
+  text-align: center;
+}
+
+.list-timeline-item1 {
+  position: relative;
+  text-align: center;
+}
+
+.work-experiences.description {
+  padding: 0;
+  margin: 0;
+  outline: 0;
+  box-sizing: border-box;
+}
+.even-color{
+  background-color: #dfdede;
+}
+label{
+  float: right;
+}
+
+
+.work-experiences-span {
+  position: relative;
+  display: block;
+  border-radius: 50%;
+  width: 16px;
+  height: 16px;
+  margin: 0 auto;
+  background: #777777;
+  border-bottom: none !important;
+}
+.verticalLine {
+  border-left: thick solid #777777;
+  height: 83px;
+  position: absolute;
+  left: 5px;
+  top: 13px;
+}
+
+.backgroundGreen {
+  background-color: #2ecc71 !important;
+}
+
+.candidate-cv {
+  min-height: 48px;
+  background: #145fa8;
+  padding-top: 4px;
+  border-radius: 0 0 4px 4px;
+}
+
+.header-contact-information {
+  min-height: 48px;
+  background: #1d1d1d;
+  padding-top: 4px;
+  border-radius: 0 0 4px 4px;
+  color: #ffb606;
+}
+
+.cv-right {
+  background-color: white; text-align: center;
+  border-radius: 10px;
+}
+
+::ng-deep .p-datatable .p-sortable-column:hover {
+  background: #1f2d40 !important;
+  color: #FFB606;
+}
+
+
+::ng-deep .p-overlaypanel {
+  background-color: white;
+  color: black;
+  border: 1px solid #59e3c9;
+  width: 200px;
+  text-align: center;
+}
+::ng-deep .right-cont{
+  padding-top: 0 !important;
+  background-color: #756f6f;
+  margin-left: 11px;
+  margin-top: 4px;
+  border-radius: 7px;
+}
+
+::ng-deep .p-overlaypanel::after {
+  border-bottom-color: white;
+}
+
+::ng-deep .p-overlaypanel::before {
+  border-bottom-color: #59e3c9;
+}
+::ng-deep .p-datatable-wrapper{
+  overflow-x: scroll;
+}
+::ng-deep .d-inline-flex:focus{
+  border: unset;
+}
+::ng-deep .d-inline-flex::selection{
+  border: unset;
+}
+::ng-deep .p-overlaypanel .p-overlaypanel-content {
+  padding: unset;
+}
+.fix-margin{
+  margin-right: 3px
+}
+.item-op {
+  cursor: pointer;
+  padding: 8px 22px;
+  direction: rtl;
+}
+
+::ng-deep .close {
+  float: left;
+  padding: unset !important;
+  margin: unset !important;
+  border: unset !important;
+}
+::ng-deep .modal-dialog {
+  max-width: 50vw;
+}
+::ng-deep .modal-content {
+  direction: rtl;
+}
+.new-rel{
+  float: left;
+  background-color: #1d2a35;
+  color: white;
+  padding: 3px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+}

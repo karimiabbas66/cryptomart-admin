@@ -1,0 +1,416 @@
+<!-- //////////////////////////////////////////////////////////////////////////// -->
+<!-- START Notification Sidebar -->
+<aside #sidebar id="notification-sidebar" class="notification-sidebar d-none d-sm-none d-md-block">
+  <a class="notification-sidebar-close" (click)="onClose()">
+    <i class="ft-x font-medium-3"></i>
+  </a>
+  <div class="side-nav notification-sidebar-content" [perfectScrollbar]>
+    <div class="row">
+      <div class="col-12 mt-1">
+        <ngb-tabset>
+          <ngb-tab>
+            <ng-template ngbTabTitle><b>فعالیت</b></ng-template>
+            <ng-template ngbTabContent>
+              <div id="activity" class="col-12 timeline-left">
+                <h6 class="mt-1 mb-3 text-bold-400 text-left">فعالیت اخیر</h6>
+                <div id="timeline" class="timeline-left timeline-wrapper">
+                  <ul class="timeline">
+                    <li class="timeline-line"></li>
+                    <li class="timeline-item text-left text-left">
+                      <div class="timeline-badge">
+                        <span class="bg-purple bg-lighten-1" data-toggle="tooltip" data-placement="right"
+                          title="Portfolio project work"><i class="ft-shopping-cart"></i></span>
+                      </div>
+                      <div class="col s9 recent-activity-list-text">
+                        <a href="#" class="deep-purple-text medium-small">چند لحظه پیش</a>
+                        <p class="mt-0 mb-2 fixed-line-height font-weight-300 medium-small">
+عضو جدیدی ثبت نام کرد
+
+                        </p>
+                      </div>
+                    </li>
+                    <li class="timeline-item text-left">
+                      <div class="timeline-badge">
+                        <span class="bg-info bg-lighten-1" data-toggle="tooltip" data-placement="right"
+                          title="Portfolio project work"><i class="fa fa-plane"></i></span>
+                      </div>
+                      <div class="col s9 recent-activity-list-text">
+                        <a href="#" class="cyan-text medium-small">دیروز</a>
+                        <p class="mt-0 mb-2 fixed-line-height font-weight-300 medium-small">
+راهبر شماره 2 منظومه را تغییر داد
+                        </p>
+                      </div>
+                    </li>
+                    <li class="timeline-item text-left">
+                      <div class="timeline-badge">
+                        <span class="bg-success bg-lighten-1" data-toggle="tooltip" data-placement="right"
+                          title="Portfolio project work"><i class="ft-mic"></i></span>
+                      </div>
+                      <div class="col s9 recent-activity-list-text">
+                        <a href="#" class="green-text medium-small">5 روز پیش</a>
+                        <p class="mt-0 mb-2 fixed-line-height font-weight-300 medium-small">
+دانشگاه تهران 10 کاربر دسته ای ثبت نام کرد
+                        </p>
+                      </div>
+                    </li>
+                    <li class="timeline-item text-left">
+                      <div class="timeline-badge">
+                        <span class="bg-warning bg-lighten-1" data-toggle="tooltip" data-placement="right"
+                          title="Portfolio project work"><i class="ft-map-pin"></i></span>
+                      </div>
+                      <div class="col s9 recent-activity-list-text">
+                        <a href="#" class="amber-text medium-small">1 هفته پیش</a>
+                        <p class="mt-0 mb-2 fixed-line-height font-weight-300 medium-small">
+                          دانشگاه تبریز 10 کاربر دسته ای ثبت نام کرد
+                        </p>
+                      </div>
+                    </li>
+                    <li class="timeline-item text-left">
+                      <div class="timeline-badge">
+                        <span class="bg-red bg-lighten-1" data-toggle="tooltip" data-placement="right"
+                          title="Portfolio project work"><i class="ft-inbox"></i></span>
+                      </div>
+                      <div class="col s9 recent-activity-list-text">
+                        <a href="#" class="deep-orange-text medium-small">2 هفته پیش</a>
+                        <p class="mt-0 mb-2 fixed-line-height font-weight-300 medium-small">
+                            پست صوتی برای کنفرانس
+                        </p>
+                      </div>
+                    </li>
+                    <li class="timeline-item text-left">
+                      <div class="timeline-badge">
+                        <span class="bg-cyan bg-lighten-1" data-toggle="tooltip" data-placement="right"
+                          title="Portfolio project work"><i class="ft-mic"></i></span>
+                      </div>
+                      <div class="col s9 recent-activity-list-text">
+                        <a href="#" class="brown-text medium-small">1 ماه پیش</a>
+                        <p class="mt-0 mb-2 fixed-line-height font-weight-300 medium-small">
+                          دانشگاه تهران 10 کاربر دسته ای ثبت نام کرد
+                        </p>
+                      </div>
+                    </li>
+                    <li class="timeline-item text-left">
+                      <div class="timeline-badge">
+                        <span class="bg-amber bg-lighten-1" data-toggle="tooltip" data-placement="right"
+                          title="Portfolio project work"><i class="ft-map-pin"></i></span>
+                      </div>
+                      <div class="col s9 recent-activity-list-text">
+                        <a href="#" class="deep-purple-text medium-small">3 ماه پیش</a>
+                        <p class="mt-0 mb-2 fixed-line-height font-weight-300 medium-small">
+                          دانشگاه تهران 10 کاربر دسته ای ثبت نام کرد
+                        </p>
+                      </div>
+                    </li>
+                    <li class="timeline-item text-left">
+                      <div class="timeline-badge">
+                        <span class="bg-grey bg-lighten-1" data-toggle="tooltip" data-placement="right"
+                          title="Portfolio project work"><i class="ft-inbox"></i></span>
+                      </div>
+                      <div class="col s9 recent-activity-list-text">
+                        <a href="#" class="grey-text medium-small">1 سال پیش</a>
+                        <p class="mt-0 mb-2 fixed-line-height font-weight-300 medium-small">
+                          دانشگاه تهران 10 کاربر دسته ای ثبت نام کرد
+
+                        </p>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </ng-template>
+          </ngb-tab>
+          <ngb-tab>
+            <ng-template ngbTabTitle><b>گفتگو</b></ng-template>
+            <ng-template ngbTabContent>
+              <div id="chatapp" class="col-12">
+                <h6 class="mt-1 mb-3 text-bold-400 text-left">چت اخیر</h6>
+                <div class="collection border-none">
+                  <div class="media mb-1">
+                    <a>
+                      <img alt="96x96" class="media-object d-flex mr-3 bg-primary height-50 rounded-circle"
+                        src="assets/img/portrait/small/avatar-s-17.png">
+                    </a>
+                    <div class="media-body text-left">
+                      <div class="clearfix">
+                        <h4 class="font-medium-1 primary mt-1 mb-0 mr-auto float-left">مصطفی احمدی </h4>
+                        <span class="medium-small float-right blue-grey-text text-lighten-3">5 صبح</span>
+                      </div>
+                      <p class="text-muted font-small-3">ممنون</p>
+                    </div>
+                  </div>
+                  <div class="media mb-1">
+                    <a>
+                      <img alt="96x96" class="media-object d-flex mr-3 bg-primary height-50 rounded-circle"
+                        src="assets/img/portrait/small/avatar-s-17.png">
+                    </a>
+                    <div class="media-body text-left">
+                      <div class="clearfix">
+                        <h4 class="font-medium-1 primary mt-1 mb-0 mr-auto float-left">نیما عزیزی </h4>
+                        <span class="medium-small float-right blue-grey-text text-lighten-3">4.14 عصر</span>
+                      </div>
+                      <p class="text-muted font-small-3">سلام </p>
+                    </div>
+                  </div>
+                  <div class="media mb-1">
+                    <a>
+                      <img alt="96x96" class="media-object d-flex mr-3 bg-primary height-50 rounded-circle"
+                        src="assets/img/portrait/small/avatar-s-17.png">
+                    </a>
+                    <div class="media-body text-left">
+                      <div class="clearfix">
+                        <h4 class="font-medium-1 primary mt-1 mb-0 mr-auto float-left">علی فرهادی</h4>
+                        <span class="medium-small float-right blue-grey-text text-lighten-3">9 صبح</span>
+                      </div>
+                      <p class="text-muted font-small-3">خوبی </p>
+                    </div>
+                  </div>
+                  <div class="media mb-1">
+                    <a>
+                      <img alt="96x96" class="media-object d-flex mr-3 bg-primary height-50 rounded-circle"
+                        src="assets/img/portrait/small/avatar-s-17.png">
+                    </a>
+                    <div class="media-body text-left">
+                      <div class="clearfix">
+                        <h4 class="font-medium-1 primary mt-1 mb-0 mr-auto float-left">احمد رضایی </h4>
+                        <span class="medium-small float-right blue-grey-text text-lighten-3">4.14 عصر</span>
+                      </div>
+                      <p class="text-muted font-small-3">سپاس</p>
+                    </div>
+                  </div>
+                  <div class="media mb-1">
+                    <a>
+                      <img alt="96x96" class="media-object d-flex mr-3 bg-primary height-50 rounded-circle"
+                        src="assets/img/portrait/small/avatar-s-17.png">
+                    </a>
+                    <div class="media-body text-left">
+                      <div class="clearfix">
+                        <h4 class="font-medium-1 primary mt-1 mb-0 mr-auto float-left">علی فرهادی </h4>
+                        <span class="medium-small float-right blue-grey-text text-lighten-3">5 صبح</span>
+                      </div>
+                      <p class="text-muted font-small-3">متن تستی کریپتومارت</p>
+                    </div>
+                  </div>
+                  <div class="media mb-1">
+                    <a>
+                      <img alt="96x96" class="media-object d-flex mr-3 bg-primary height-50 rounded-circle"
+                        src="assets/img/portrait/small/avatar-s-17.png">
+                    </a>
+                    <div class="media-body text-left">
+                      <div class="clearfix">
+                        <h4 class="font-medium-1 primary mt-1 mb-0 mr-auto float-left">حسن حسینی </h4>
+                        <span class="medium-small float-right blue-grey-text text-lighten-3">8 صبح</span>
+                      </div>
+                      <p class="text-muted font-small-3">متن تستی کریپتومارت </p>
+                    </div>
+                  </div>
+                  <div class="media mb-1">
+                    <a>
+                      <img alt="96x96" class="media-object d-flex mr-3 bg-primary height-50 rounded-circle"
+                        src="assets/img/portrait/small/avatar-s-17.png">
+                    </a>
+                    <div class="media-body text-left">
+                      <div class="clearfix">
+                        <h4 class="font-medium-1 primary mt-1 mb-0 mr-auto float-left">علی زمانی </h4>
+                        <span class="medium-small float-right blue-grey-text text-lighten-3">9.53 صبح</span>
+                      </div>
+                      <p class="text-muted font-small-3">متن تستی کریپتومارت</p>
+                    </div>
+                  </div>
+                  <div class="media mb-1">
+                    <a>
+                      <img alt="96x96" class="media-object d-flex mr-3 bg-primary height-50 rounded-circle"
+                        src="assets/img/portrait/small/avatar-s-17.png">
+                    </a>
+                    <div class="media-body text-left">
+                      <div class="clearfix">
+                        <h4 class="font-medium-1 primary mt-1 mb-0 mr-auto float-left">خانم حسنی </h4>
+                        <span class="medium-small float-right blue-grey-text text-lighten-3">4.20 بعد از ظهر</span>
+                      </div>
+                      <p class="text-muted font-small-3">متن تستی کریپتومارت</p>
+                    </div>
+                  </div>
+                  <div class="media mb-1">
+                    <a>
+                      <img alt="96x96" class="media-object d-flex mr-3 bg-primary height-50 rounded-circle"
+                        src="assets/img/portrait/small/avatar-s-17.png">
+                    </a>
+                    <div class="media-body text-left">
+                      <div class="clearfix">
+                        <h4 class="font-medium-1 primary mt-1 mb-0 mr-auto float-left">حسن عباسی </h4>
+                        <span class="medium-small float-right blue-grey-text text-lighten-3">5.30 صبح</span>
+                      </div>
+                      <p class="text-muted font-small-3">متن تستی کریپتومارت</p>
+                    </div>
+                  </div>
+                  <div class="media mb-1">
+                    <a>
+                      <img alt="96x96" class="media-object d-flex mr-3 bg-primary height-50 rounded-circle"
+                        src="assets/img/portrait/small/avatar-s-17.png">
+                    </a>
+                    <div class="media-body text-left">
+                      <div class="clearfix">
+                        <h4 class="font-medium-1 primary mt-1 mb-0 mr-auto float-left">احمد حسنی </h4>
+                        <span class="medium-small float-right blue-grey-text text-lighten-3">4.34 AM</span>
+                      </div>
+                      <p class="text-muted font-small-3">متن تستی کریپتومارت</p>
+                    </div>
+                  </div>
+                  <div class="media mb-1">
+                    <a>
+                      <img alt="96x96" class="media-object d-flex mr-3 bg-primary height-50 rounded-circle"
+                        src="assets/img/portrait/small/avatar-s-17.png">
+                    </a>
+                    <div class="media-body text-left">
+                      <div class="clearfix">
+                        <h4 class="font-medium-1 primary mt-1 mb-0 mr-auto float-left">دانیال زیوری </h4>
+                        <span class="medium-small float-right blue-grey-text text-lighten-3">12.00 ظهر</span>
+                      </div>
+                      <p class="text-muted font-small-3">ممنون </p>
+                    </div>
+                  </div>
+                  <div class="media mb-1">
+                    <a>
+                      <img alt="96x96" class="media-object d-flex mr-3 bg-primary height-50 rounded-circle"
+                        src="assets/img/portrait/small/avatar-s-17.png">
+                    </a>
+                    <div class="media-body text-left">
+                      <div class="clearfix">
+                        <h4 class="font-medium-1 primary mt-1 mb-0 mr-auto float-left">خانم یعقوبی </h4>
+                        <span class="medium-small float-right blue-grey-text text-lighten-3">11.14 ظهر</span>
+                      </div>
+                      <p class="text-muted font-small-3">متن تستی کریپتومارت</p>
+                    </div>
+                  </div>
+                  <div class="media mb-1">
+                    <a>
+                      <img alt="96x96" class="media-object d-flex mr-3 bg-primary height-50 rounded-circle"
+                        src="assets/img/portrait/small/avatar-s-17.png">
+                    </a>
+                    <div class="media-body text-left">
+                      <div class="clearfix">
+                        <h4 class="font-medium-1 primary mt-1 mb-0 mr-auto float-left">ارمین آزاد</h4>
+                        <span class="medium-small float-right blue-grey-text text-lighten-3">7.30 صبح</span>
+                      </div>
+                      <p class="text-muted font-small-3">متن تستی کریپتومارت</p>
+                    </div>
+                  </div>
+                  <div class="media mb-1">
+                    <a>
+                      <img alt="96x96" class="media-object d-flex mr-3 bg-primary height-50 rounded-circle"
+                        src="assets/img/portrait/small/avatar-s-17.png">
+                    </a>
+                    <div class="media-body text-left">
+                      <div class="clearfix">
+                        <h4 class="font-medium-1 primary mt-1 mb-0 mr-auto float-left">حسین مدنی </h4>
+                        <span class="medium-small float-right blue-grey-text text-lighten-3">2.00 شب</span>
+                      </div>
+                      <p class="text-muted font-small-3">متن تستی کریپتومارت</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </ng-template>
+          </ngb-tab>
+          <ngb-tab>
+            <ng-template ngbTabTitle><b>تنظیمات</b></ng-template>
+            <ng-template ngbTabContent>
+              <div id="settings" class="col-12">
+                <h6 class="mt-1 mb-3 text-bold-400 text-left">تنظیمات عمومی</h6>
+                <ul class="list-unstyled">
+                  <li class="text-left">
+                    <div class="togglebutton">
+                      <div class="switch d-flex justify-content-between w-100">
+                        <span class="text-bold-500">اطلاعیه</span>
+                        <div class="notification-cb">
+                          <div class="custom-control custom-checkbox mb-2 mr-sm-2 mb-sm-0">
+                            <input checked="checked" class="custom-control-input " type="checkbox"
+                              id="notifications1">
+                            <label class="custom-control-label d-block" for="notifications1"></label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <p>نمایش اعلان ها.</p>
+                  </li>
+                  <li class="text-left">
+                    <div class="togglebutton">
+                      <div class="switch d-flex justify-content-between w-100">
+                        <span class="text-bold-500">نمایش فعالیت اخیر</span>
+                        <div class="notification-cb">
+                          <div class="custom-control custom-checkbox mb-2 mr-sm-2 mb-sm-0">
+                            <input checked="checked" class="custom-control-input " type="checkbox"
+                              id="recent-activity1">
+                            <label class="custom-control-label d-block" for="recent-activity1"></label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <p>نمایش فعالیتهای اخیر به راهبران ارشد</p>
+                  </li>
+                  <li class="text-left">
+                    <div class="togglebutton">
+                      <div class="switch  d-flex justify-content-between w-100">
+                        <span class="text-bold-500">اطلاعیه</span>
+                        <div class="notification-cb">
+                          <div class="custom-control custom-checkbox mb-2 mr-sm-2 mb-sm-0">
+                            <input class="custom-control-input " type="checkbox" id="notifications2">
+                            <label class="custom-control-label d-block" for="notifications2"></label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <p>امکان لاگین از چند دستگاه</p>
+                  </li>
+                  <li class="text-left">
+                    <div class="togglebutton">
+                      <div class="switch d-flex justify-content-between w-100">
+                        <span class="text-bold-500">نشست فعال</span>
+                        <div class="notification-cb">
+                          <div class="custom-control custom-checkbox mb-2 mr-sm-2 mb-sm-0">
+                            <input class="custom-control-input " type="checkbox"
+                              id="recent-activity2">
+                            <label class="custom-control-label d-block" for="recent-activity2"></label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <p>اتمام تمامی نشستهای فعال</p>
+                  </li>
+                  <li class="text-left">
+                    <div class="togglebutton">
+                      <div class="switch d-flex justify-content-between w-100">
+                        <span class="text-bold-500">ایمیل های خود را نمایش دهید</span>
+                        <div class="notification-cb">
+                          <div class="custom-control custom-checkbox mb-2 mr-sm-2 mb-sm-0">
+                            <input class="custom-control-input " type="checkbox" id="show-emails">
+                            <label class="custom-control-label d-block" for="show-emails"></label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <p>هنگام بررسی بله یا بدون پاسخ، کادرهای جعبه را استفاده کنید.</p>
+                  </li>
+                  <li class="text-left">
+                    <div class="togglebutton">
+                      <div class="switch d-flex justify-content-between w-100">
+                        <span class="text-bold-500">نمایش آمار کار</span>
+                        <div class="notification-cb">
+                          <div class="custom-control custom-checkbox mb-2 mr-sm-2 mb-sm-0">
+                            <input class="custom-control-input " type="checkbox" id="show-stats">
+                            <label class="custom-control-label d-block" for="show-stats"></label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <p>نمایش تعداد تسک انجام شده در پنل وظایف</p>
+                  </li>
+                </ul>
+              </div>
+            </ng-template>
+          </ngb-tab>
+        </ngb-tabset>
+      </div>
+    </div>
+  </div>
+</aside>
+<!-- END Notification Sidebar -->

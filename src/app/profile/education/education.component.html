@@ -1,0 +1,39 @@
+<div class="recover-pass">
+    <div class="p-col-1">
+        <button type="submit" class="circle-add btn-new btn btn-raised " aria-label="Add"
+                [routerLink]="['/profile/new-education']" [queryParams]="{ degreeType: 1,id:profileId}"
+        >
+            <i class="ft-plus"></i>
+        </button>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-12 col-md-12">
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>رشته تحصیلی</th>
+                    <th>گرایش تحصیلی</th>
+                    <th>واحد علمی</th>
+                    <th>مدرک تحصیلی</th>
+                    <th>عملیات</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr class='clickable-row' *ngFor="let edu of personalEducations">
+                    <td>{{edu.fieldName}}</td>
+                    <td>{{edu.orientationName}}</td>
+                    <td>{{edu.unitName}}</td>
+                    <td>{{edu.degreeName}}</td>
+                    <td>
+                        <a class="tbl-btn-del" (click)="removePersonEducation(edu)">
+                            <i class="fa ft-trash-2 table-operation"></i>
+                        </a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

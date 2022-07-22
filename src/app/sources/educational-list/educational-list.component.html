@@ -1,0 +1,50 @@
+<div class="p-grid bg-white px-4 pt-3" style="text-align: right">
+    <div class="p-col-12 page-title">لیست محتواهای آموزشی</div>
+    <div class="p-col-12">
+        <div class="new-btn-container p-col-12 ui-sm-12">
+            <button title="جدید" routerLink="/sources/educational-detail" type="button" class="btn-new btn btn-raised "
+                    aria-label="Add">
+                <i class="ft-plus"></i>
+            </button>
+        </div>
+        <div class="p-col-12 ui-sm-12 table-responsive">
+            <table class="table table-striped text-center">
+                <thead>
+                <tr>
+                    <th>تولید کنده/تقریر کننده</th>
+                    <th>درس</th>
+                    <th>موضوع</th>
+                    <th>صفحات</th>
+                    <th>عملیات</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let item of educationalContent" class="clickable-row">
+                    <td><strong>{{ item.creator }}</strong></td>
+                    <td><strong>{{ item.lecture }}</strong></td>
+                    <td><strong>{{ item.topic }}</strong></td>
+                    <td><strong>{{ item.page }}</strong></td>
+                    <td>
+                        <a title="ویرایش" class="tbl-btn-new" [routerLink]="['/sources/educational-detail']"
+                           [queryParams]="{ educationalId: item.id}">
+                            <i class="fa ft-edit table-operation"></i>
+                        </a>
+
+                        <a title="حذف" class="tbl-btn-del" (click)="removeEducational(item.id)">
+                            <i class="fa ft-trash-2 table-operation"></i>
+                        </a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <div class="d-flex justify-content-between p-2">
+                <ngb-pagination [collectionSize]="totalSize" [page]="1" [pageSize]="tableSize"
+                                (pageChange)="getAllEducationalContent($event)">
+                </ngb-pagination>
+            </div>
+        </div>
+    </div>
+</div>
+<div style="position: relative;">
+    <img *ngIf="showProgress" src="assets/img/gif/loading.gif" style="position: absolute;width: 10vw;left: 50%">
+</div>

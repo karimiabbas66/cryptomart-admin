@@ -1,0 +1,99 @@
+<div class="p-grid bg-white" style="text-align: right">
+    <div class="p-col-12 page-title">ثبت نام دسته ای</div>
+    <div class="p-col-12 p-grid">
+        <form [formGroup]="bulkForm" class="editForm p-grid p-col-12" (ngSubmit)="saveRequest()">
+            <div class="p-col-12 p-grid">
+                <div class="p-col-12">
+                    <span (click)="showHelp = !showHelp"><i class="fa ft-help-circle custom-help-icon" title="راهنما"></i> </span>
+                </div>
+                <span *ngIf="showHelp">
+                    <p class="help-up">
+                        ۱. لطفا در انتخاب نام و توضیحات مناسب برای فایل خود دقت داشته باشید.
+                    </p>
+                    <p class="help-up">
+                        ۲.فایل با فرمت اکسل باید آپلود شود و شامل فیلدهای زیر باشد:
+                    </p>
+                    <p class="help-up"  style="padding-right: 15px; font-weight: bold">
+                        <span>
+                            کد ملی(nationalCode)
+                        </span>
+                        <span>
+                            تلفن همراه(mobile)
+                        </span>
+                        <span>
+                            احراز هویت شده(authorize)
+                        </span>
+                        <span>
+                            نام(firstName)
+                        </span>
+                        <span>
+                            نام خانوادگی(lastName)
+                        </span>
+                    </p>
+                    <p class="help-up">
+۳.                        اسامی سرستون فایلها باید لاتین و دقیقا مطابق کلمات راهنمای بالا باشد
+                    </p>
+                    <p class="help-up">
+۴.                        در فیلد احراز هویت شده، عدد ۱ به معنای تایید هویت فرد و عدد ۰ به معنای عدم تایید هویت اوست.
+                    </p>
+                </span>
+            </div>
+            <div class="p-col-12" style="border-top: 1px solid #eae9e9">
+
+            </div>
+            <div class="p-col-6 form-group" style="padding-right: 20px">
+                <label for="title">عنوان درخواست</label>
+                <input id="title" class="round form-control" formControlName="title"
+                       [(ngModel)]="requestDto.title"
+                       placeholder="عنوان درخواست"/>
+                <small class="form-text text-muted danger"
+                       *ngIf="!bulkForm.get('title').valid &&
+                       (bulkForm.get('title').dirty
+               || bulkForm.get('title').touched)">
+                    این فیلد الزامی است.
+                </small>
+            </div>
+
+            <div class="p-col-12">
+                <div class="p-col-12">
+                    <div class="p-col-12">آپلود فایل</div>
+                    <app-uploader (fileUuid)="afterUploadBookFile($event)"
+                                  accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+                                  [patch]="patch"></app-uploader>
+                </div>
+            </div>
+            <div class="p-col-12">
+                <div class="form-group">
+                    <label for="content" style="padding-right: 20px; margin-bottom: -10px">توضیحات درخواست</label>
+
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-12 col-lg-12">
+                                <angular-editor id="content"
+                                                formControlName="description"
+                                                [style]="{minHeight: '200px'}"
+                                                [config]="editorConfig"
+                                                [(ngModel)]="requestDto.description"></angular-editor>
+                            </div>
+                        </div>
+                    </div>
+                    <small class="form-text text-muted danger"
+                           *ngIf="!bulkForm.get('description').valid && (bulkForm.get('description').dirty
+               || bulkForm.get('description').touched)">
+                        این فیلد الزامی است.
+                    </small>
+                </div>
+            </div>
+            <div class="p-col-12 p-grid" style="text-align: center">
+                <div class="p-col-6" style="text-align: center; margin: 0 auto">
+                    <button [disabled]="!bulkForm.valid"
+                            class="btn btn-primary fix-submit-btn"
+                            type="submit">
+                        ارسال درخواست
+                        <i class="ft-save"></i>
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

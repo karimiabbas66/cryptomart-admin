@@ -1,0 +1,31 @@
+<div class="p-grid p-col-12" style="padding: 0;margin-top: -20px">
+    <div class="p-col-12 page-title">نقشه منظومه</div>
+    <div class="p-col-4" style="text-align: right">
+        <div class="p-col-12" style="padding-bottom: 0">
+            <button style="margin-bottom: -10px" class="btn btn-raised btn-primary" (click)="back()">
+                بازگشت
+                <i class="ft-arrow-right"></i>
+            </button>
+        </div>
+    </div>
+    <div class="p-col-4">
+        <fieldset class="form-group">
+            <ng-select [items]="relationNames"
+                       bindValue="value"
+                       bindLabel="key"
+                       notFoundText="موردی یافت نشد"
+                       placeholder="نوع رابطه"
+                       (ngModelChange)="onSelectRelation()"
+                       [(ngModel)]="selectedRelationName">
+            </ng-select>
+        </fieldset>
+    </div>
+</div>
+<div style="text-align: right;padding: 0" class="p-grid p-col-12">
+    <div class="p-col-12" style="padding-top: 0;padding-right: 0">
+        <div class="feature" id="chart"></div>
+    </div>
+
+</div>
+
+

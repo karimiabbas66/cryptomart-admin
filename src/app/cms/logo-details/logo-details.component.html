@@ -1,0 +1,69 @@
+<div class="p-grid bg-white" style="text-align: right">
+    <div class="p-col-12 page-title">مشخصات بنر</div>
+    <div class="p-col-12">
+        <form [formGroup]="logoDetailForm" class="editForm p-grid p-col-12" (ngSubmit)="edit()">
+            <div class="p-col-5 form-group">
+                <input id="title" class="round form-control" formControlName="title"
+                       [(ngModel)]="logo.title"
+                       placeholder="عنوان لوگو"/>
+                <small class="form-text text-muted danger"
+                       *ngIf="!logoDetailForm.get('title').valid &&
+                       (logoDetailForm.get('title').dirty
+               || logoDetailForm.get('title').touched)">
+                    این فیلد الزامی است.
+                </small>
+            </div>
+
+            <div class="form-group p-grid p-col-12">
+                <div class="p-grid p-col-12">
+                    <div class="p-col-3"></div>
+                    <div class="p-col-6">
+                        <div style="text-align: center" class="p-col-12">
+                            <button class="btn btn-primary fix-submit-btn" (click)="openChangeImageDialog(logoimage)"
+                                    type="button" title="آپلود لوگو">
+                                آپلود لوگو
+                            </button>
+                        </div>
+                    </div>
+                    <div class="p-col-3"></div>
+                </div>
+                <div class="p-col-12">
+                    <img *ngIf="logo.imageId" style="max-height: 400px"
+                         [src]="downloadUrl + logo.imageId">
+                </div>
+                <div class="p-col-12 p-grid">
+                    <div class="p-col-6" style="text-align: left">
+                        <button class="btn btn-primary fix-back-btn"
+                                [routerLink]="['/cms/banner-list']"
+                                type="button">
+                            بازگشت
+                            <i class="ft-arrow-right"></i>
+                        </button>
+                    </div>
+                    <div class="p-col-6" style="text-align: right;">
+                        <button [disabled]="!logoDetailForm.valid"
+                                class="btn btn-primary fix-submit-btn"
+                                type="submit">
+                            ثبت
+                            <i class="ft-save"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<ng-template #logoimage let-modal>
+    <div class="modal-header">
+        <h5 class="modal-title">عکس لوگو</h5>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true" style="color: black; float:left;">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body ">
+        <app-image-upload shape="rect" resizeWidth="1920" [aspectRatio]="1.9" [enableRatio]="true"
+                          (resultImage)="setlogoimage($event)"></app-image-upload>
+    </div>
+</ng-template>

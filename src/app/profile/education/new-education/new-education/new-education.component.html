@@ -1,0 +1,96 @@
+<div class="p-grid" style="text-align: right">
+    <div class="p-col-12 page-title">{{degreeType==1 ?  'اطلاعات تحصیلی' : 'اطلاعات تدریسی'}}</div>
+    <div class="p-col-12 p-grid form-group">
+        <form [formGroup]="educationDetailForm" class="editForm p-grid p-col-12" (ngSubmit)="saveEducation()">
+            <div class="p-xl-5 p-lg-5 p-md-5 p-sm-12 p-col-12">
+                <ng-select formControlName="type" notFoundText="موردی یافت نشد" [items]="typeData" bindLabel="name"
+                           bindValue="id"
+                           (change)="loadTypeDegrees($event)"
+                           placeholder="نوع واحد علمی"
+                           [(ngModel)]="personalEducations.typeId">
+                </ng-select>
+                <small class="form-text text-muted danger" *ngIf="!educationDetailForm.get('type').valid
+                && (educationDetailForm.get('type').dirty || educationDetailForm.get('type').touched)">
+                    این فیلد الزامی است.
+                </small>
+            </div>
+            <div class="p-xl-2 p-lg-2 p-md-2 p-sm-12 p-col-12">
+            </div>
+
+            <div class="p-xl-5 p-lg-5 p-md-5 p-sm-12 p-col-12 fix-key">
+                <ng-select formControlName="unit" notFoundText="موردی یافت نشد" [items]="unitData" bindLabel="name"
+                           [searchable]="true"
+                           bindValue="unitId" placeholder="واحد علمی"
+                           [(ngModel)]="personalEducations.unitId">
+                </ng-select>
+                <small class="form-text text-muted danger" *ngIf="!educationDetailForm.get('unit').valid
+                && (educationDetailForm.get('unit').dirty || educationDetailForm.get('unit').touched)">
+                    این فیلد الزامی است.
+                </small>
+            </div>
+
+            <div class="p-xl-5 p-lg-5 p-md-5 p-sm-12 p-col-12 fix-key">
+                <ng-select formControlName="degree" notFoundText="موردی یافت نشد" [items]="degreeTypeData"
+                           bindLabel="name"
+                           [searchable]="true"
+                           bindValue="degreeId" [placeholder]="degreeType==1 ?  'مدرک تحصیلی' : 'مدرک تدریسی'"
+                           [(ngModel)]="personalEducations.degreeId">
+                </ng-select>
+                <small class="form-text text-muted danger" *ngIf="!educationDetailForm.get('degree').valid
+                && (educationDetailForm.get('degree').dirty || educationDetailForm.get('degree').touched)">
+                    این فیلد الزامی است.
+                </small>
+            </div>
+            <div class="p-xl-2 p-lg-2 p-md-2 p-sm-12 p-col-12">
+            </div>
+            <div class="p-xl-5 p-lg-5 p-md-5 p-sm-12 p-col-12 fix-key">
+                <ng-select formControlName="field" notFoundText="موردی یافت نشد" [items]="fieldData" bindLabel="name"
+                           [searchable]="true"
+                           (change)="loadFieldOrientations($event)"
+                           bindValue="fieldId" [placeholder]="degreeType==1 ?  'رشته تحصیلی' : 'رشته تدریسی'"
+                           [(ngModel)]="personalEducations.fieldId">
+                    <ng-template ng-option-tmp let-item="item">
+                        <b>{{item.name}}-</b>
+                        <b *ngIf="item.firstParentTitle">{{item.firstParentTitle}}-</b>
+                        <b *ngIf="item.secondParentTitle">{{item.secondParentTitle}}</b>
+                    </ng-template>
+                </ng-select>
+                <small class="form-text text-muted danger" *ngIf="!educationDetailForm.get('field').valid
+                && (educationDetailForm.get('field').dirty || educationDetailForm.get('field').touched)">
+                    این فیلد الزامی است.
+                </small>
+            </div>
+
+            <div class="p-xl-5 p-lg-5 p-md-5 p-sm-12 p-col-12 fix-key">
+                <ng-select formControlName="orientation" notFoundText="موردی یافت نشد" [items]="orientationData" bindLabel="name"
+                           [searchable]="true"
+                           bindValue="orientationId" [placeholder]="degreeType==1 ?  'گرایش تحصیلی' : 'گرایش تدریسی'"
+                           [(ngModel)]="personalEducations.orientationId">
+                </ng-select>
+                <small class="form-text text-muted danger" *ngIf="!educationDetailForm.get('orientation').valid
+                && (educationDetailForm.get('orientation').dirty || educationDetailForm.get('orientation').touched)">
+                    این فیلد الزامی است.
+                </small>
+            </div>
+            <div class="p-col-12 p-grid">
+                <div class="p-col-6" style="text-align: left">
+                    <button class="btn btn-primary fix-back-btn"
+                            [routerLink]="['/profile/profile-detail']" [queryParams]="{ id: this.personalEducations.personalId, eduType: degreeType}"
+                            type="button">
+                        بازگشت
+                        <i class="ft-arrow-right"></i>
+                    </button>
+                </div>
+                <div class="p-col-6" style="text-align: right;">
+                    <button [disabled]="!educationDetailForm.valid"
+                            class="btn btn-primary fix-submit-btn"
+                            type="submit">
+                        ثبت
+                        <i class="ft-save"></i>
+                    </button>
+                </div>
+
+            </div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,14 @@
+::ng-deep .modal-dialog{
+  direction: rtl;
+}
+button{
+  color: white !important;
+}
+::ng-deep .modal-header .close{
+  margin-left: 0;
+  border: 1px solid white;
+}
+
+::ng-deep .modal-dialog{
+  max-width: 80vw !important;
+}

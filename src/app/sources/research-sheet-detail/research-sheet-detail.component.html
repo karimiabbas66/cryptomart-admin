@@ -1,0 +1,145 @@
+<div class="p-grid" style="text-align: right">
+  <div class="p-col-12 page-title">مشخصات برگه</div>
+  <div class="p-col-12 p-grid">
+    <div class="p-grid p-col-12" style="margin-right: 0; margin-left: 0">
+      <div *ngIf="sheet" class="p-xl-3 p-lg-2 p-md-1 p-sm-12 p-col-12 right-cont">
+
+        <div style="color:#535757" class="p-xl-12 p-col-12 cv-right" >
+          <div class="p-col-12 text-center">
+            <span class="description"></span>
+          </div>
+
+          <div class="p-col-12 text-center" style="padding-top: 10px;">
+            <span class="description">تعداد نسخه: </span>
+            <span class="description">{{sheet.version}}</span>
+          </div>
+          <div class="p-col-12 text-center even-color" style="padding-top: 10px;">
+            <span class="description">شماره نسخه: </span>
+            <span class="description">{{sheet.version}}</span>
+          </div>
+          <div class="p-col-12 text-center" style="padding-top: 10px;">
+            <span class="description">تاریخ انتشار: </span>
+            <span class="description">{{sheet.updatedDate | persianDate}}</span>
+          </div>
+          <!--            <div class="p-col-12 text-center even-color" style="padding-top: 10px;">-->
+          <!--                <span class="description">انتشار آخرین نسخه: </span>-->
+          <!--                <span class="description">{{sheet.updatedDate | persianDate}}</span>-->
+          <!--            </div>-->
+          <div *ngIf="profile" class="p-col-12 text-center" style="padding-top: 10px;">
+            <button (click)="goProfile()" class="action-btn-fill" type="button">
+              {{profile.firstName}}  {{profile.lastName}}
+            </button>
+          </div>
+        </div>
+        <div *ngIf="sheet" style="color:#535757; margin-top: 25px" class="p-xl-12 p-col-12 cv-right" >
+          <div class="p-col-12 text-center">
+            <span class="description"></span>
+          </div>
+
+          <div class="p-col-12 text-center even-color" style="padding-top: 10px;">
+            <span class="description">منبع: </span>
+            <span class="description">{{
+              sheet.type == 1?book.title
+                      : sheet.type == 2?(thesis.persianTitle != null?thesis.persianTitle:thesis.englishTitle):
+                      article.title
+              }}</span>
+          </div>
+          <div class="p-col-12 text-center" style="padding-top: 10px;">
+            <span class="description">نوع منبع: </span>
+            <span class="description">{{sheet.type == 1?'کتاب':sheet.type == 2?'پایان نامه':'مقاله'}} </span>
+          </div>
+          <div *ngIf="sheet.type == 1" class="p-col-12 text-center even-color" style="padding-top: 10px;">
+            <span class="description">شماره جلد منبع: </span>
+            <span class="description">{{book.volume}}</span>
+          </div>
+
+          <div *ngIf="sheet.type == 2" class="p-col-12 text-center even-color" style="padding-top: 10px;">
+            <span class="description"> مقطع:</span>
+            <span class="description">{{thesis.levelId | thesisLevel}}</span>
+          </div>
+
+          <div *ngIf="sheet.type == 3 && article && article.articleReferenceDtos" class="p-col-12 text-center even-color" style="padding-top: 10px;">
+            <span class="description"> نوع مرجع:</span>
+            <span class="description">{{article.articleReferenceDtos[0].articleId != null?'نشریه علمی':
+                    article.articleReferenceDtos[0].conferenceId != null?'کنفرانس':
+                            article.articleReferenceDtos[0].magazineId != null?'مجله':'روزنامه'}}</span>
+          </div>
+
+
+          <div class="p-col-12 text-center" style="padding-top: 10px;">
+            <span class="description">شماره صفحه در سایت: </span>
+            <span *ngIf="sheet.fromPage" class="description">{{sheet.fromPage}}{{' تا '+sheet.toPage}}</span>
+          </div>
+          <div class="p-col-12 text-center even-color" style="padding-top: 10px;">
+            <span class="description">شماره صفحه در منبع: </span>
+            <span *ngIf="sheet.fromResourcePage" class="description">{{sheet.fromResourcePage}}{{' تا '+sheet.toResourcePage}}</span>
+          </div>
+          <div class="p-col-12 text-center " style="padding-top: 10px;">
+            <span class="description">نویسنده منبع: </span>
+            <span class="description" *ngFor="let items of book.authors">{{items.fullName}}</span>
+          </div>
+        </div>
+        <div style="color:#535757; margin-top: 25px" class="p-xl-12 p-col-12 cv-right" >
+          <div class="p-col-12 text-center">
+            <span class="description"></span>
+          </div>
+
+          <div class="p-col-12 text-center" style="padding-top: 10px;">
+            <span class="description">امتیاز: </span>
+            <span class="description">{{sheet.rate}}</span>
+            <span class="description" style="margin-right: 4px; margin-left: 4px">از</span>
+            <span class="description">5</span>
+          </div>
+          <div class="p-col-12 text-center even-color" style="padding-top: 10px;">
+            <span class="description">تعداد بازدید: </span>
+            <span class="description">{{visitNumber}}</span>
+          </div>
+          <div class="p-col-12 text-center" style="padding-top: 10px;">
+            <span class="description">تعداد گزارش خطا: </span>
+            <span class="description">0</span>
+          </div>
+          <div class="p-col-12 text-center even-color" style="padding-top: 10px;">
+            <span class="description">تعداد ارسال به میز پژوهش: </span>
+            <span class="description">{{sendTableNumber}}</span>
+          </div>
+
+        </div>
+        <div style="color:#535757; margin-top: 25px" class="p-xl-12 p-col-12 cv-right" >
+          <div class="p-col-12 text-center " >
+            <span class="description" style="display: block">نمایه ها: </span>
+            <!--                <span class="description">فیزیک</span>-->
+          </div>
+        </div>
+
+      </div>
+      <div *ngIf="sheet" class="p-xl-9 p-lg-8 p-md-10 p-sm-12 p-col-12  p-grid" style="padding-top: 0!important;margin-top: 1px; background-color: white; border-radius: 7px;border: 1px solid #dbd6d6;">
+        <div class="p-col-12" style="direction: rtl">
+          <div>
+            <label for="sourceName" class="d-block">عنوان</label>
+            <input style="width:100% !important;" id="sourceName" class="width-100" [disabled]="true" [(ngModel)]="sheet.title">
+          </div>
+          <div class="p-col-12" style="direction: rtl">
+            <label for="sourceDesc" class="d-block">توضیحات</label>
+            <textarea style="width:100% !important;" id="sourceDesc" class="width-100" [disabled]="true" [(ngModel)]="sheet.description"></textarea>
+          </div>
+          <div class="p-col-12" style="direction: rtl">
+            <div style="text-align: right">متن</div>
+            <div style="border: 1px solid #ddbfbf;padding: 13px;" id="sourcetext" [innerHTML]="sheet.content |safeHtml"></div>
+          </div>
+        </div>
+      </div>
+      <div class="p-col-12 p-grid" style="margin-top: 20px">
+        <div class="p-col-12" style="background-color: #e8e8e8;direction: rtl;">
+          <div *ngIf="sheet" id="comment" style="background-color: white">
+            <div *ngIf="sheet && sheet.commentId" class="p-col-12">
+              <app-comment [threadId]="sheet.commentId"></app-comment>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+  </div>
+</div>

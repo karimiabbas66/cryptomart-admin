@@ -1,0 +1,251 @@
+<div>
+    <form class="p-col-12 basic-container" [formGroup]="referencedForm">
+        <div class=" p-col-5">
+            <ng-select formControlName="referenceType" [items]="referenceTypes"
+                       notFoundText="موردی یافت نشد" (change)="getReferences($event)"
+                       bindLabel="title"
+                       placeholder="انتخاب نوع مرجع" style="width: 100%;">
+            </ng-select>
+        </div>
+        <div class="p-col-12"></div>
+        <div class="p-col-12"></div>
+        <div class=" p-col-12 text-center" *ngIf="typeId == 0">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>نام</th>
+                    <th>موضوع</th>
+                    <th>نام کوتاه</th>
+                    <th>تعداد صفحات</th>
+                    <th>نوبت چاپ</th>
+                    <th>انتخاب</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr class='clickable-row'
+                    *ngFor="let book of bookModel">
+                    <td><strong>{{ book.title }}</strong></td>
+                    <td><strong>{{ book.subject }}</strong></td>
+                    <td><strong>{{ book.shortTitle }}</strong></td>
+                    <td><strong>{{ book.pageCount }}</strong></td>
+                    <td><strong>{{ book.editionNumber }}</strong></td>
+                    <td>
+                        <a title="انتخاب" class="tbl-btn-del"
+                           (click)="selectBookForReference(book)">
+                            <i class="fa ft-check table-operation"></i>
+                        </a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <div class="d-flex justify-content-between p-2">
+                <ngb-pagination [collectionSize]="totalRecords" [page]="1" [pageSize]="tableSize"
+                                (pageChange)="getBookList($event)">
+                </ngb-pagination>
+            </div>
+
+        </div>
+
+        <div class=" p-col-12 text-center" *ngIf="typeId == 1">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>عنوان نشریه</th>
+                    <th>سال آغاز انتشار</th>
+                    <th>حوزه تخصصی</th>
+                    <th>نوع انتشار</th>
+                    <th>انتخاب</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr class='clickable-row'
+                    *ngFor="let journal of journalModel">
+                    <td><strong>{{ journal.title }}</strong></td>
+                    <td><strong>{{ journal.startReleaseDate }}</strong></td>
+                    <td><strong>{{ journal.specialistArea }}</strong></td>
+                    <td><strong>{{ journal.releaseTypeName }}</strong></td>
+                    <td>
+                        <a title="انتخاب" class="tbl-btn-del"
+                           (click)="selectJournalForReference(journal)">
+                            <i class="fa ft-check table-operation"></i>
+                        </a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <div class="d-flex justify-content-between p-2">
+                <ngb-pagination [collectionSize]="totalRecords" [page]="1" [pageSize]="tableSize"
+                                (pageChange)="getJournalList($event)">
+                </ngb-pagination>
+            </div>
+        </div>
+
+
+        <div class=" p-col-12 text-center" *ngIf="typeId == 2">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>عنوان مجله</th>
+                    <th>سال آغاز انتشار</th>
+                    <th>حوزه تخصصی</th>
+                    <th>نوع انتشار</th>
+                    <th>انتخاب</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr class='clickable-row'
+                    *ngFor="let magazine of magazineModel">
+                    <td><strong>{{ magazine.title }}</strong></td>
+                    <td><strong>{{ magazine.startReleaseDate }}</strong></td>
+                    <td><strong>{{ magazine.specialistArea }}</strong></td>
+                    <td><strong>{{ magazine.releaseTypeName }}</strong></td>
+                    <td>
+                        <a title="انتخاب" class="tbl-btn-del"
+                           (click)="selectMagazineForReference(magazine)">
+                            <i class="fa ft-trash-2 table-operation"></i>
+                        </a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class=" p-col-12 text-center" *ngIf="typeId == 3">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>عنوان</th>
+                    <th>محل برگزاری</th>
+                    <th>تاریخ برگزاری</th>
+                    <th>شماره</th>
+                    <th>انتخاب</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr class='clickable-row'
+                    *ngFor="let conference of conferenceModel">
+                    <td><strong>{{ conference.title }}</strong></td>
+                    <td><strong>{{ conference.conferencePlace }}</strong></td>
+                    <td><strong>{{ conference.conferenceDate | persianDate  }}</strong></td>
+                    <td><strong>{{ conference.conferenceNumber }}</strong></td>
+                    <td>
+                        <a title="انتخاب" class="tbl-btn-del"
+                           (click)="selectConferenceForReference(conference)">
+                            <i class="fa ft-check table-operation"></i>
+                        </a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <div class="d-flex justify-content-between p-2">
+                <ngb-pagination [collectionSize]="totalRecords" [page]="1" [pageSize]="tableSize"
+                                (pageChange)="getConferenceList($event)">
+                </ngb-pagination>
+            </div>
+        </div>
+
+        <div class=" p-col-12 text-center">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>نام مرجع</th>
+                    <th>نوع مرجع</th>
+                    <th>حذف</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr class='clickable-row' *ngFor="let reference of selectedReference">
+                    <td>{{reference.referenceName}}</td>
+                    <td>{{findReferenceType(reference)}}</td>
+                    <td>
+                        <a title="حذف" class="tbl-btn-del"
+                           (click)="removeReference(reference)">
+                            <i class="fa ft-trash-2 table-operation"></i>
+                        </a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class=" p-col-12 text-center">
+            <button [disabled]="selectedReference.length < 1" (click)="addReferenced()" type="button"
+                    class="btn btn-raised btn-info"
+                    style="margin-bottom: 0;">
+                بعدی
+                <span>
+                  <i class="ft-chevron-left"></i>
+                </span>
+            </button>
+        </div>
+    </form>
+</div>
+
+
+<!--        <div class=" p-col-12 text-center" *ngIf="typeId == 4">-->
+<!--            <table class="table table-striped">-->
+<!--                <thead>-->
+<!--                <tr>-->
+<!--                    <th>عنوان کریپتومارت</th>-->
+<!--                    <th>انتخاب</th>-->
+<!--                </tr>-->
+<!--                </thead>-->
+<!--                <tbody>-->
+<!--                <tr class='clickable-row'-->
+<!--                    *ngFor="let journal of journalModel">-->
+<!--                    <td><strong>{{ journal.title }}</strong></td>-->
+<!--                    <td>-->
+<!--                        <a title="انتخاب" class="tbl-btn-del"-->
+<!--                           (click)="selectMagazineForReference(journal)">-->
+<!--                            <i class="fa ft-trash-2 table-operation"></i>-->
+<!--                        </a>-->
+<!--                    </td>-->
+<!--                </tr>-->
+<!--                </tbody>-->
+<!--            </table>-->
+<!--        </div>-->
+
+<!--        <div class=" p-col-12 text-center" *ngIf="typeId == 5">-->
+<!--            <table class="table table-striped">-->
+<!--                <thead>-->
+<!--                <tr>-->
+<!--                    <th>عنوان روزنامه</th>-->
+<!--                    <th>انتخاب</th>-->
+<!--                </tr>-->
+<!--                </thead>-->
+<!--                <tbody>-->
+<!--                <tr class='clickable-row'-->
+<!--                    *ngFor="let journal of journalModel">-->
+<!--                    <td><strong>{{ journal.title }}</strong></td>-->
+<!--                    <td>-->
+<!--                        <a title="انتخاب" class="tbl-btn-del"-->
+<!--                           (click)="selectMagazineForReference(journal)">-->
+<!--                            <i class="fa ft-trash-2 table-operation"></i>-->
+<!--                        </a>-->
+<!--                    </td>-->
+<!--                </tr>-->
+<!--                </tbody>-->
+<!--            </table>-->
+<!--        </div>-->
+
+<!--        <div class=" p-col-12 text-center" *ngIf="typeId == 6">-->
+<!--            <table class="table table-striped">-->
+<!--                <thead>-->
+<!--                <tr>-->
+<!--                    <th>عنوان سایر</th>-->
+<!--                    <th>انتخاب</th>-->
+<!--                </tr>-->
+<!--                </thead>-->
+<!--                <tbody>-->
+<!--                <tr class='clickable-row'-->
+<!--                    *ngFor="let journal of journalModel">-->
+<!--                    <td><strong>{{ journal.title }}</strong></td>-->
+<!--                    <td>-->
+<!--                        <a title="انتخاب" class="tbl-btn-del"-->
+<!--                           (click)="selectMagazineForReference(journal)">-->
+<!--                            <i class="fa ft-trash-2 table-operation"></i>-->
+<!--                        </a>-->
+<!--                    </td>-->
+<!--                </tr>-->
+<!--                </tbody>-->
+<!--            </table>-->
+<!--        </div>-->

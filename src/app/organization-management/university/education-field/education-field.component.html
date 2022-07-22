@@ -1,0 +1,433 @@
+<div class="p-grid p-col-12" style="text-align: right">
+    <div class="p-col-12 p-grid">
+        <ngb-accordion #acc="ngbAccordion" style="width: 100%">
+            <ngb-panel id="toggle-1" title="تعریف اولین گروه">
+                <ng-template ngbPanelContent>
+                    <div class="p-col-12">
+                        <div class="new-btn-container p-grid p-col-12 ui-sm-12">
+                            <button title="جدید"
+                                    (click)="initialAddDialog(addFirstGroup)"
+                                    type="button" class="btn-new btn btn-raised " aria-label="Add">
+                                <i class="ft-plus"></i>
+                            </button>
+                        </div>
+                        <table style="text-align: center" class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th>عنوان</th>
+                                <th>تاریخ ایجاد</th>
+                                <th>عملیات</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr *ngFor="let item of firstGroup" class='clickable-row'>
+                                <td><strong>{{ item.name }}</strong></td>
+                                <td><strong>{{ item.createDate | persianDate}}</strong></td>
+                                <td>
+                                    <a title="ویرایش" class="tbl-btn-new"
+                                       (click)="editFirstGroup(item,addFirstGroup)">
+                                        <i class="fa ft-edit table-operation"></i>
+                                    </a>
+
+                                    <a title="حذف" class="tbl-btn-del" (click)="removeField(item.fieldId)">
+                                        <i class="fa ft-trash-2 table-operation"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+
+                        <ngb-pagination [collectionSize]="group1Length" [page]="1" [pageSize]="5"
+                                        [maxSize]="5"
+                                        [rotate]="true" [ellipses]="false" [boundaryLinks]="true"
+                                        (pageChange)="getGroup1Items($event,5)"
+                        >
+                        </ngb-pagination>
+                    </div>
+                </ng-template>
+            </ngb-panel>
+            <ngb-panel id="toggle-2" title="تعریف دومین گروه">
+                <ng-template ngbPanelContent>
+                    <div class="p-col-12">
+                        <div class="new-btn-container p-grid p-col-12 ui-sm-12">
+                            <button title="جدید"
+                                    (click)="initialAddDialog(addSecondGroup)"
+                                    type="button" class="btn-new btn btn-raised " aria-label="Add">
+                                <i class="ft-plus"></i>
+                            </button>
+                        </div>
+                        <table style="text-align: center" class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th>عنوان</th>
+                                <th>عنوان گروه</th>
+                                <th>تاریخ ایجاد</th>
+                                <th>عملیات</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr *ngFor="let item of secondGroup" class='clickable-row'>
+                                <td><strong>{{ item.name }}</strong></td>
+                                <td><strong>{{ item.firstParentTitle }}</strong></td>
+                                <td><strong>{{ item.createDate | persianDate}}</strong></td>
+                                <td>
+                                    <a title="ویرایش" class="tbl-btn-new"
+                                       (click)="editSecondGroup(item,addSecondGroup)">
+                                        <i class="fa ft-edit table-operation"></i>
+                                    </a>
+
+                                    <a title="حذف" class="tbl-btn-del" (click)="removeField(item.fieldId)">
+                                        <i class="fa ft-trash-2 table-operation"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+
+                        <ngb-pagination [collectionSize]="group2Length" [page]="1" [pageSize]="5"
+                                        [maxSize]="5"
+                                        [rotate]="true" [ellipses]="false" [boundaryLinks]="true"
+                                        (pageChange)="getGroup2Items($event,5)"
+                        >
+                        </ngb-pagination>
+                    </div>
+                </ng-template>
+            </ngb-panel>
+            <ngb-panel id="toggle-3" title="تعریف رشته و گرایش">
+                <ng-template ngbPanelContent>
+                    <div class="p-col-12" style="padding-bottom: 120px">
+                        <div class="new-btn-container p-grid p-col-12 ui-sm-12">
+                            <button title="جدید"
+                                    (click)="initialAddDialog(addField)"
+                                    type="button" class="btn-new btn btn-raised " aria-label="Add">
+                                <i class="ft-plus"></i>
+                            </button>
+                        </div>
+                        <table style="text-align: center" class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th>عنوان</th>
+                                <th>عنوان گروه</th>
+                                <th>عنوان زیر گروه</th>
+                                <th>تاریخ ایجاد</th>
+                                <th>عملیات</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr *ngFor="let item of thirdGroup" class='clickable-row'>
+                                <td><strong>{{ item.name }}</strong></td>
+                                <td><strong>{{ item.firstParentTitle }}</strong></td>
+                                <td><strong>{{ item.secondParentTitle }}</strong></td>
+                                <td><strong>{{ item.createDate | persianDate}}</strong></td>
+                                <td>
+                                    <div ngbDropdown class="d-inline-block">
+                                        <button class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle>
+                                            <i style="margin-left: 8px" class="ft-settings"></i>
+                                        </button>
+                                        <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                                            <a class="menu-btn-item" title="ویرایش"
+                                               (click)="editThird(addField, item)">
+                                                ویرایش</a>
+                                            <a class="menu-btn-item" title="گرایش ها"
+                                               (click)="openOrientation(orientation, item.fieldId)">
+                                                گرایش ها</a>
+                                            <a title="حذف"
+                                               class="menu-btn-item"
+                                               (click)="removeField(item.fieldId)">
+                                                حذف
+                                            </a>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <div class="d-flex justify-content-between p-2">
+                            <ngb-pagination [collectionSize]="countAllField" [page]="1" [pageSize]="5"
+                                            [maxSize]="5"
+                                            [rotate]="true" [ellipses]="false" [boundaryLinks]="true"
+                                            (pageChange)="lazyLoadField($event)"
+                            >
+                            </ngb-pagination>
+                        </div>
+                    </div>
+                </ng-template>
+            </ngb-panel>
+        </ngb-accordion>
+    </div>
+</div>
+
+
+<ng-template #addFirstGroup let-modal>
+    <div class="modal-header">
+        <h5 class="modal-title"> مشخصات اولین گروه</h5>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true" style="color: black; float:left;">&times;</span>
+        </button>
+    </div>
+    <div class="p-col-12 p-grid" style="text-align: right">
+        <form [formGroup]="firsEducationFieldForm" class="editForm p-grid p-col-12" (ngSubmit)="addFirst()">
+            <div class="p-col-12 p-grid">
+                <div class="p-col-3"></div>
+                <div class="p-col-6 form-group">
+                    <label for="title">عنوان</label>
+                    <input id="title" class="round form-control" formControlName="title"
+                           [(ngModel)]="newField.name"
+                    />
+                    <small class="form-text text-muted danger"
+                           *ngIf="!firsEducationFieldForm.get('title').valid &&
+                       (firsEducationFieldForm.get('title').dirty
+               || firsEducationFieldForm.get('title').touched)">
+                        این فیلد الزامی است.
+                    </small>
+                </div>
+                <div class="p-col-3"></div>
+            </div>
+            <div class="p-col-12 p-grid">
+                <div class="p-col-6" style="text-align: left">
+                    <button class="btn btn-primary fix-back-btn"
+                            (click)="modalService.dismissAll()"
+                            type="button">
+                        بازگشت
+                        <i class="ft-arrow-right"></i>
+                    </button>
+                </div>
+                <div class="p-col-6" style="text-align: right;">
+                    <button [disabled]="!firsEducationFieldForm.valid"
+                            class="btn btn-primary fix-submit-btn"
+                            type="submit">
+                        ثبت
+                        <i class="ft-save"></i>
+                    </button>
+                </div>
+
+
+            </div>
+        </form>
+    </div>
+</ng-template>
+
+
+<ng-template #addSecondGroup let-modal>
+    <div class="modal-header">
+        <h5 class="modal-title">مشخصات دومین گروه </h5>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true" style="color: black; float:left;">&times;</span>
+        </button>
+    </div>
+    <div class="p-col-12 p-grid" style="text-align: right">
+        <form [formGroup]="secondEducationFieldForm" class="editForm p-grid p-col-12" (ngSubmit)="addSecondField()">
+            <div class="p-col-12 p-grid">
+                <div class="p-col-3"></div>
+                <div class="p-col-6 form-group">
+                    <label for="second-title">عنوان</label>
+                    <input id="second-title" class="round form-control" formControlName="title"
+                           [(ngModel)]="newField.name"
+                    />
+                    <small class="form-text text-muted danger"
+                           *ngIf="!secondEducationFieldForm.get('title').valid &&
+                       (secondEducationFieldForm.get('title').dirty
+               || secondEducationFieldForm.get('title').touched)">
+                        این فیلد الزامی است.
+                    </small>
+                </div>
+                <div class="p-col-3"></div>
+                <div class="p-col-3"></div>
+                <div class="p-col-6">
+                    <fieldset class="form-group">
+                        <label for="first-group"> گروه</label>
+                        <ng-select [items]="firstGroup"
+                                   bindLabel="name"
+                                   id="first-group"
+                                   placeholder=" گروه"
+                                   [ngModelOptions]="{standalone: true}"
+                                   (clear)="resetSelect()"
+                                   [(ngModel)]="selectedSecondFormFirstGroup">
+
+                        </ng-select>
+                    </fieldset>
+                </div>
+                <div class="p-col-3"></div>
+
+            </div>
+            <div class="p-col-12 p-grid">
+                <div class="p-col-6" style="text-align: left">
+                    <button class="btn btn-primary fix-back-btn"
+                            (click)="modalService.dismissAll()"
+                            type="button">
+                        بازگشت
+                        <i class="ft-arrow-right"></i>
+                    </button>
+                </div>
+                <div class="p-col-6" style="text-align: right;">
+                    <button [disabled]="!secondEducationFieldForm.valid"
+                            class="btn btn-primary fix-submit-btn"
+                            type="submit">
+                        ثبت
+                        <i class="ft-save"></i>
+                    </button>
+                </div>
+
+
+            </div>
+        </form>
+    </div>
+</ng-template>
+
+
+<ng-template #addField let-modal>
+    <div class="modal-header">
+        <h5 class="modal-title">مشخصات رشته</h5>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true" style="color: black; float:left;">&times;</span>
+        </button>
+    </div>
+    <div class="p-col-12 p-grid" style="text-align: right">
+        <form [formGroup]="fieldForm" class="editForm p-grid p-col-12" (ngSubmit)="addThirdField()">
+            <div class="p-col-12 p-grid">
+                <div class="p-col-3"></div>
+                <div class="p-col-6 form-group">
+                    <label for="third-title">عنوان</label>
+                    <input id="third-title" class="round form-control" formControlName="title"
+                           [(ngModel)]="newField.name"
+                    />
+                    <small class="form-text text-muted danger"
+                           *ngIf="!fieldForm.get('title').valid &&
+                       (fieldForm.get('title').dirty
+               || fieldForm.get('title').touched)">
+                        این فیلد الزامی است.
+                    </small>
+                </div>
+                <div class="p-col-3"></div>
+
+                <div class="p-col-3"></div>
+                <div class="p-col-6">
+                    <fieldset class="form-group">
+                        <label for="first-group-leaf"> گروه</label>
+                        <ng-select [items]="firstGroup"
+                                   bindLabel="name"
+                                   id="first-group-leaf"
+                                   (change)="loadSecond()"
+                                   placeholder=" گروه"
+                                   [ngModelOptions]="{standalone: true}"
+                                   (clear)="resetFirstGroupSelect()"
+                                   [(ngModel)]="selectedThirdFormFirstGroup">
+
+                        </ng-select>
+                    </fieldset>
+                </div>
+                <div class="p-col-3"></div>
+
+                <div class="p-col-3"></div>
+                <div class="p-col-6">
+                    <fieldset class="form-group">
+                        <label for="second-group-leaf">گروه</label>
+                        <ng-select [items]="secondGroupNgSelect"
+                                   bindLabel="name"
+                                   id="second-group-leaf"
+                                   placeholder="گروه"
+                                   [ngModelOptions]="{standalone: true}"
+                                   (clear)="resetSecondNgSelect()"
+                                   [(ngModel)]="selectedThirdFormSecondGroup">
+
+                        </ng-select>
+                    </fieldset>
+                </div>
+                <div class="p-col-3"></div>
+
+
+            </div>
+            <div class="p-col-12 p-grid">
+                <div class="p-col-6" style="text-align: left">
+                    <button class="btn btn-primary fix-back-btn"
+                            (click)="modalService.dismissAll()"
+                            type="button">
+                        بازگشت
+                        <i class="ft-arrow-right"></i>
+                    </button>
+                </div>
+                <div class="p-col-6" style="text-align: right;">
+                    <button [disabled]="!fieldForm.valid"
+                            class="btn btn-primary fix-submit-btn"
+                            type="submit">
+                        ثبت
+                        <i class="ft-save"></i>
+                    </button>
+                </div>
+
+
+            </div>
+        </form>
+    </div>
+</ng-template>
+
+
+<ng-template #orientation let-modal>
+    <div class="modal-header">
+        <div class="p-col-12 p-grid" style="text-align: right">
+            <div class="p-col-12" style="text-align: right">
+                <h5 class="modal-title">گرایش ها</h5>
+            </div>
+            <div class="p-col-6">
+                <input id="orientation-tile" class="round form-control"
+                       [(ngModel)]="newFieldOrientation.name"
+                />
+            </div>
+            <div class="p-col-6">
+                <button class="btn btn-primary fix-submit-btn"
+                        (click)="addNewOrientation()"
+                        type="button">
+                    ثبت
+                    <i class="ft-save"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="p-col-12 p-grid" style="text-align: right">
+        <div class="p-col-12 p-grid">
+            <table style="text-align: center" class="table table-striped">
+                <thead>
+                <tr>
+                    <th>عنوان</th>
+                    <th>عملیات</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let item of orientationItems" class='clickable-row'>
+                    <td><strong>{{ item.name }}</strong></td>
+                    <td>
+                        <a title="ویرایش" class="tbl-btn-new"
+                           (click)="fillInput(item)">
+                            <i class="fa ft-edit table-operation"></i>
+                        </a>
+
+                        <a title="حذف" class="tbl-btn-del" (click)="removeOrientation(item.orientationId)">
+                            <i class="fa ft-trash-2 table-operation"></i>
+                        </a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+            <ngb-pagination [collectionSize]="countAllOrientation" [page]="1" [pageSize]="5"
+                            [maxSize]="5"
+                            [rotate]="true" [ellipses]="false" [boundaryLinks]="true"
+                            (pageChange)="getOrientationItems($event,5)"
+            >
+            </ngb-pagination>
+        </div>
+        <div class="p-col-12 p-grid">
+            <div class="p-col-4"></div>
+
+            <div class="p-col-4" style="text-align: center">
+                <button class="btn btn-primary fix-back-btn"
+                        (click)="modalService.dismissAll()"
+                        type="button">
+                    بازگشت
+                    <i class="ft-arrow-right"></i>
+                </button>
+            </div>
+            <div class="p-col-4"></div>
+        </div>
+    </div>
+</ng-template>

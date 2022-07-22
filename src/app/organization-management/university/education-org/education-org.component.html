@@ -1,0 +1,242 @@
+<div class="p-grid p-col-12">
+    <div class="p-col-12">
+        <div class="new-btn-container p-grid p-col-12 ui-sm-12">
+            <button title="جدید"
+                    (click)="openNewUnit(addNew)"
+                    type="button" class="btn-new btn btn-raised " aria-label="Add">
+                <i class="ft-plus"></i>
+            </button>
+        </div>
+        <table style="text-align: center" class="table table-striped">
+            <thead>
+            <tr>
+                <th>عنوان</th>
+                <th>نوع واحد</th>
+                <th>استان</th>
+                <th>شهر</th>
+                <th>تاریخ ایجاد</th>
+                <th>عملیات</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let item of data" class='clickable-row'>
+                <td><strong>{{ item.name }}</strong></td>
+                <td><strong>{{ item.typeName}}</strong></td>
+                <td><strong>{{ item.provinceName}}</strong></td>
+                <td><strong>{{ item.cityName}}</strong></td>
+                <td><strong>{{ item.createDate | persianDate}}</strong></td>
+                <td>
+                    <div ngbDropdown class="d-inline-block">
+                        <button class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle>
+                            <i style="margin-left: 8px" class="ft-settings"></i>
+                        </button>
+                        <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                            <a title="ویرایش"
+                               class="menu-btn-item"
+                               (click)="edit(item,addNew)">
+                                ویرایش
+                            </a>
+
+
+                            <a title="حذف"
+                               class="menu-btn-item"
+                               (click)="remove(item.unitId)">
+                                حذف
+                            </a>
+
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+        <ngb-pagination [collectionSize]="unitCount" [page]="1" [pageSize]="5"
+                        [maxSize]="5"
+                        [rotate]="true" [ellipses]="false" [boundaryLinks]="true"
+                        (pageChange)="lazyLoadUnits($event)"
+        >
+        </ngb-pagination>
+    </div>
+</div>
+
+<ng-template #addNew let-modal>
+    <div class="modal-header">
+        <h5 class="modal-title">واحد علمی</h5>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true" style="color: black; float:left;">&times;</span>
+        </button>
+    </div>
+    <div class="p-grid p-col-12" style="text-align: right;padding-right: 40px">
+        <form [formGroup]="addForm" class="editForm p-grid p-col-12" (ngSubmit)="addUnit()">
+            <div class="p-col-12 p-grid">
+                <div class="p-col-6">
+                    <fieldset class="form-group">
+                        <label for="first-group">نوع واحد علمی</label>
+                        <ng-select [items]="unitTypes"
+                                   bindLabel="name"
+                                   [clearable]="false"
+                                   [virtualScroll]="true"
+                                   [searchable]="false"
+                                   id="first-group"
+                                   placeholder="نوع واحد علمی"
+                                   formControlName="unitType"
+                                   [(ngModel)]="selectedUnitType">
+
+                        </ng-select>
+                    </fieldset>
+                </div>
+                <div class="p-col-6">
+                    <label for="title">عنوان</label>
+                    <input id="title" class="round form-control" formControlName="title"
+                           [(ngModel)]="newUnit.name"
+                    />
+                </div>
+                <div class="p-col-6">
+                    <label for="province">انتخاب استان</label>
+                    <ng-select formControlName="province" [items]="provinces" [(ngModel)]="province"
+                               id="province"
+                               notFoundText="موردی یافت نشد"
+                               bindLabel="title" style="width: 100%;"
+                               [virtualScroll]="true" (change)="selectProvince($event)">
+                    </ng-select>
+                </div>
+                <div class="p-col-6">
+                    <label for="city">انتخاب شهر</label>
+                    <ng-select formControlName="city" [(ngModel)]="city"
+                               id="city"
+                               notFoundText="موردی یافت نشد"
+                               [items]="cities" bindLabel="title"
+                               style="width: 100%;">
+                    </ng-select>
+                </div>
+                <div class="p-col-6">
+                    <label for="address">نشانی</label>
+                    <textarea id="address" class="round form-control" formControlName="address"
+                           [(ngModel)]="newUnit.address"
+                    ></textarea>
+                </div>
+                <div class="p-col-12 p-grid">
+                    <hr style="width: 100% ; border: 1px solid gray">
+                    <div class="p-col-12 p-text-center">
+                        <h5 style="font-weight: bold" class="pt-2 pb-4">اطلاعات تماس</h5>
+                    </div>
+                    <form [formGroup]="contactForm" class="editForm p-grid p-col-12" (ngSubmit)="createContact()">
+                        <div class="p-col-12 p-grid">
+                            <div style="padding-top: 0 !important;" class="p-xl-4 p-lg-4 p-md-4 p-sm-12 p-col-12">
+                                <label for="contact-type">نوع اطلاع تماس</label>
+                                <ng-select class="disable-clear-all"
+                                           [clearable]="false"
+                                           id="contact-type"
+                                           [searchable]="false"
+                                           [items]="contentTypeSelect"
+                                           bindLabel="name"
+                                           formControlName="contactType">
+                                    <ng-template ng-label-tmp let-item="item">
+                                        <img style="margin-left: 6px" height="20" width="20" [src]="item.avatar"/>
+                                        <b> </b>
+                                        <span style="font-family: iransans">{{item.name}}</span>
+                                    </ng-template>
+                                    <ng-template ng-option-tmp let-item="item" let-index="index">
+                                        <img style="margin-left: 6px" height="20" width="20" [src]="item.avatar"/>
+                                        <span style="font-family: iransans">{{item.name}}</span>
+                                    </ng-template>
+                                </ng-select>
+                                <small style="text-align: right" class="form-text text-muted danger" *ngIf="!contactForm.get('contactType').valid
+                                 && (contactForm.get('contactType').dirty || contactForm.get('contactType').touched)">
+                                    این فیلد الزامی است.
+                                </small>
+                            </div>
+                            <div style="padding-top: 0 !important;" class="p-xl-6 p-lg-6 p-md-6 p-sm-12 p-col-12">
+                                <label for="subject">محتوا</label>
+                                <input id="subject" class="round form-control" formControlName="content"/>
+                                <small style="text-align: right" class="form-text text-muted danger" *ngIf="!contactForm.get('content').valid
+                                &&contactForm.get('content').errors.required
+                                && (contactForm.get('content').dirty || contactForm.get('content').touched)">
+                                    این فیلد الزامی است.
+                                </small>
+                                <small style="text-align: right" class="form-text text-muted danger" *ngIf="!contactForm.get('content').valid
+                                &&contactForm.get('content').errors.email
+                                && (contactForm.get('content').dirty || contactForm.get('content').touched)">
+                                    فرمت ایمیل صحیح نیست
+                                </small>
+                                <small style="text-align: right" class="form-text text-muted danger" *ngIf="!contactForm.get('content').valid
+                                &&contactForm.get('content').errors.pattern
+                                && (contactForm.get('content').dirty || contactForm.get('content').touched)">
+                                    فرمت صحیح نیست
+                                </small>
+                            </div>
+                            <div style="position: relative; padding: 0 !important; height: 66px;"
+                                 class="p-xl-2 p-lg-2 p-md-2 p-sm-12 p-col-12 add-cent-mob">
+                                <button style="position: absolute;bottom: 2px; right: 50px" title="جدید" type="submit"
+                                        class="circle-add btn-new btn btn-raised "
+                                        aria-label="Add"
+                                        [disabled]="!contactForm.valid">
+                                    <i class="ft-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                    <div class="p-grid p-col-12">
+                        <div style="position: relative" class="p-col-12 p-grid">
+                            <div style="padding: 0!important;"
+                                 class="card text-center p-col-12 p-lg-4 p-xl-4 p-md-4 p-sm-12 ml-1"
+                                 *ngFor="let contact of listOfContact"
+                                 [ngClass]="{'bg-warning': contact.type == 'EMAIL', 'bg-primary': contact.type == 'PHONE', 'bg-success': contact.type == 'MOBILE', 'bg-gold': contact.type == 'WEB'}">
+                                <div class="card-body">
+                                    <p class="card-text">{{contact.content}}</p>
+                                    <div class="">
+                                        <a title="حذف" class="tbl-btn-del" (click)="deleteContact(contact)">
+                                            <i class="fa ft-trash-2 table-operation"></i>
+                                        </a>
+
+                                        <a title="موبایل" *ngIf="contact.type=='MOBILE'"
+                                           style="position: absolute; right: 4px;top: 2px">
+                                            <i style="font-size: 35px;color: #f5f7fa;"
+                                               class="fa fa-mobile table-operation"></i>
+                                        </a>
+
+                                        <a title="ایمیل" *ngIf="contact.type=='EMAIL'"
+                                           style="position: absolute; right: 2px;top: 2px">
+                                            <i style="font-size: 28px;color: #f5f7fa;"
+                                               class="fa ft-mail table-operation"></i>
+                                        </a>
+
+                                        <a title="تلفن" *ngIf="contact.type=='PHONE'"
+                                           style="position: absolute; right: 2px;top: 2px">
+                                            <i style="font-size: 28px;color: #f5f7fa;"
+                                               class="fa fa-phone table-operation"></i>
+                                        </a>
+                                        <a title="وبسایت" *ngIf="contact.type=='WEB'"
+                                           style="position: absolute; right: 2px;top: 2px">
+                                            <i style="font-size: 28px;color: #f5f7fa;"
+                                               class="fa fa-link table-operation"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="p-col-12 p-grid">
+                    <div class="p-col-6" style="text-align: left">
+                        <button class="btn btn-primary fix-back-btn"
+                                (click)="closeAll()"
+                                type="button">
+                            بازگشت
+                            <i class="ft-arrow-right"></i>
+                        </button>
+                    </div>
+                    <div class="p-col-6" style="text-align: right;">
+                        <button [disabled]="!addForm.valid"
+                                class="btn btn-primary fix-submit-btn"
+                                type="submit">
+                            ثبت
+                            <i class="ft-save"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</ng-template>

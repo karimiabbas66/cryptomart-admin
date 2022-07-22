@@ -1,0 +1,94 @@
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.btn-outline-primary{
+  background-color: #336668 !important
+}
+
+.btn-outline-primary{
+  margin-bottom: 0;
+}
+::ng-deep .card .card-header{
+  background-color: #589a94 !important;
+}
+::ng-deep .btn-link{
+  color: white;
+  &:hover, :focus{
+    color: white;
+  }
+}
+::ng-deep .show > .btn-outline-primary.dropdown-toggle{
+  color: white !important;
+}
+.menu-btn-item{
+  display: block;
+  text-align: right;
+  font-weight: bold;
+  padding-right: 6px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+::ng-deep .accordion > .card{
+  background-color: #eef0f7;
+}
+::ng-deep .p-tree .p-tree-container .p-treenode .p-treenode-content.p-highlight{
+  background-color: #336668;
+}
+::ng-deep .p-checkbox .p-checkbox-box.p-highlight{
+  background-color: #336668;
+}
+.help-tree{
+  float: right;
+  font-weight: bold;
+  color: #9a8f8f;
+  font-size: 13px;
+}
+
+::ng-deep .ng-dropdown-panel .ng-dropdown-panel-items .ng-option.ng-option-marked{
+  text-align: right;
+}
+::ng-deep .ng-dropdown-panel .scrollable-content{
+  text-align: right;
+}
+
+::ng-deep .ng-select.ng-select-single .ng-select-container .ng-value-container .ng-input {
+  top: 5px;
+  left: 0;
+  padding-left: 30px;
+  padding-right: 5px;
+}
+
+::ng-deep .ng-select.ng-select-single .ng-select-container{
+  padding-right: 5px;
+}
+
+::ng-deep .modal-dialog{
+  direction: rtl;
+}
+::ng-deep .p-treenode-label{
+  padding-right: 4px;
+  font-family: iransans, serif;
+}
+::ng-deep .pi-fw{
+  text-align: center;
+  font-size: 11px;
+  font-weight: bold;
+}
+button{
+  color: white !important;
+}
+::ng-deep .modal-header .close{
+  margin-left: 0;
+  border: 1px solid white;
+}
+
+input[type=number] {
+  -moz-appearance: textfield;
+}
+:host ::ng-deep .p-tree { a { color: #2196f3; } }
+::ng-deep .p-tree .p-tree-container .p-treenode .p-treenode-content.p-highlight{
+  color: white;
+}

@@ -1,0 +1,12 @@
+<div class="p-col-12" style="padding: 0">
+    <div class="p-col-12" style="padding: 0; direction: ltr">
+        <label class="custom-file">
+            <label  [for]="label" class="btn btn-upload-label"><span style="font-family: iransans,serif">{{buttonName}}</span></label>
+            <input [id]="label" [accept]="accept" style="visibility: hidden" type="file" (change)="upload($event.target.files[0])">
+            <span class="custom-file-control"></span>
+        </label>
+        <div [id]="label" class="progress" *ngIf="progress">
+            <div class="progress-bar" [style.width]="progress + '%'">{{progress}}%</div>
+        </div>
+    </div>
+</div>

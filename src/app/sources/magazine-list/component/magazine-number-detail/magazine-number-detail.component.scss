@@ -1,0 +1,63 @@
+button {
+  color: white !important;
+}
+
+::ng-deep aw-wizard-navigation-bar.horizontal ul.steps-indicator.steps-5 li {
+  position: relative;
+  direction: ltr;
+}
+
+.form-input {
+  width: 90%;
+  font-family: iransans;
+  font-weight: normal;
+  padding-right: 10px;
+}
+
+input {
+  margin-bottom: 15px;
+}
+
+button {
+  color: white !important;
+}
+
+button {
+  color: white !important;
+  padding-right: 15px;
+  padding-left: 15px;
+}
+
+.bg-primary {
+  background-image: linear-gradient(#ff8d60, #aa3304);
+  box-shadow: 3px 5px 6px gray;
+}
+
+.bg-success {
+  background-image: linear-gradient(#007bff, #03376c);
+  box-shadow: 3px 5px 6px gray;
+}
+
+.bg-warning {
+  background-image: linear-gradient(#20c997, #056c4d);
+  box-shadow: 3px 5px 6px gray;
+}
+
+@media (max-width: 768px) {
+  .add-cent-mob {
+    text-align: center;
+  }
+}
+
+button {
+  color: white !important;
+}
+
+.card-body {
+  padding: 1rem;
+}
+
+.circle-add {
+  margin-right: 0 !important;
+  margin-top: 0 !important;
+}

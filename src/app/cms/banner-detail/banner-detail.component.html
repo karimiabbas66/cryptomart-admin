@@ -1,0 +1,144 @@
+<div class="p-grid bg-white" style="text-align: right">
+    <div class="p-col-12 page-title">مشخصات بنر</div>
+    <div class="p-col-12">
+        <form [formGroup]="bannerDetailForm" class="editForm p-grid p-col-12" (ngSubmit)="edit()">
+            <div class="p-col-5 form-group">
+                <input id="title" class="round form-control" formControlName="title"
+                       [(ngModel)]="banner.title"
+                       placeholder="عنوان بنر"/>
+                <small class="form-text text-muted danger"
+                       *ngIf="!bannerDetailForm.get('title').valid &&
+                       (bannerDetailForm.get('title').dirty
+               || bannerDetailForm.get('title').touched)">
+                    این فیلد الزامی است.
+                </small>
+            </div>
+            <div class="p-col-1">
+            </div>
+            <div class="p-col-5">
+                <input id="targetLink" style="text-align: left; direction: ltr" class="round form-control" formControlName="targetLink"
+                       [(ngModel)]="banner.targetLink"
+                       placeholder="لینک مقصد"/>
+            </div>
+            <div class="p-col-1">
+            </div>
+            <div class="p-col-6 margin-form">
+
+                <persian-date-picker placeholder="تاریخ شروع نمایش"
+                                     (passEntry)="setStartDate($event)"
+                                     [epochDate]="banner.startDate"></persian-date-picker>
+            </div>
+
+            <div class="p-col-6 margin-form">
+                <persian-date-picker placeholder="تاریخ پایان نمایش"
+                                     (passEntry)="setEndDate($event)"
+                                     [epochDate]="banner.endDate"></persian-date-picker>
+            </div>
+
+            <div class="form-group p-grid p-col-12">
+                <div class="p-grid p-col-12">
+                    <div class="p-col-6">
+                        <label class="d-block">نوع نمایش</label>
+                        <div class="custom-control custom-radio custom-control-inline float-left">
+                            <input [checked]='true' [(ngModel)]="selectedValue"
+                                   value=1
+                                   formControlName="loginType"
+                                   type="radio"
+                                   id="customRadioInline1"
+                                   class="custom-control-input">
+                            <label class="custom-control-label"
+                                   for="customRadioInline1">نمایش برای عموم</label>
+                        </div>
+                        <div class="custom-control custom-radio custom-control-inline  float-left">
+                            <input value=2
+                                   [(ngModel)]="selectedValue"
+                                   formControlName="loginType"
+                                   type="radio"
+                                   id="customRadioInline2"
+                                   class="custom-control-input">
+                            <label class="custom-control-label" for="customRadioInline2">نمایش برای اعضا</label>
+                        </div>
+                    </div>
+                    <div class="p-col-4">
+                        <div class="p-col-12" style="position: relative">
+                            <span style="position: absolute;color: gray; right: 0; bottom: 0">
+                                <i class="fa ft-minus-square"></i>
+                            </span>
+                            <span style="position: absolute;color: gray; left: 0; bottom: 0">
+                                <i class="fa ft-plus-square"></i>
+                            </span>
+                            <label for="vol">اولویت {{banner.priority}}</label>
+                            <input formControlName="priority" class="slider" [(ngModel)]="banner.priority" type="range" id="vol"
+                                   name="vol" min="0" max="100">
+                        </div>
+                    </div>
+                </div>
+                <div class="p-col-12 p-grid">
+                    <div class="p-col-6">
+                        <label class="d-block">رنگ و شفافیت</label>
+                            <input #colorpicker
+                                    [(colorPicker)]="color"
+                                   [style.background]="banner.color"
+                                   [style.color]="banner.color"
+                                   cpPosition="left"
+                                   (colorPickerChange)="onChangeColor($event)"
+                                   formControlName="color" [(ngModel)]="banner.color"/>
+                    </div>
+                </div>
+            </div>
+            <div class="p-grid p-col-12">
+                <div class="p-col-3"></div>
+                <div class="p-col-6">
+                    <div style="text-align: center" class="p-col-12">
+                        <button class="btn btn-primary fix-submit-btn" (click)="openChangeImageDialog(bannerimage)" type="button" title="آپلود بنر">
+                            آپلود بنر
+                        </button>
+                    </div>
+                </div>
+                <div class="p-col-3"></div>
+            </div>
+            <div class="p-col-12">
+                <img *ngIf="banner.imageId" style="max-height: 400px"
+                     [src]="downloadUrl + banner.imageId">
+                <div class="col-md-12 col-lg-12">
+                    <angular-editor id="description"
+                                    formControlName="description"
+                                    [style]="{minHeight: '200px'}"
+                                    [config]="editorConfig"
+                                    [(ngModel)]="banner.description"></angular-editor>
+                </div>
+            </div>
+            <div class="p-col-12 p-grid">
+                <div class="p-col-6" style="text-align: left">
+                    <button class="btn btn-primary fix-back-btn"
+                            [routerLink]="['/cms/banner-list']"
+                            type="button">
+                        بازگشت
+                        <i class="ft-arrow-right"></i>
+                    </button>
+                </div>
+                <div class="p-col-6" style="text-align: right;">
+                    <button [disabled]="!bannerDetailForm.valid"
+                            class="btn btn-primary fix-submit-btn"
+                            type="submit">
+                        ثبت
+                        <i class="ft-save"></i>
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<ng-template #bannerimage let-modal>
+    <div class="modal-header">
+        <h5 class="modal-title">عکس بنر</h5>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true" style="color: black; float:left;">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body ">
+        <app-image-upload shape="rect" resizeWidth="1920" [aspectRatio]="1.9" [enableRatio]="true" (resultImage)="setbannerimage($event)"></app-image-upload>
+    </div>
+</ng-template>

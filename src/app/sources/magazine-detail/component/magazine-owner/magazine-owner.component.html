@@ -1,0 +1,121 @@
+<ng-template #newModal let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title">انتخاب سازمان</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true" style="color: black; float:left;">&times;</span>
+        </button>
+    </div>
+    <app-organization [modal]="true" (passEntry)="getOrganization($event)"></app-organization>
+</ng-template>
+
+<ng-template #personModal let-modal>
+    <div class="modal-header">
+        <h5 class="modal-title">اطلاعات شخص</h5>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true" style="color: black; float:left;">&times;</span>
+        </button>
+    </div>
+    <div class="p-col-12 p-grid" style="text-align: right">
+        <form class="p-grid p-col-12 basic-container" [formGroup]="ownerForm">
+            <div class="p-col-1"></div>
+            <div class="p-col-4">
+                <input id="personFirstName" class="round form-control" formControlName="ownerName" placeholder="نام"
+                       [(ngModel)]="personOwner.firstName"/>
+                <small class="form-text text-muted danger"
+                       *ngIf="!ownerForm.get('ownerName').valid && (ownerForm.get('ownerName').dirty || ownerForm.get('ownerName').touched)">
+                    این فیلد الزامی است.
+                </small>
+            </div>
+            <div class="p-col-2"></div>
+            <div class="p-col-4">
+                <input id="personLastName" class="round form-control" formControlName="ownerLastName"
+                       placeholder="نام خانوادگی"
+                       [(ngModel)]="personOwner.lastName"/>
+                <small class="form-text text-muted danger"
+                       *ngIf="!ownerForm.get('ownerLastName').valid && (ownerForm.get('ownerLastName').dirty || ownerForm.get('ownerLastName').touched)">
+                    این فیلد الزامی است.
+                </small>
+            </div>
+            <div class="p-col-1"></div>
+        </form>
+    </div>
+    <div class="p-col-12 p-grid">
+        <div class="p-col-6" style="text-align: left">
+            <button class="btn btn-primary fix-back-btn" (click)="modalService.dismissAll()" type="button">
+                بازگشت
+                <i class="ft-arrow-right"></i>
+            </button>
+        </div>
+        <div class="p-col-6" style="text-align: right;">
+            <button [disabled]="!ownerForm.get('ownerLastName').valid || !ownerForm.get('ownerName').valid"
+                    class="btn btn-primary fix-submit-btn" type="submit"
+                    (click)="getPerson($event)">
+                ثبت
+                <i class="ft-save"></i>
+            </button>
+        </div>
+    </div>
+</ng-template>
+
+<div class="p-grid p-col-12" style="margin: 0;">
+    <div class="p-grid p-col-12">
+        <div class="p-col-3">
+            <app-profile-search [multiple]="false" (final)="getProfile($event)"></app-profile-search>
+        </div>
+        <div class="p-col-4">
+            <button class="btn btn-raised mr-1 btn-info" aria-label="Add"
+                    (click)="openModal(newModal)" type="button">
+                <i class="ft-icon ft-plus-circle">
+                    <span>افزودن از سازمان ها</span>
+                </i>
+            </button>
+        </div>
+        <div class="p-col-3">
+            <button title="افزودن شخص" type="button" class="btn btn-raised mr-1 btn-info" aria-label="Add"
+                    (click)="openPersonModal(personModal)">
+                <i class="ft-icon ft-plus-circle">
+                    <span>افزودن شخص</span>
+                </i>
+            </button>
+        </div>
+    </div>
+
+    <div class=" p-col-12 text-center">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>نام مالک</th>
+                <th>نوع مالک</th>
+                <th>حذف</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr class='clickable-row' *ngFor="let j of magazineOwner">
+                <td>{{j.fullName}}</td>
+                <td>{{findType(j)}}</td>
+                <td>
+                    <a title="حذف" class="tbl-btn-del" *ngIf="j.profileId" (click)="removeOwnerProfile(j.profileId)">
+                        <i class="fa ft-trash-2 table-operation"></i>
+                    </a>
+                    <a title="حذف" class="tbl-btn-del" *ngIf="j.organizationId"
+                       (click)="removeOwnerOrg(j.organizationId)">
+                        <i class="fa ft-trash-2 table-operation"></i>
+                    </a>
+                    <a title="حذف" class="tbl-btn-del" *ngIf="!j.organizationId && !j.profileId"
+                       (click)="removeOwnerPerson(j.fullName)">
+                        <i class="fa ft-trash-2 table-operation"></i>
+                    </a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+        <button type="button" [disabled]="magazineOwner.length < 1" (click)="addOwners()" class="btn btn-raised btn-info"
+                style="margin-bottom: 0;">بعدی
+            <span>
+                  <i class="ft-chevron-left"></i>
+                </span>
+        </button>
+    </div>
+</div>
+

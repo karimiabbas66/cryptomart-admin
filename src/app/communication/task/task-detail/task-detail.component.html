@@ -1,0 +1,346 @@
+<div class="p-grid bg-white" style="text-align: right">
+    <div class="p-col-12">
+        <form class="form" [formGroup]="taskForm" (ngSubmit)="editTask()">
+            <div class="form-body">
+                <h4 class="form-section"><i class="ft-file-text"></i>ویرایش تسک </h4>
+                <div class="row p-grid">
+                    <div class="p-col-6">
+                        <div class="form-group">
+                            <label for="name">نام تسک</label>
+                            <textarea type="text" id="name"
+                                      class="form-control round"
+                                      name="task-name"
+                                      formControlName="name"
+                                      [(ngModel)]="task.name">
+                            </textarea>
+                            <small class="form-text text-muted danger"
+                                   *ngIf="!taskForm.get('name').valid && (taskForm.get('name').dirty || taskForm.get('name').touched)">
+                                این فیلد مورد نیاز است!
+                            </small>
+                        </div>
+                    </div>
+                    <div class="p-col-3" style="padding-top: 17px">
+                        <label for="priority">اهمیت</label>
+                        <ng-select formControlName="priority" [items]="priority"
+                                   id="priority"
+                                   bindLabel="name"
+                                   [(ngModel)]="_priorityName"
+                                   [clearable]="false" [searchable]="false"
+                        >
+                        </ng-select>
+                        <small class="form-text text-muted danger"
+                               *ngIf="!taskForm.get('priority').valid && (taskForm.get('priority').dirty || taskForm.get('priority').touched)">
+                            این فیلد مورد نیاز است!
+                        </small>
+                    </div>
+                    <div class="p-col-3" style="padding-top: 50px">
+                        <app-profile-search searchText="انجام دهنده" [multiple]="false"
+                                            (final)="getResult($event)"></app-profile-search>
+                    </div>
+                    <div *ngIf="taskId" class="p-col-12 p-grid">
+                        <div class="p-col-6">
+                            <div style="background-color: #add0ad;border-radius: 5px;" class="p-col-12">
+                                <span>ایجاد: </span>
+                                <span style="margin-right: 10px">{{task.createDate | persianDate}}</span>
+                            </div>
+                        </div>
+                        <div class="p-col-6">
+                            <div style="background-color: #d1dde6;border-radius: 5px;" class="p-col-12">
+                                <span>بروزرسانی: </span>
+                                <span style="margin-right: 10px">{{task.updateDate | persianDate}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="p-grid p-col-12">
+                    <table style="text-align: center" class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th style="background-color: #add0ad">ایجاد کننده</th>
+                            <th style="background-color: #d1dde6">انجام دهنده</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr class='clickable-row'>
+                            <td style="background-color: #add0ad; width: 50%"><strong>
+                                <div class="p-col-12">
+                                    <div class="p-col-12" style="padding-right: 20px;padding-left: 20px">
+                                        <div class="card-container">
+                                            <i *ngIf="profileCreator.gender" class="fa fa-male gender-icon"></i>
+                                            <i *ngIf="!profileCreator.gender" class="fa fa-female gender-icon"></i>
+                                            <div class="no-img-profile" *ngIf="!profileCreator.photo">
+                                                <img *ngIf="!profileCreator.photo"
+                                                     class="round no-profile-image"
+                                                     src="../../../assets/img/portrait/avatars/profile-avatar.png"
+                                                     alt="user"/>
+                                            </div>
+                                            <div class="parent-img" *ngIf="profileCreator.photo">
+                                                <img *ngIf="profileCreator.photo"
+                                                     class="round profile-image"
+                                                     [src]="downloadUrl + profileCreator.photo" alt="user"/>
+                                            </div>
+                                            <h6 style="font-size: 19px;margin-top: 10px">{{profileCreator.firstName + ' ' + profileCreator.lastName }}</h6>
+                                            <div class="p-col-12">
+                                                <div class="p-col-12 p-grid card-container-border">
+                                                    <div class="p-col-6 row-highlight">کد ملی</div>
+                                                    <div class="p-col-6 row-highlight">{{profileCreator.nationalCode}}</div>
+                                                    <div class="p-col-6">شماره تماس</div>
+                                                    <div class="p-col-6">
+                                                        <span>{{profileCreator.mainPhone ? profileCreator.mainPhone : 'بدون شماره'}}</span>
+                                                    </div>
+                                                    <div class="p-col-6 row-highlight">نام کاربری</div>
+                                                    <div class="p-col-6 row-highlight">
+                                                        <span>{{profileCreator.userName}}</span></div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </strong></td>
+                            <td style="background-color: #d1dde6; width: 50%"><strong>
+                                <div class="p-col-12">
+                                    <div class="p-col-12" style="padding-right: 20px;padding-left: 20px">
+                                        <div class="card-container">
+                                            <i *ngIf="profileAssignee.gender" class="fa fa-male gender-icon"></i>
+                                            <i *ngIf="!profileAssignee.gender" class="fa fa-female gender-icon"></i>
+                                            <div class="no-img-profile" *ngIf="!profileAssignee.photo">
+                                                <img *ngIf="!profileAssignee.photo"
+                                                     class="round no-profile-image"
+                                                     src="../../../assets/img/portrait/avatars/profile-avatar.png"
+                                                     alt="user"/>
+                                            </div>
+                                            <div class="parent-img" *ngIf="profileAssignee.photo">
+                                                <img *ngIf="profileAssignee.photo"
+                                                     class="round profile-image"
+                                                     [src]="downloadUrl + profileAssignee.photo" alt="user"/>
+                                            </div>
+                                            <h6 style="font-size: 19px;margin-top: 10px">{{profileAssignee.firstName + ' ' + profileAssignee.lastName }}</h6>
+                                            <div class="p-col-12">
+                                                <div class="p-col-12 p-grid card-container-border">
+                                                    <div class="p-col-6 row-highlight">کد ملی</div>
+                                                    <div class="p-col-6 row-highlight">{{profileAssignee.nationalCode}}</div>
+                                                    <div class="p-col-6">شماره تماس</div>
+                                                    <div class="p-col-6">
+                                                        <span>{{profileAssignee.mainPhone ? profileAssignee.mainPhone : 'بدون شماره'}}</span>
+                                                    </div>
+                                                    <div class="p-col-6 row-highlight">نام کاربری</div>
+                                                    <div class="p-col-6 row-highlight">
+                                                        <span>{{profileAssignee.userName}}</span></div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </strong></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="row p-grid">
+                    <div class="p-col-12">
+                        <div class="form-group">
+                            <label for="description">توضیحات</label>
+                            <textarea id="description" rows="5" class="form-control round"
+                                      name="task-description"
+                                      formControlName="description"
+                                      [(ngModel)]="task.description">
+                            </textarea>
+                            <small class="orm-text text-muted danger"
+                                   *ngIf="(taskForm.get('description').dirty || taskForm.get('description').touched) && taskForm.controls['description'].hasError('maxlength')">
+                                طول پیام باید کمتر از ۵۰۰ کاراکتر باشد
+                            </small>
+                            <small class="form-text text-muted danger"
+                                   *ngIf="!taskForm.get('description').valid && (taskForm.get('description').dirty || taskForm.get('description').touched)">
+                                این فیلد مورد نیاز است!
+                            </small>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="p-col-12 p-grid">
+                <div class="p-col-6">
+                    <span style="font-weight: bold">فایل ها</span>
+                </div>
+                <div class="p-col-2"></div>
+                <div class="p-col-4" style="text-align: left">
+                    <app-uploader style="display: block; margin: 0 auto" (fileUuid)="afterUploadFile($event)"
+                                  buttonName="افزودن فایل"
+                                  [patch]="'tasks'"></app-uploader>
+                </div>
+                <div class="p-col-12 p-grid" *ngFor="let item of files">
+                    <div class="file-name">
+                        <div class="file-title" (click)="goForDownload(item)">
+                            <span>{{item.fileName}}</span>
+                        </div>
+
+                        <div class="date-title" style="margin-top: 10px">
+                            <span>{{item.createDate | persianDate}}</span>
+                        </div>
+                        <div>
+                            <span style="margin-top: 5px">{{item.owner}}</span>
+                        </div>
+                        <div style="    margin-top: 11px;text-align: left;padding-left: 10px;font-size: 17px;">
+                            <span style="margin-top: 5px"><i title="حذف فایل" style="color: #f5f2f2"
+                                                             class="fa fa-trash-o" (click)="removeFileAttach(item)"></i> </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="p-col-12 p-grid">
+                <div class="p-col-6" style="text-align: left">
+                    <button class="btn btn-primary fix-back-btn"
+                            [routerLink]="['/communication/task-list']"
+                            type="button">
+                        بازگشت
+                        <i class="ft-arrow-right"></i>
+                    </button>
+                </div>
+                <div class="p-col-6" style="text-align: right;">
+                    <button [disabled]="!taskForm.valid"
+                            class="btn btn-primary fix-submit-btn"
+                            type="submit">
+                        ثبت
+                        <i class="ft-save"></i>
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<br>
+
+
+<div *ngIf="taskId" class="tab">
+    <button #comment style="float: right; background-color: #3f9ea1" (click)="openIt('comment')">مشاهده نظرات</button>
+    <button #log style="float: right; background-color: #c3c7c7" (click)="openIt( 'log')">گزارش کارکرد</button>
+</div>
+
+<!-- comment -->
+<div *ngIf="taskId && showComment" id="comment" style="background-color: white">
+    <div *ngIf="taskId && task.threadId" class="p-col-12">
+        <app-comment [threadId]="task.threadId"></app-comment>
+    </div>
+    <div *ngIf="taskId && !task.threadId" class="p-col-12">
+        <app-comment (threadOutput)="setThreadId($event)" threadId="first"></app-comment>
+    </div>
+</div>
+
+
+
+<!--Log Form-->
+<div *ngIf="taskId && !showComment" id="log">
+    <div *ngIf="taskId" class="row bg-white text-left p-grid">
+        <div class="p-col-12">
+            <form class="form" [formGroup]="logForm" (ngSubmit)="addLog()">
+                <div class="form-body">
+                    <h4 class="form-section"><i class="ft-file-text"></i>گزارش کار</h4>
+                </div>
+                <div class="row p-grid">
+                    <div class="p-col-12 p-grid">
+                        <div style="padding-top: 15px" class="form-group p-col-3 ">
+                            <label for="hour">ساعت</label>
+                            <input (keypress)="keyPressHour($event)"
+                                   type="number"
+                                   value="numbersOnly"
+                                   id="hour"
+                                   class="form-control round"
+                                   name="hour"
+                                   placeholder="0"
+                                   formControlName="hour"
+                                   min="0" max="23">
+
+                            <small class="form-text text-muted danger"
+                                   *ngIf="!logForm.get('hour').valid
+                                &&logForm.get('hour').errors.required
+                                && (logForm.get('hour').dirty || logForm.get('hour').touched)">
+                                این فیلد مورد نیاز است!
+                            </small>
+                        </div>
+                        <div style="padding-top: 15px" class="p-col-2">
+                            <div class="form-group">
+                                <label for="second">دقیقه</label>
+                                <input (keypress)="keyPressSecond($event)"
+                                       type="number" id="second"
+                                       class="form-control round"
+                                       name="second"
+                                       placeholder="0"
+                                       min="0" max="59"
+                                       formControlName="second">
+                            </div>
+                            <small class="form-text text-muted danger"
+                                   *ngIf="!logForm.get('second').valid &&
+                                 logForm.get('second').errors.required &&
+                                (logForm.get('second').dirty || logForm.get('second').touched)">
+                                این فیلد مورد نیاز است!
+                            </small>
+                        </div>
+                        <div class="p-col-4">
+                            <label for="logwork">تاریخ انجام</label>
+                            <persian-date-picker id="logwork" placeholder="تاریخ انجام"
+                                                 (passEntry)="setStartDate($event)"
+                                                 [epochDate]="datePick"></persian-date-picker>
+                        </div>
+                        <div style="padding-top: 44px" class="p-col-3">
+                            <button [disabled]="!logForm.valid || (logForm.get('hour').value == 0 && logForm.get('second').value == 0)
+                                  || (logForm.get('hour').value == null && logForm.get('second').value == null) || (logForm.get('hour').value == null && logForm.get('second').value == 0)
+                                  || (logForm.get('hour').value == 0 && logForm.get('second').value == null)"
+                                    class="btn btn-primary fix-submit-btn"
+                                    type="submit">
+                                ثبت
+                                <i class="ft-save"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <div class="col-lg-12 col-md-12">
+                <div class="table-responsive">
+                    <table class="table table-striped" style="text-align: center">
+                        <thead>
+                        <tr>
+                            <th>شناسه کاربر</th>
+                            <th>نام و نام خانوادگی</th>
+                            <th>زمان</th>
+                            <th>تاریخ لاگ</th>
+                            <th>عملیات</th>
+                        </tr>
+                        </thead>
+
+                        <tbody>
+                        <tr style="font-size: 13px" *ngFor="let log of logWorks">
+                            <th>{{log.creator}}</th>
+                            <th>{{logs.get(log.creator) ? (logs.get(log.creator).firstName + ' ' + logs.get(log.creator).lastName) : ''}}</th>
+                            <th>{{log.duration | timeDurationPipe}}</th>
+                            <th>{{log.workDate | persianDate}}</th>
+                            <td>
+                                <a *ngIf="log.creator == currentUserId" (click)="deleteLogWork(log.id)">
+                                    <i title="حذف" style="color: #d92b2b" class="fa ft-trash-2 table-operation"></i>
+                                </a>
+                            </td>
+
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<br/>
+<div class="row p-grid">
+    <div *ngIf="showDelete" class="p-col-12" style="text-align: right">
+        <button class="btn btn-primary fix-back-btn"
+                (click)="goForDelete()"
+                type="button">
+            حذف تسک
+            <i class="fa fa-trash"></i>
+        </button>
+    </div>
+</div>
+

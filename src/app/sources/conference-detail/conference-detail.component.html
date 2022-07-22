@@ -1,0 +1,162 @@
+<div class="p-grid p-col-12 bg-white px-4 pt-3" style="text-align: right;direction: rtl;">
+    <div class="p-col-12 page-title">مشخصات کنفرانس
+    </div>
+    <form [formGroup]="conferenceForm" class="editForm p-grid p-col-12" (ngSubmit)="save()">
+
+        <div class="p-col-1"></div>
+
+        <div class="p-col-4">
+            <input id="title" class="round form-control" formControlName="title" [(ngModel)]="conference.title"
+                   placeholder="عنوان"/>
+            <small class="form-text text-muted danger"
+                   *ngIf="!conferenceForm.get('title').valid && (conferenceForm.get('title').dirty
+                    || conferenceForm.get('title').touched)">
+                این فیلد الزامی است.
+            </small>
+        </div>
+
+        <div class="p-col-2"></div>
+
+        <div class="p-col-4">
+            <input id="conferenceNumber" class="round form-control" formControlName="conferenceNumber" type="number"
+                   [(ngModel)]="conference.conferenceNumber" placeholder="چندمین کنفرانس">
+        </div>
+
+        <div class="p-col-5"></div>
+
+        <div class="p-col-2">
+            <persian-date-picker placeholder="تاریخ برگزاري"
+                                 (passEntry)="setUpdateDate($event)"
+                                 [epochDate]="conference.conferenceDate">
+            </persian-date-picker>
+            <small class="form-text text-muted danger"
+                   *ngIf="!conferenceForm.get('conferenceDate').valid && (conferenceForm.get('conferenceDate').dirty
+                    || conferenceForm.get('conferenceDate').touched)">
+                این فیلد الزامی است.
+            </small>
+        </div>
+
+        <div class="p-col-5"></div>
+
+        <div class="p-col-4">
+            <input id="conferenceCityPlace" class="round form-control" formControlName="conferenceCityPlace"
+                   [(ngModel)]="conference.conferenceCityPlace" placeholder="شهر محل برگزاری">
+        </div>
+
+        <div class="p-col-4">
+            <input id="conferenceStatePlace" class="round form-control" formControlName="conferenceStatePlace"
+                   [(ngModel)]="conference.conferenceStatePlace" placeholder="استان محل برگزاری">
+        </div>
+
+
+        <div class="p-col-4">
+            <input id="link" class="round form-control" formControlName="link"
+                   [(ngModel)]="conference.link" placeholder="لینک سایت">
+        </div>
+
+        <div class="p-col-12">
+            <div class="p-col-12" style="position: relative; margin-top: 30px;">
+                <div style="position: absolute;top: -25px;">
+                    <i class="ft-help-circle"
+                       style="font-size: 13px;
+                           color: gray;   margin-left: 4px;font-weight: bold;"></i>
+                    <span style="font-size: 13px; color: gray">پس از تایپ هر کلمه کلید Enter را بزنید</span>
+                </div>
+                <tag-input id="conferenceSubjects"
+                           formControlName="conferenceSubjects"
+                           [(ngModel)]="conferenceSubjects"
+                           [theme]="'bootstrap'"
+                           [placeholder]="'محور هاي اصلی کنفرانس'"
+                           [secondaryPlaceholder]="'محور هاي اصلی کنفرانس'"
+                           editable="true">
+                </tag-input>
+            </div>
+        </div>
+
+        <div class="p-col-12"></div>
+
+        <div class="p-col-12" style="position: relative;text-align: center">
+            <div style="text-align: center;width: 20%;position: relative; margin: auto">
+                <i *ngIf="conference.picture" title="حذف"
+                   style="bottom: -21px;right: 83px; position: absolute;color: #ef5369;cursor: pointer;font-size: 19px;"
+                   class="fa fa-remove" (click)="removeConferencePicture()">
+                </i>
+                <img *ngIf="conference.picture" title="برای ویرایش کلیک کنید" [src]="uploadUrl + conference.picture"
+                     (click)="openChangeImageDialog(conferencePicture)"
+                     style="cursor: pointer;box-shadow: 0 0 16px #bfb0b0; border-radius:100%; margin: auto;display: block;height: 100px;width: 100px;">
+                <img *ngIf="!conference.picture" title="افزودن تصویر فراخوان کنفرانس"
+                     src="../../../assets/img/portrait/avatars/avatar-07.png"
+                     (click)="openChangeImageDialog(conferencePicture)"
+                     style="cursor: pointer;box-shadow: 0 0 16px #bfb0b0; border-radius:100%; margin: auto;display: block;height: 100px;width: 100px;">
+            </div>
+        </div>
+    </form>
+
+    <hr>
+
+    <form [formGroup]="organizationForm" class="editForm p-grid p-col-12" (ngSubmit)="save()">
+        <div class="p-col-12"></div>
+        <div class="p-col-12"></div>
+        <div formArrayName="organization" class="p-grid p-col-12">
+            <div class="p-col-12">
+                <button class="btn btn-raised  mr-1 btn-adn" aria-label="Add"
+                        (click)="addOrganizationFormGroup()" type="button">
+                    <i class="ft-icon ft-plus-circle">
+                        <span>افزودن سازمان برگزار کننده</span>
+                    </i>
+                </button>
+            </div>
+            <div class="p-col-12 p-grid row"
+                 *ngFor="let organization of formData.controls; let i = index"
+                 [formGroupName]="i">
+                <div class="p-col-1">
+                    <button class="btn btn-raised mr-1 btn-danger" aria-label="Add"
+                            (click)="removeOrganizationForm(i)" type="button">
+                        <i class="ft-minus-circle"></i>
+                    </button>
+                </div>
+                <div class="p-col-5">
+                    <ng-select formControlName="organizationId" (search)="searchOrganization($event)"
+                               [items]="organizations"
+                               bindLabel="name"
+                               placeholder="انتخاب سازمان برگزار کننده" (scroll)="onScroll($event)"
+                               notFoundText="موردی یافت نشد"
+                               [virtualScroll]="true"
+                               (scrollToEnd)="onScrollToEnd()" style="width: 100%;">
+                    </ng-select>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <div class="p-col-6" style="text-align: left">
+        <button class="btn btn-primary fix-back-btn"
+                [routerLink]="['/sources/conference-list']"
+                type="button">
+            <i class="ft-arrow-right"></i>
+            بازگشت
+        </button>
+    </div>
+    <div class="p-col-6" style="text-align: right;">
+        <button
+                class="btn btn-primary fix-submit-btn"
+                type="button" (click)="save()">
+            ثبت
+            <i class="ft-save"></i>
+        </button>
+    </div>
+
+</div>
+<ng-template #conferencePicture let-modal>
+    <div class="modal-header">
+        <h5 class="modal-title">تصویر فراخوان کنفرانس</h5>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true" style="color: black; float:left;">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <app-image-upload shape="circle" [aspectRatio]="1" [enableRatio]="true"
+                          (resultImage)="setConferencePicture($event)">
+        </app-image-upload>
+    </div>
+</ng-template>

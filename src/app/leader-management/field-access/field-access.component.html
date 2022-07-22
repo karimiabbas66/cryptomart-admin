@@ -1,0 +1,77 @@
+<div class="p-col-12 p-grid">
+    <div class="p-xl-5 p-lg-5 p-md-5 p-sm-12 p-col-12">
+        <div class="form-group">
+            <div style="position: relative" class="form-group form-inline">
+                <ng-select appendTo="body"
+                           (scroll)="onScroll($event)"
+                           [virtualScroll]="true"
+                           (scrollToEnd)="onScrollToEnd()"
+                           (close)="close()"
+                           [loading]="loading"
+                           (clear)="close()"
+                           (search)="onSearch($event)"
+                           (autocomplete)="false"
+                           style="width: 100%;"
+                           bindLabel="title"
+                           bindValue="id"
+                           notFoundText="موردی یافت نشد"
+                           [(ngModel)]="selectedFieldId"
+                           (ngModelChange)="onChange()"
+                           [items]="currentUserFields" placeholder="لیست منظومه">
+                </ng-select>
+            </div>
+
+        </div>
+    </div>
+
+    <div style="direction: ltr; text-align: right" class="p-xl-5 p-lg-5 p-md-5 p-sm-12 p-col-12">
+
+        <label style="margin-right: 5px;"
+                for="hasAccessDown"
+        >
+            دسترسی به پایین
+        </label>
+        <input id="hasAccessDown"  type="checkbox" [(ngModel)]="hasAccessDown">
+
+    </div>
+
+    <div class="p-col-6" style="text-align: right;">
+        <button [disabled]="!this.selectedField"
+                class="btn btn-primary fix-submit-btn"
+                (click)="save()"
+                type="button">
+            ثبت
+            <i class="ft-save"></i>
+        </button>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-striped " style="cursor: pointer; ">
+            <thead>
+            <tr>
+                <th style="text-align: center;">نام منظومه</th>
+                <th style="text-align: center">دسترسی به پایین</th>
+                <th style="text-align: center">عملیات</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let item of searchedUserFields" style="text-align: center">
+                <td><strong>{{item.title}}</strong></td>
+                <td *ngIf="item.accessDown==true"><i class="ft-check primary font-small-2"></i></td>
+                <td *ngIf="item.accessDown==false"><i class="ft-x danger font-small-2"></i></td>
+                <td><a title="حذف" class="tbl-btn-del"
+                       (click)="delete(item.id)"><i class="fa ft-trash-2 table-operation"></i></a
+                ></td>
+            </tr>
+            </tbody>
+
+        </table>
+        <div class="d-flex justify-content-between p-2">
+            <ngb-pagination #ngbPagination [collectionSize]="searchedUserFieldsCount" [pageSize]="pageSize"
+                            [rotate]="true" [ellipses]="false" [boundaryLinks]="true"
+                            [maxSize]="5"
+                            (pageChange)="pageChange($event)">
+            </ngb-pagination>
+        </div>
+    </div>
+</div>

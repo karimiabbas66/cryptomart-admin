@@ -1,0 +1,14 @@
+<p-toast (onClose)="onReject()" [baseZIndex]="5000">
+    <ng-template let-message pTemplate="message">
+        <div  class="p-flex p-flex-column" style="flex: 1; direction: rtl">
+            <div style="font-family: iransans,serif">
+                <h5 style="text-align: right">{{message.summary}}</h5>
+                <p style="text-align: right">{{message.detail}}</p>
+                <div>
+                    <span style="text-align: left; font-weight: bold; cursor:pointer;color: blue" (click)="onConfirm(message.data)">مشاهده</span>
+                </div>
+            </div>
+        </div>
+    </ng-template>
+</p-toast>
+<router-outlet></router-outlet>

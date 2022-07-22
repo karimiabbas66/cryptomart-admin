@@ -1,0 +1,162 @@
+<div class="p-grid" style="text-align: right">
+    <div class="p-col-12 page-title">مشخصات نمایه</div>
+    <div class="p-col-12 p-grid form-group">
+        <form #fieldForm [formGroup]="fieldDetailForm" class="editForm p-grid p-col-12"
+              (ngSubmit)="addNewField(fieldForm)">
+            <div class="p-xl-5 p-lg-5 p-md-5 p-sm-12 p-col-12">
+                <input id="fieldName" class="round form-control" formControlName="fieldName"
+                       [(ngModel)]="newField.name"
+                       placeholder="نام نمایه"/>
+                <small class="form-text text-muted danger" *ngIf="!fieldDetailForm.get('fieldName').valid
+                && (fieldDetailForm.get('fieldName').dirty || fieldDetailForm.get('fieldName').touched)">
+                    این فیلد الزامی است.
+                </small>
+            </div>
+            <div class="p-xl-2 p-lg-2 p-md-2 p-sm-12 p-col-12">
+            </div>
+
+            <div class="p-xl-5 p-lg-5 p-md-5 p-sm-12 p-col-12 fix-key">
+                <div class="form-group" style="position: relative">
+                    <div style="position: absolute;top: -25px;">
+                        <i class="ft-help-circle" style="font-size: 15px;   margin-left: 4px;font-weight: bold;"></i>
+                        <span>پس از تایپ هر کلمه کلید Enter را بزنید</span>
+                    </div>
+                    <tag-input class="form-group " formControlName="keywords"
+                               (onAdd)="onadd($event)"
+                               [secondaryPlaceholder]="'عناوین دیگر'"
+                               [theme]="'bootstrap'"
+                               [placeholder]="''"
+                               (onRemove)="onRemove($event)"
+                               editable="true">
+                    </tag-input>
+                </div>
+            </div>
+
+            <div class="p-xl-5 p-lg-5 p-md-5 p-sm-12 p-col-12">
+                <div class="form-group">
+                    <div style="position: relative" class="form-group form-inline">
+                        <ng-select formControlName="parentName"
+                                   appendTo="body"
+                                   (scroll)="onScroll($event)"
+                                   [virtualScroll]="true"
+                                   (scrollToEnd)="onScrollToEnd()"
+                                   (close)="close()"
+                                   [loading]="loading"
+                                   (clear)="close()"
+                                   (search)="onSearch($event)"
+                                   (autocomplete)="false"
+                                   style="width: 100%;"
+                                   bindLabel="title"
+                                   bindValue="id"
+                                   notFoundText="موردی یافت نشد"
+                                   [(ngModel)]="newField.parentId"
+                                   (ngModelChange)="open(searchResult)"
+                                   [items]="fields" placeholder="پدر جدید">
+                        </ng-select>
+                    </div>
+                </div>
+            </div>
+            <div class="p-xl-2 p-lg-2 p-md-2 p-sm-12 p-col-12">
+            </div>
+            <div class="p-xl-5 p-lg-5 p-md-5 p-sm-12 p-col-12">
+                <ng-select notFoundText="موردی یافت نشد" formControlName="relationName" [items]="relationNames"
+                           placeholder="نوع رابطه"
+                           [searchable]="false"
+                           [(ngModel)]="newField.relationName">
+                </ng-select>
+            </div>
+
+            <div class="form-group p-xl-5 p-lg-5 p-md-5 p-sm-12 p-col-12">
+                <ng-select formControlName="fieldTypes" notFoundText="موردی یافت نشد" [items]="fieldTypes"
+                           placeholder="جنس نمایه"
+                           bindLabel="name"
+                           bindValue="value"
+                           [searchable]="false"
+                           [(ngModel)]="newField.fieldType">
+                </ng-select>
+                <small class="form-text text-muted danger" *ngIf="!fieldDetailForm.get('fieldTypes').valid
+                && (fieldDetailForm.get('fieldTypes').dirty || fieldDetailForm.get('fieldTypes').touched)">
+                    این فیلد الزامی است.
+                </small>
+            </div>
+            <div class="p-xl-2 p-lg-2 p-md-2 p-sm-12 p-col-12">
+            </div>
+            <div class="p-xl-5 p-lg-5 p-md-5 p-sm-12 p-col-12">
+
+                    <label
+                            for="customCheckboxInline1"
+                    >
+                        مجوز نمایه زدن
+                    </label>
+                    <input id="customCheckboxInline1" formControlName="hasAccess" type="checkbox" [(ngModel)]="hasAccess">
+
+
+            </div>
+
+            <div class="p-xl-5 p-lg-5 p-md-5 p-sm-12 p-col-12 fix-key">
+                <textarea class="form-control" rows="3" placeholder="تعریف" class="form-control"
+                          formControlName="describe" [(ngModel)]="newField.describe"></textarea>
+            </div>
+            <div class="p-xl-2 p-lg-2 p-md-2 p-sm-12 p-col-12">
+            </div>
+            <div class="p-xl-5 p-lg-5 p-md-5 p-sm-12 p-col-12">
+                <textarea class="form-control" rows="3" placeholder="توضیحات" class="form-control"
+                          formControlName="description" [(ngModel)]="newField.description"></textarea>
+            </div>
+
+            <div class="p-col-12 p-grid" style="margin-top: 30px">
+                <div class="p-col-6" style="text-align: left">
+                    <button class="btn btn-primary fix-back-btn"
+                            [routerLink]="['/dashboard/field']"
+                            type="button">
+                        بازگشت
+                        <i class="ft-arrow-right"></i>
+                    </button>
+                </div>
+                <div class="p-col-6">
+                    <button style="padding-right: 30px;padding-left: 30px" [disabled]="!fieldDetailForm.valid"
+                            class="btn btn-primary btn-raised"
+                            type="submit">
+                        ثبت
+                    </button>
+                </div>
+            </div>
+        </form>
+        <ng-template #searchResult let-s="close" let-d="dismiss">
+            <div class="modal-body px-4" style="direction: rtl">
+                <div class="table-responsive">
+                    <table class="table table-striped " style="cursor: pointer; ">
+                        <thead>
+                        <tr>
+                            <th style="text-align: center;">نام</th>
+                            <th style="text-align: center">عناوین دیگر</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr style="text-align: center">
+                            <td><strong>{{ selectedFieldMeta.title }}</strong></td>
+                            <td><strong>{{ selectedFieldMeta.keywords }}</strong></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer px-4 form-group ">
+                    <button style="padding-right: 17px; padding-left: 17px" class="btn btn-raised btn-primary"
+                            (click)="onSubmit()">
+                        <a
+                                class="text-decoration-none text-white "
+                        >تایید</a
+                        >
+                    </button>
+
+                    <button style="margin-right: 3px;" class="btn btn-raised btn-danger" (click)="onCancel()">
+                        <a
+                                class="text-decoration-none text-white "
+                        >انصراف</a
+                        >
+                    </button>
+                </div>
+            </div>
+        </ng-template>
+    </div>
+</div>

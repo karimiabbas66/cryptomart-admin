@@ -1,0 +1,94 @@
+<div class="p-grid p-col-12">
+    <div class="p-col-12">
+        <div class="new-btn-container p-grid p-col-12 ui-sm-12">
+            <button title="جدید"
+                    (click)="openNewUnit(addNew)"
+                    type="button" class="btn-new btn btn-raised " aria-label="Add">
+                <i class="ft-plus"></i>
+            </button>
+        </div>
+        <table style="text-align: center" class="table table-striped">
+            <thead>
+            <tr>
+                <th>عنوان</th>
+                <th>تاریخ ایجاد</th>
+                <th>عملیات</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let item of dataItems" class='clickable-row'>
+                <td><strong>{{ item.name }}</strong></td>
+                <td><strong>{{ item.createDate | persianDate}}</strong></td>
+                <td>
+                    <a title="ویرایش" class="tbl-btn-new"
+                       (click)="edit(item,addNew)">
+                        <i class="fa ft-edit table-operation"></i>
+                    </a>
+
+                    <a title="حذف" class="tbl-btn-del" (click)="remove(item.id)">
+                        <i class="fa ft-trash-2 table-operation"></i>
+                    </a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <ngb-pagination [collectionSize]="dataLength" [page]="1" [pageSize]="5"
+                        [maxSize]="5"
+                        [rotate]="true" [ellipses]="false" [boundaryLinks]="true"
+                        (pageChange)="getTypeItems($event,5)"
+        >
+        </ngb-pagination>
+    </div>
+</div>
+
+
+<ng-template #addNew let-modal>
+    <div class="modal-header">
+        <h5 class="modal-title">نوع واحد علمی</h5>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true" style="color: black; float:left;">&times;</span>
+        </button>
+    </div>
+    <div class="p-col-12 p-grid" style="text-align: right">
+        <form [formGroup]="addForm" class="editForm p-grid p-col-12" (ngSubmit)="addUnitType()">
+            <div class="p-col-12 p-grid">
+                <div class="p-col-3"></div>
+                <div class="p-col-6 form-group">
+                    <label for="title">عنوان</label>
+                    <input id="title" class="round form-control" formControlName="title"
+                           [(ngModel)]="unitType.name"
+                    />
+                    <small class="form-text text-muted danger"
+                           *ngIf="!addForm.get('title').valid &&
+                       (addForm.get('title').dirty
+               || addForm.get('title').touched)">
+                        این فیلد الزامی است.
+                    </small>
+                </div>
+
+                <div class="p-col-3"></div>
+
+            </div>
+            <div class="p-col-12 p-grid">
+                <div class="p-col-6" style="text-align: left">
+                    <button class="btn btn-primary fix-back-btn"
+                            (click)="modalService.dismissAll()"
+                            type="button">
+                        بازگشت
+                        <i class="ft-arrow-right"></i>
+                    </button>
+                </div>
+                <div class="p-col-6" style="text-align: right;">
+                    <button [disabled]="!addForm.valid"
+                            class="btn btn-primary fix-submit-btn"
+                            type="submit">
+                        ثبت
+                        <i class="ft-save"></i>
+                    </button>
+                </div>
+
+
+            </div>
+        </form>
+    </div>
+</ng-template>

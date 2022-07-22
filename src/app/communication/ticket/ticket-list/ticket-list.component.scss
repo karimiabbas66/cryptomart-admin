@@ -1,0 +1,59 @@
+::ng-deep .modal-dialog {
+  direction: rtl;
+}
+::ng-deep input{
+  max-width: 100% !important;
+}
+
+::ng-deep .pi{
+  font-size: 11px;
+}
+.unread-color{
+  background-color: #8addd5 !important;
+}
+
+::ng-deep .pi-fw {
+  text-align: center;
+  font-size: 11px;
+  font-weight: bold;
+}
+
+button {
+  color: white !important;
+}
+
+::ng-deep .modal-header .close {
+  margin-left: 0;
+  border: 1px solid white;
+}
+
+.modal-close {
+  color: black;
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  float: left;
+}
+.fix-submit-btn {
+  padding-right: 15px;
+  padding-left: 12px;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+::ng-deep .modal-header{
+  padding: 10px;
+}
+.search-component-link{
+  color: white !important;
+  padding: 3px 8px 3px 8px;
+  background-color: #336668;
+  font-weight: bold;
+  border-radius: 4px;
+  font-size: 13px;
+}
+

@@ -1,0 +1,47 @@
+
+<div class="p-grid bg-white px-4 pt-3" style="text-align: right">
+  <div class="p-col-12 page-title">لیست ناشران</div>
+  <div class="p-col-12">
+
+    <div class="new-btn-container p-col-12 ui-sm-12">
+      <button title="جدید" routerLink="/sources/publisher-detail" type="button" class="btn-new btn btn-raised " aria-label="Add">
+        <i class="ft-plus"></i>
+      </button>
+    </div>
+
+    <div class="p-col-12 ui-sm-12 table-responsive">
+      <table class="table table-striped text-center">
+        <thead>
+        <tr>
+          <th>نام ناشر</th>
+          <th>کد سازمانی</th>
+          <th>عملیات</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let item of publisherList" class='clickable-row'>
+          <td><strong>{{ item.publisherName }}</strong></td>
+          <td><strong>{{ item.licenseNumber }}</strong></td>
+          <td>
+            <a title="ویرایش" class="tbl-btn-new"
+                    [routerLink]="['/sources/publisher-detail']" [queryParams]="{ id: item.publisherId}">
+              <i class="fa ft-edit table-operation"></i>
+            </a>
+
+            <a title="حذف" class="tbl-btn-del"  (click)="removePublisher(item.publisherId)">
+              <i class="fa ft-trash-2 table-operation"></i>
+            </a>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+      <div class="d-flex justify-content-between p-2">
+        <ngb-pagination [collectionSize]="totalRecords" [page]="1" [pageSize]="tableSize"
+                        (pageChange)="getPublisherList($event)">
+        </ngb-pagination>
+      </div>
+
+    </div>
+
+  </div>
+</div>

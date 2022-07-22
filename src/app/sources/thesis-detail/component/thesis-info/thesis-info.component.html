@@ -1,0 +1,111 @@
+<div class="p-grid" style="text-align: right; float: right;direction: rtl;">
+    <form [formGroup]="thesisForm" class="editForm p-grid p-col-12" (ngSubmit)="edit()">
+
+        <div class="p-col-4">
+            <input class="round form-control" id="persianTitle" formControlName="persianTitle" placeholder="عنوان فارسی"
+                   [(ngModel)]="thesis.persianTitle"/>
+        </div>
+
+        <div class="p-col-4">
+            <input class="round form-control" id="englishTitle" formControlName="englishTitle"
+                   placeholder="عنوان انگلیسی"
+                   [(ngModel)]="thesis.englishTitle"/>
+        </div>
+
+        <div class="p-col-4">
+            <input class="round form-control" id="year" formControlName="year" placeholder="سال"
+                   [(ngModel)]="thesis.year" type="number"/>
+            <small class="form-text text-muted danger"
+                   *ngIf="!thesisForm.get('year').valid && (thesisForm.get('year').dirty || thesisForm.get('year').touched)">
+                این فیلد الزامی است.
+            </small>
+        </div>
+
+        <div class="p-col-4">
+            <ng-select notFoundText="موردی یافت نشد" id="languageId" formControlName="languageId" placeholder="زبان"
+                       [(ngModel)]="thesis.languageId" [items]="languages" bindLabel="name" bindValue="id"
+                       style="width: 100%;">
+            </ng-select>
+            <small class="form-text text-muted danger"
+                   *ngIf="!thesisForm.get('languageId').valid && (thesisForm.get('languageId').dirty || thesisForm.get('languageId').touched)">
+                این فیلد الزامی است.
+            </small>
+        </div>
+
+        <div class="p-col-4">
+            <ng-select id="levelId" formControlName="levelId" placeholder="سطح" notFoundText="موردی یافت نشد"
+                       [(ngModel)]="thesis.levelId" [items]="level" bindLabel="name" bindValue="id"
+                       style="width: 100%;">
+            </ng-select>
+            <small class="form-text text-muted danger"
+                   *ngIf="!thesisForm.get('levelId').valid && (thesisForm.get('levelId').dirty || thesisForm.get('levelId').touched)">
+                این فیلد الزامی است.
+            </small>
+        </div>
+
+        <div class="p-col-4">
+            <input class="round form-control" type="number" id="pageNumber" formControlName="pageNumber"
+                   placeholder="صفحات" [(ngModel)]="thesis.pageNumber"/>
+        </div>
+
+        <div class="p-col-12">
+            <input class="round form-control" id="description" formControlName="description" placeholder="توضیحات"
+                   [(ngModel)]="thesis.description"/>
+        </div>
+        <div class="p-col-12">
+            <div class="p-col-12" style="position: relative; margin-top: 30px;">
+                <div style="position: absolute;top: -25px;">
+                    <i class="ft-help-circle"
+                       style="font-size: 13px;
+                           color: gray;   margin-left: 4px;font-weight: bold;"></i>
+                    <span style="font-size: 13px; color: gray">پس از تایپ هر کلمه کلید Enter را بزنید</span>
+                </div>
+                <tag-input id="thesisKeyword"
+                           formControlName="thesisKeyword"
+                           [(ngModel)]="thesisKeyword"
+                           [theme]="'bootstrap'"
+                           [placeholder]="'واژگان کلیدي'"
+                           [secondaryPlaceholder]="'واژگان کلیدي'"
+                           editable="true">
+                </tag-input>
+            </div>
+        </div>
+        <div class="p-col-6">
+            <textarea id="persianAbstract" class="form-control" formControlName="persianAbstract" rows="3"
+                      [(ngModel)]="thesis.persianAbstract" placeholder="چکیده فارسی">
+            </textarea>
+        </div>
+
+        <div class="p-col-6">
+            <textarea id="englishAbstract" class="form-control" formControlName="englishAbstract" rows="3"
+                      [(ngModel)]="thesis.englishAbstract" placeholder="چکیده انگلیسی"  dir="ltr">
+            </textarea>
+        </div>
+        <div class="p-col-12">
+            <div class="custom-control custom-checkbox custom-control-inline mb-3 p-col-2">
+                <label class="btn-raised btn-primary" ngbButtonLabel>
+                    <input formControlName="confirmed" type="checkbox" ngbButton [(ngModel)]="thesis.confirmed">تایید
+                    شده</label>
+            </div>
+        </div>
+        <div class="p-col-12 p-grid">
+            <div class="p-col-6" style="text-align: left">
+                <button class="btn btn-primary fix-back-btn" [routerLink]="['/sources/thesis-list']" type="button">
+                    <i class="ft-arrow-right"></i>
+                    بازگشت
+                </button>
+            </div>
+            <div class="p-col-6" style="text-align: right;">
+                <button [disabled]="!thesisForm.valid" type="submit" class="btn btn-raised btn-info"
+                        style="margin-bottom: 0;">بعدی
+                    <span>
+                        <i class="ft-chevron-left"></i>
+                    </span>
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
+<div style="position: relative;">
+    <img *ngIf="showProgress" src="assets/img/gif/loading.gif" style="position: absolute;width: 10vw;left: 50%">
+</div>

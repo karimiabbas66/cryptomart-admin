@@ -1,0 +1,124 @@
+<div class="p-grid p-col-12 bg-white px-4 pt-3" style="text-align: right; float: right;direction: rtl;">
+    <div class="p-col-12 page-title">مشخصات شماره نشریه</div>
+    <form [formGroup]="magazineNumberForm" class="editForm p-grid p-col-12" (ngSubmit)="edit()">
+        <div class="p-col-3">
+            <input id="whichYear" class="round form-control" formControlName="whichYear"
+                   [(ngModel)]="magazineNumberModel.whichYear" type="number" placeholder="سال چندم"/>
+            <small class="form-text text-muted danger"
+                   *ngIf="!magazineNumberForm.get('whichYear').valid && (magazineNumberForm.get('whichYear').dirty || magazineNumberForm.get('whichYear').touched)">
+                این فیلد الزامی است.
+            </small>
+        </div>
+
+        <div class="p-col-3">
+            <ng-select formControlName="numberType" [items]="type"
+                       notFoundText="موردی یافت نشد" [(ngModel)]="magazineNumberModel.numberType"
+                       bindLabel="name" bindValue="id" placeholder="دوره انتشار" style="width: 100%;">
+            </ng-select>
+        </div>
+        <div class="p-col-3">
+            <input id="yearNumber" class="round form-control" formControlName="yearNumber" type="number"
+                   [(ngModel)]="magazineNumberModel.yearNumber" placeholder="شماره در سال">
+        </div>
+        <div class="p-col-3">
+            <input id="serialNumber" class="round form-control" formControlName="serialNumber" type="number"
+                   [(ngModel)]="magazineNumberModel.serialNumber" placeholder="شماره پیاپی">
+        </div>
+
+        <div class="p-col-3">
+            <input id="pageNumber" class="round form-control" formControlName="pageNumber" type="number"
+                   [(ngModel)]="magazineNumberModel.pageNumber" placeholder="تعداد صفحه">
+        </div>
+
+        <div class="p-col-4">
+            <label class="d-block">نوع تاریخ</label>
+            <div class="custom-control custom-radio custom-control-inline float-left">
+                <input [value]="0" id="customRadioInline1"
+                       formControlName="dateType" type="radio" [(ngModel)]="magazineNumberModel.dateType"
+                       class="custom-control-input">
+                <label class="custom-control-label"
+                       for="customRadioInline1">تاریخ شمسی</label>
+            </div>
+            <div class="custom-control custom-radio custom-control-inline  float-left">
+                <input [value]="1" id="customRadioInline3"
+                       formControlName="dateType" type="radio" [(ngModel)]="magazineNumberModel.dateType"
+                       class="custom-control-input">
+                <label class="custom-control-label"
+                       for="customRadioInline3">تاریخ هجری</label>
+            </div>
+            <div class="custom-control custom-radio custom-control-inline float-left">
+                <input [value]="2" id="customRadioInline2"
+                       formControlName="dateType" type="radio" [(ngModel)]="magazineNumberModel.dateType"
+                       class="custom-control-input">
+                <label class="custom-control-label"
+                       for="customRadioInline2">تاریخ میلادی</label>
+            </div>
+        </div>
+        <div class="p-col-3">
+            <persian-date-picker *ngIf="magazineNumberModel.dateType == 0" placeholder="سال یا فصل یا ماه"
+                                 [epochDate]="magazineNumberModel.date"
+                                 (passEntry)="onDateChange($event)"></persian-date-picker>
+            <islamic-date-picker *ngIf="magazineNumberModel.dateType == 1" placeholder="سال یا فصل یا ماه"
+                                 [epochDate]="magazineNumberModel.date"
+                                 (passEntry)="onDateChange($event)"></islamic-date-picker>
+            <gregorian-date-picker *ngIf="magazineNumberModel.dateType == 2" placeholder="سال یا فصل یا ماه"
+                                   [epochDate]="magazineNumberModel.date"
+                                   (passEntry)="onDateChange($event)"></gregorian-date-picker>
+        </div>
+
+        <div class="p-col-2" style="position: relative;text-align: center">
+            <div style="text-align: center;width: 20%;position: relative; margin: auto">
+                <i *ngIf="magazineNumberModel.photo" title="حذف"
+                   style="bottom: -21px;right: 83px; position: absolute;color: #ef5369;cursor: pointer;font-size: 19px;"
+                   class="fa fa-remove" (click)="removePhoto()">
+                </i>
+                <img *ngIf="magazineNumberModel.photo" title="برای ویرایش کلیک کنید"
+                     [src]="uploadUrl + magazineNumberModel.photo"
+                     (click)="openChangeImageDialog(photo)"
+                     style="cursor: pointer;box-shadow: 0 0 16px #bfb0b0; border-radius:100%; margin: auto;display: block;height: 100px;width: 100px;">
+                <img *ngIf="!magazineNumberModel.photo" title="افزودن تصویر جلد"
+                     src="../../../assets/img/portrait/avatars/avatar-07.png"
+                     (click)="openChangeImageDialog(photo)"
+                     style="cursor: pointer;box-shadow: 0 0 16px #bfb0b0; border-radius:100%; margin: auto;display: block;height: 100px;width: 100px;">
+            </div>
+        </div>
+
+        <div class="p-col-12">
+            <div class="custom-control custom-checkbox custom-control-inline mb-3 p-col-2">
+                <label class="btn-raised btn-primary" ngbButtonLabel>
+                    <input formControlName="confirmed" type="checkbox" ngbButton
+                           [(ngModel)]="magazineNumberModel.confirmed">تایید شده</label>
+            </div>
+        </div>
+    </form>
+    <div class="p-col-6" style="text-align: right;">
+        <button
+                class="btn btn-primary fix-submit-btn"
+                [disabled]="!magazineNumberForm.valid" type="button" (click)="edit()">
+            ثبت
+            <i class="ft-save"></i>
+        </button>
+    </div>
+
+    <div class="p-col-6" style="text-align: left">
+        <button class="btn btn-primary fix-back-btn" [routerLink]="['/sources/magazine-number-list']"
+                [queryParams]="{ magazineId: magazineResourceId}"
+                type="button">
+            <i class="ft-arrow-right"></i>
+            بازگشت
+        </button>
+    </div>
+</div>
+
+<ng-template #photo let-modal>
+    <div class="modal-header">
+        <h5 class="modal-title">تصویر جلد</h5>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true" style="color: black; float:left;">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <app-image-upload shape="circle" [aspectRatio]="1" [enableRatio]="true"
+                          (resultImage)="setPhoto($event)"></app-image-upload>
+    </div>
+</ng-template>

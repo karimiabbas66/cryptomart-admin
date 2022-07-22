@@ -1,0 +1,52 @@
+::ng-deep .modal-dialog{
+  direction: rtl;
+}
+
+::ng-deep .pi-fw{
+  text-align: center;
+  font-size: 11px;
+  font-weight: bold;
+}
+::ng-deep .p-treenode-label{
+  padding-right: 4px;
+  font-family: iransans, serif;
+}
+::ng-deep .show > .btn-outline-primary.dropdown-toggle{
+  color: white !important;
+}
+::ng-deep .pi-fw{
+  text-align: center;
+  font-size: 11px;
+  font-weight: bold;
+}
+form label{
+  float: right;
+  padding-right: 11px;
+}
+button{
+  color: white !important;
+}
+::ng-deep .modal-header .close{
+  margin-left: 0;
+  border: 1px solid white;
+}
+.btn-outline-primary{
+  background-color: #336668 !important
+}
+.btn-outline-primary{
+  margin-bottom: 0;
+}
+::ng-deep .p-tree .p-tree-container .p-treenode .p-treenode-content.p-highlight{
+  background-color: #336668;
+}
+::ng-deep .p-checkbox .p-checkbox-box.p-highlight{
+  background-color: #336668;
+}
+.menu-btn-item{
+  display: block;
+  text-align: right;
+  font-weight: bold;
+  padding-right: 6px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}

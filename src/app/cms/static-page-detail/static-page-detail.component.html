@@ -1,0 +1,78 @@
+<div class="p-grid" style="text-align: right">
+    <div class="p-col-12 page-title">مشخصات صفحه</div>
+    <div class="p-col-12">
+        <form [formGroup]="pageDetailForm" class="editForm p-grid p-col-12" (ngSubmit)="edit()">
+            <div class="p-col-5 form-group">
+                <input id="title" class="round form-control" formControlName="title"
+                       [(ngModel)]="page.title"
+                       placeholder="عنوان صفحه"/>
+                <small class="form-text text-muted danger" *ngIf="!pageDetailForm.get('title').valid
+         && (pageDetailForm.get('title').dirty
+               || pageDetailForm.get('title').touched)">
+                    این فیلد الزامی است.
+                </small>
+            </div>
+            <div class="p-col-7"></div>
+
+
+            <div class="p-col-5 form-group">
+                <input id="url" class="round form-control" formControlName="url"
+                       [(ngModel)]="page.url"
+                       placeholder="آدرس صفحه"/>
+                <small class="form-text text-muted danger" *ngIf="!pageDetailForm.get('url').valid
+         && (pageDetailForm.get('url').dirty
+               || pageDetailForm.get('url').touched)">
+                    این فیلد الزامی است.
+                </small>
+            </div>
+            <div class="p-col-7"></div>
+            <div class="form-group p-grid p-col-12">
+                <div class="p-grid p-col-12">
+                    <div class="p-col-12">
+                        <div class="form-group">
+                            <label for="content">محتوای صفحه</label>
+
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-12 col-lg-12">
+                                        <angular-editor id="content"
+                                                        formControlName="content"
+                                                        [style]="{minHeight: '200px'}"
+                                                        [config]="editorConfig"
+                                                        [(ngModel)]="page.body"></angular-editor>
+                                    </div>
+                                </div>
+                            </div>
+                            <small class="form-text text-muted danger"
+                                   *ngIf="!pageDetailForm.get('content').valid &&
+                                    (pageDetailForm.get('content').dirty
+               || pageDetailForm.get('content').touched)">
+                                این فیلد الزامی است.
+                            </small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="p-col-12 p-grid">
+                <div class="p-col-6" style="text-align: left">
+                    <button class="btn btn-primary fix-back-btn"
+                            [routerLink]="['/cms/static-page-list']"
+                            type="button">
+                        بازگشت
+                        <i class="ft-arrow-right"></i>
+                    </button>
+                </div>
+                <div class="p-col-6" style="text-align: right;">
+                    <button [disabled]="!pageDetailForm.valid"
+                            class="btn btn-primary fix-submit-btn"
+                            type="submit">
+                        ثبت
+                        <i class="ft-save"></i>
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+

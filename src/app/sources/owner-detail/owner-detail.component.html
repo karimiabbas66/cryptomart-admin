@@ -1,0 +1,89 @@
+<div class="p-grid p-col-12 bg-white px-4 pt-3" style="text-align: right;direction: rtl;float: right;">
+    <div class="p-col-12 page-title">مشخصات مالک منبع</div>
+    <div class="p-col-12">
+        <form [formGroup]="ownerDetailForm" class="editForm p-col-12" (ngSubmit)="edit()">
+            <div class="p-col-12 p-grid">
+                <div class="p-col-5">
+                    <input id="firstName" class="round form-control" formControlName="firstName"
+                           [(ngModel)]="owner.firstName"
+                           placeholder="نام "/>
+                    <small class="form-text text-muted danger" *ngIf="!ownerDetailForm.get('firstName').valid
+                && (ownerDetailForm.get('firstName').dirty || ownerDetailForm.get('firstName').touched)">
+                        این فیلد الزامی است.
+                    </small>
+
+                </div>
+                <div class="p-col-2">
+                </div>
+                <div class="p-col-5">
+                    <input id="lastName" class="round form-control" formControlName="lastName"
+                           [(ngModel)]="owner.lastName"
+                           placeholder="نام خانوادگی"/>
+                    <small class="form-text text-muted danger" *ngIf="!ownerDetailForm.get('lastName').valid
+                && (ownerDetailForm.get('lastName').dirty || ownerDetailForm.get('lastName').touched)">
+                        این فیلد الزامی است.
+                    </small>
+                </div>
+            </div>
+
+            <div class="p-col-12 p-grid">
+                <div class="p-col-5">
+                    <input id="phoneNumber" class="round form-control" formControlName="phoneNumber"
+                           [(ngModel)]="owner.phoneNumber"
+                           placeholder="تلفن ثابت"/>
+                    <small class="form-text text-muted danger" *ngIf="!ownerDetailForm.get('phoneNumber').valid
+                && (ownerDetailForm.get('phoneNumber').dirty || ownerDetailForm.get('phoneNumber').touched)">
+                        این فیلد الزامی است.
+                    </small>
+                </div>
+                <div class="p-col-2">
+                </div>
+                <div class="p-col-5">
+                    <input id="mobileNumber" class="round form-control" formControlName="mobileNumber"
+                           [(ngModel)]="owner.mobileNumber"
+                           placeholder="تلفن همراه"/>
+                    <small class="form-text text-muted danger" *ngIf="!ownerDetailForm.get('mobileNumber').valid
+                && (ownerDetailForm.get('mobileNumber').dirty || ownerDetailForm.get('mobileNumber').touched)">
+                        این فیلد الزامی است.
+                    </small>
+                </div>
+            </div>
+
+            <div class="p-col-12 p-grid">
+
+                <div class="p-col-2"></div>
+
+                <div class="p-col-8">
+                    <input id="address" class="round form-control" formControlName="address"
+                           [(ngModel)]="owner.address"
+                           placeholder="آدرس"/>
+                    <small class="form-text text-muted danger" *ngIf="!ownerDetailForm.get('address').valid
+                && (ownerDetailForm.get('address').dirty || ownerDetailForm.get('address').touched)">
+                        این فیلد الزامی است.
+                    </small>
+                </div>
+                <div class="p-col-2"></div>
+            </div>
+
+            <div class="p-col-12 p-grid">
+                <div class="p-col-6" style="text-align: left">
+                    <button class="btn btn-primary fix-back-btn"
+                            [routerLink]="['/sources/owner-list']"
+                            type="button">
+                        <i class="ft-arrow-right"></i>
+                        بازگشت
+                    </button>
+                </div>
+                <div class="p-col-6" style="text-align: right;">
+                    <button
+                            class="btn btn-primary fix-submit-btn"
+                            [disabled]="!ownerDetailForm.valid" type="submit">
+                        ثبت
+                        <i class="ft-save"></i>
+                    </button>
+                </div>
+            </div>
+
+        </form>
+    </div>
+</div>

@@ -1,0 +1,121 @@
+<div class="p-grid" style="text-align: right; float: right;direction: rtl;">
+    <form [formGroup]="bookDetailForm" class="editForm p-grid p-col-12" (ngSubmit)="edit()">
+        <div class="p-col-5">
+            <input id="title" class="round form-control" formControlName="title"
+                   [(ngModel)]="book.title"
+                   placeholder="نام"/>
+            <small class="form-text text-muted danger" *ngIf="!bookDetailForm.get('title').valid
+                && (bookDetailForm.get('title').dirty || bookDetailForm.get('title').touched)">
+                این فیلد الزامی است.
+            </small>
+
+        </div>
+        <div class="p-col-2">
+        </div>
+        <div class="p-col-5">
+            <input id="subject" class="round form-control" formControlName="subject"
+                   [(ngModel)]="book.subject"
+                   placeholder="موضوع"/>
+            <small class="form-text text-muted danger" *ngIf="!bookDetailForm.get('subject').valid
+                && (bookDetailForm.get('subject').dirty || bookDetailForm.get('subject').touched)">
+                این فیلد الزامی است.
+            </small>
+        </div>
+
+        <div class="p-col-4">
+            <input id="shortTitle" class="round form-control" formControlName="shortTitle"
+                   [(ngModel)]="book.shortTitle"
+                   placeholder="نام کوتاه"/>
+            <small class="form-text text-muted danger" *ngIf="!bookDetailForm.get('shortTitle').valid
+                && (bookDetailForm.get('shortTitle').dirty || bookDetailForm.get('shortTitle').touched)">
+                این فیلد الزامی است.
+            </small>
+        </div>
+        <div class="p-col-4">
+            <input id="collectionTitle" class="round form-control" formControlName="collectionTitle"
+                   [(ngModel)]="book.collectionTitle"
+                   placeholder="نام مجموعه"/>
+            <small class="form-text text-muted danger" *ngIf="!bookDetailForm.get('collectionTitle').valid
+                && (bookDetailForm.get('collectionTitle').dirty || bookDetailForm.get('collectionTitle').touched)">
+                این فیلد الزامی است.
+            </small>
+        </div>
+        <div class="p-col-4">
+            <input id="collectionNumber" class="round form-control" formControlName="collectionNumber"
+                   [(ngModel)]="book.collectionNumber" type="number" min="1"
+                   placeholder="شماره مجموعه"/>
+            <small class="form-text text-muted danger" *ngIf="!bookDetailForm.get('collectionNumber').valid
+                && (bookDetailForm.get('collectionNumber').dirty || bookDetailForm.get('collectionNumber').touched)">
+                این فیلد الزامی است.
+            </small>
+        </div>
+
+        <div class="p-col-4">
+
+            <input id="pageCount" class="round form-control" formControlName="pageCount"
+                   [(ngModel)]="book.pageCount" type="number" min="1"
+                   placeholder="تعداد صفحات"/>
+            <small class="form-text text-muted danger" *ngIf="!bookDetailForm.get('pageCount').valid
+                && (bookDetailForm.get('pageCount').dirty || bookDetailForm.get('pageCount').touched)">
+                این فیلد الزامی است.
+            </small>
+        </div>
+        <div class="p-col-4">
+            <input id="totalVolumeCount" class="round form-control" formControlName="totalVolumeCount"
+                   [(ngModel)]="book.totalVolumeCount" type="number" min="1"
+                   placeholder="تعداد جلدها"/>
+        </div>
+        <div class="p-col-4">
+            <input id="volume" class="round form-control" formControlName="volume"
+                   [(ngModel)]="book.volume" type="number" min="1"
+                   placeholder="شماره جلد"/>
+        </div>
+        <div class="p-col-2">
+            <ng-select formControlName="language" [items]="languages"
+                       notFoundText="موردی یافت نشد" [(ngModel)]="book.languageId"
+                       bindLabel="name" bindValue="id" placeholder="انتخاب زبان" style="width: 100%;">
+            </ng-select>
+        </div>
+
+        <div class="p-col-8">
+            <textarea [(ngModel)]="book.summary" class="form-control" rows="3" id="summary" maxlength="400"
+                      placeholder="متن چکیده" formControlName="summary"></textarea>
+        </div>
+        <div class="p-col-2"></div>
+        <div class="p-grid p-col-12" style="position: relative">
+            <div class="p-col-2">
+                <label class="btn-raised btn-primary" ngbButtonLabel>
+                    <input formControlName="confirmed" type="checkbox" ngbButton [(ngModel)]="book.confirmed"> تایید شده
+                </label>
+            </div>
+            <div class="p-col-6">
+            </div>
+
+            <div class="p-col-4">
+                <label class="btn-raised btn-primary" ngbButtonLabel  style="position: absolute;left: 0;">
+                    <input formControlName="isReference" type="checkbox" ngbButton [(ngModel)]="book.isReference">انتخاب
+                    به عنوان مرجع
+                </label>
+            </div>
+        </div>
+        <div class="p-col-12 p-grid">
+            <div class="p-col-6" style="text-align: left">
+                <button class="btn btn-primary fix-back-btn"
+                        [routerLink]="['/sources/book-list']"
+                        type="button">
+                    <i class="ft-arrow-right"></i>
+                    بازگشت
+                </button>
+            </div>
+            <div class="p-col-6" style="text-align: right;">
+                <button [disabled]="!bookDetailForm.valid" type="submit" class="btn btn-raised btn-info"
+                        style="margin-bottom: 0;">بعدی
+                    <span>
+                  <i class="ft-chevron-left"></i>
+                </span>
+                </button>
+            </div>
+        </div>
+
+    </form>
+</div>

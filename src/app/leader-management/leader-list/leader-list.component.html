@@ -1,0 +1,285 @@
+<div class="col-lg-12 col-md-12 bg-white px-4 pt-3">
+    <div class="p-col-12 page-title"> لیست راهبران</div>
+    <br/>
+    <ngb-accordion [activeIds]="firstPanel">
+        <ngb-panel id="first-panel">
+            <ng-template ngbPanelTitle>
+                <h5 class="mb-0" style="font-weight: bold"><i class="fa fa-search"></i> جستجوی راهبر </h5>
+            </ng-template>
+            <ng-template ngbPanelContent>
+                <div class="p-grid p-col-12">
+                    <div class="p-col-3">
+                        <input class="round form-control" placeholder="نام"
+                               (focusout)="test('firstName',$event.target.value)"
+                        />
+                    </div>
+                    <div class="p-col-1">
+                    </div>
+                    <div class="p-col-3">
+                        <input class="round form-control" placeholder="نام خانوادگی"
+                               (focusout)="test('lastName',$event.target.value)"
+                        />
+                    </div>
+                    <div class="p-col-1">
+                    </div>
+                    <div class="p-col-3">
+                        <input
+                                class="round form-control" (focusout)="test('nationalCode',$event.target.value)"
+                                placeholder="کد ملی">
+                    </div>
+
+                    <div class="p-col-3">
+                        <input class="round form-control" placeholder="نام کاربری"
+                               (focusout)="test('userName',$event.target.value)"
+                        />
+                    </div>
+                    <div class="p-col-1">
+                    </div>
+                    <div class="p-col-12 p-grid">
+                        <div class="p-col-6" style="text-align: left">
+                            <button style="padding-right: 16px;padding-left: 12px"
+                                    (click)="onRefreshTable()"
+                                    class="btn btn-danger btn-raised"
+                                    type="submit">
+                                انصراف
+                                <i class="ft-arrow-right"></i>
+                            </button>
+                        </div>
+                        <div class="p-col-6">
+                            <button style="padding-right: 15px;padding-left: 10px"
+                                    (click)="onSearchItems()"
+                                    [disabled]="disableSearchButton()"
+                                    class="btn btn-primary btn-raised"
+                                    type="submit">
+                                جستجو
+                                <i class="ft-search"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+            </ng-template>
+        </ngb-panel>
+    </ngb-accordion>
+
+
+    <div class="recover-pass">
+        <div style="padding-top: 21px" class="p-grid p-col-12 ui-sm-12 new-btn-container">
+            <button title="راهبر جدید" [routerLink]="['/user/new-leader']" type="button"
+                    class="btn-new btn btn-raised " aria-label="Add">
+                <i class="ft-plus"></i>
+            </button>
+        </div>
+    </div>
+
+    <div class="col-lg-12 col-md-12 bg-white px-4 pt-3">
+        <div class="table-responsive">
+
+            <table class="table table-striped " style="cursor: pointer; ">
+                <thead>
+                <tr>
+                    <th style="text-align: center;">نام</th>
+                    <th style="text-align: center">نام خانوادگی</th>
+                    <th style="text-align: center;">کدملی</th>
+                    <th style="text-align: center;">نام کاربری</th>
+                    <th style="text-align: center;">فعال</th>
+                    <th style="text-align: center;">عملیات</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                <img *ngIf="showProgress" src="assets/img/gif/loading.gif"
+                     style="position: absolute;width: 10vw;left: 50%">
+                <tr *ngFor="let item of items" style="text-align: center">
+                    <td><strong>{{item.firstName}}</strong></td>
+                    <td><strong>{{item.lastName}}</strong></td>
+                    <td><strong>{{item.nationalCode}}</strong></td>
+                    <td><strong>{{item.userName}}</strong></td>
+                    <td *ngIf="item.isEnable==true"><i class="ft-check primary font-small-2"></i></td>
+                    <td *ngIf="item.isEnable==false"><i class="ft-x danger font-small-2"></i></td>
+                    <td>
+                        <div ngbDropdown class="d-inline-block">
+                            <button class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle>
+                                <i style="margin-left: 8px" class="ft-settings"></i>
+                            </button>
+                            <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                                <a class="menu-btn-item" *ngIf="item.isEnable==true" title="غیرفعال"
+                                   (click)="activeOrInactivate(item.id,item.isEnable)">
+                                    غیرفعال</a
+                                >
+                                <a class="menu-btn-item" *ngIf="item.isEnable==false" title="فعال"
+                                   (click)="activeOrInactivate(item.id,item.isEnable)">
+                                    فعال</a
+                                >
+
+                                <a title="دسترسی"
+                                   class="menu-btn-item"
+                                   (click)="openAccessPage(accessPage,item)">
+                                    دسترسی
+                                </a
+                                >
+
+                                <a title="دسترسی منظومه"
+                                   class="menu-btn-item"
+                                   (click)="openFieldAccessPage(fieldAccessPage,item)">
+                                    دسترسی منظومه
+                                </a
+                                >
+
+                                <a title="گروه ها"
+                                   class="menu-btn-item"
+                                   (click)="openLeaderGroupPage(leaderGroup,item)">
+                                    گروه ها
+                                </a>
+
+                                <a title="بازنشانی رمز عبور"
+                                   class="menu-btn-item"
+                                   (click)="openForgotPasswordPage(forgotPassword,item)">
+                                    بازنشانی رمز عبور
+                                </a>
+
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+
+            </table>
+            <div style="margin-bottom: 60px" class="d-flex justify-content-between p-2">
+                <ngb-pagination #ngbPagination [collectionSize]="totalRecords" [page]="1" [pageSize]="pagesize"
+                                (pageChange)="lazyLoadByItems($event)">
+                </ngb-pagination>
+
+                <select class="custom-select" style="width: auto" name="pagesize" [(ngModel)]="pagesize"
+                        (ngModelChange)="changePageSize()">
+                    <option [ngValue]="5">5</option>
+                    <option [ngValue]="10">10</option>
+                    <option [ngValue]="20">20</option>
+                </select>
+            </div>
+
+
+        </div>
+    </div>
+</div>
+<ng-template #accessPage let-modal>
+    <div class="modal-header">
+        <h5 class="modal-title">دسترسی ها</h5>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true" style="color: black; float:left;">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body ">
+        <span class="help-tree">
+            دسترسی هایی که با رنگ قرمز نمایش داده می شوند از طریق گروه به راهبر اختصاص داده شده اند
+        </span>
+        <button title="نمایش همه" style="margin-left: 7px; padding-left: 10px; padding-right: 10px"
+                class="btn btn-raised btn-primary"
+                type="button" (click)="expandall()"
+        >
+            <i class="fa fa-expand"></i>
+        </button>
+        <button title="بستن همه" style="padding-left: 10px; padding-right: 10px" class="btn btn-raised btn-primary"
+                type="button" (click)="collapseAll()"
+        >
+            <i class="fa fa-compress"></i>
+        </button>
+        <p-tree selectionMode="checkbox"
+                [value]="resourceNodes"
+                [(selection)]="selected">
+            <ng-template let-node pTemplate="inherit">
+                <a style="color: red">{{node.label}}</a>
+            </ng-template>
+            <ng-template let-node pTemplate="default">
+                <b>{{node.label}}</b>
+            </ng-template>
+        </p-tree>
+        <div class="modal-footer px-4">
+            <div class="p-grid p-col-12">
+                <div class="p-lg-6 p-md-12 p-sm-12" style="text-align: left">
+                    <button class="btn btn-primary fix-back-btn"
+                            (click)="closeModal()"
+                            type="button">
+                        انصراف
+                        <i class="ft-arrow-right"></i>
+                    </button>
+                </div>
+                <div style="float: right;text-align: right" class="p-lg-6 p-md-12 p-sm-12">
+                    <button style="padding-right: 21px; padding-left: 21px" class="btn btn-raised btn-primary"
+                            (click)="saveUserAccess()"
+                            [disabled]="disableSaveAccess()"
+                    >ثبت
+                        <i class="ft-save"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-template>
+
+
+<ng-template #fieldAccessPage let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title">لیست دسترسی های منظومه</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true" style="color: black; float:left;">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body ">
+        <app-field-access [userId]="selectedUser"></app-field-access>
+    </div>
+</ng-template>
+
+<ng-template #leaderGroup let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title">گروه ها</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true" style="color: black; float:left;">&times;</span>
+        </button>
+    </div>
+
+    <div class="table-responsive">
+        <div class="modal-body ">
+            <table class="table table-striped " style="cursor: pointer; ">
+                <thead>
+
+                <tr>
+                    <th style="text-align: center;">نام گروه</th>
+                    <th style="text-align: center">توضیحات</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                <img *ngIf="showProgress" src="assets/img/gif/loading.gif"
+                     style="position: absolute;width: 10vw;left: 50%">
+                <tr *ngFor="let item of leaderGroupItems" style="text-align: center">
+                    <td><strong>{{item.name}}</strong></td>
+                    <td><strong>{{item.desciption}}</strong></td>
+                </tr>
+                </tbody>
+            </table>
+
+            <div class="d-flex justify-content-between p-2">
+                <ngb-pagination #ngbPagination [collectionSize]="totalLeadeGroupRecords" [page]="1"
+                                [pageSize]="pagesize"
+                                [maxSize]="5"
+                                [rotate]="true" [ellipses]="false" [boundaryLinks]="true"
+                                (pageChange)="lazyLoadUserEntity($event)">
+                </ngb-pagination>
+            </div>
+        </div>
+    </div>
+
+</ng-template>
+
+<ng-template #forgotPassword let-modal>
+    <div class="modal-header">
+        <h5 class="modal-title">بازنشانی رمز عبور</h5>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true" style="color: black; float:left;">&times;</span>
+        </button>
+    </div>
+
+    <app-forgot-password [user]="forgotPassowrdSelected"></app-forgot-password>
+
+</ng-template>

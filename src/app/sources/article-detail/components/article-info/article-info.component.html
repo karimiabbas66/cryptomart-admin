@@ -1,0 +1,93 @@
+<div class="p-grid" style="text-align: right; float: right;direction: rtl;">
+    <form [formGroup]="articleDetailForm" class="editForm p-grid p-col-12" (ngSubmit)="edit()">
+        <div class="p-col-5">
+            <input id="title" class="round form-control" formControlName="title"
+                   [(ngModel)]="article.title"
+                   placeholder="نام"/>
+            <small class="form-text text-muted danger" *ngIf="!articleDetailForm.get('title').valid
+                && (articleDetailForm.get('title').dirty || articleDetailForm.get('title').touched)">
+                این فیلد الزامی است.
+            </small>
+
+        </div>
+        <div class="p-col-2">
+        </div>
+        <div class="p-col-5">
+            <input id="doiNumber" class="round form-control" formControlName="doiNumber"
+                   [(ngModel)]="article.doiNumber"
+                   placeholder="شماره اختصاصی مقاله"/>
+        </div>
+        <div class="p-col-12"></div>
+
+        <div class="p-col-12">
+            <div class="p-col-12" style="position: relative; margin-top: 30px;">
+                <div style="position: absolute;top: -25px;">
+                    <i class="ft-help-circle"
+                       style="font-size: 13px;
+                           color: gray;   margin-left: 4px;font-weight: bold;"></i>
+                    <span style="font-size: 13px; color: gray">پس از تایپ هر کلمه کلید Enter را بزنید</span>
+                </div>
+                <tag-input id="authorKeywords"
+                           formControlName="authorKeywords"
+                           [(ngModel)]="keyWords"
+                           [theme]="'bootstrap'"
+                           [placeholder]="'واژگان کلیدي نویسنده'"
+                           [secondaryPlaceholder]="'واژگان کلیدي نویسنده'"
+                           editable="true">
+                </tag-input>
+            </div>
+        </div>
+        <div class="p-col-12"></div>
+
+        <div class="p-col-2">
+            <input id="totalPageNumber" class="round form-control" formControlName="totalPageNumber"
+                   [(ngModel)]="article.totalPageNumber" type="number" min="1"
+                   placeholder="تعداد صفحات"/>
+        </div>
+        <div class="p-col-10">
+            <input id="description" class="round form-control" formControlName="description"
+                   [(ngModel)]="article.description"
+                   placeholder="توضیحات"/>
+        </div>
+        <div class="p-col-2">
+            <ng-select formControlName="languageId" [items]="languages"
+                       notFoundText="موردی یافت نشد" [(ngModel)]="article.languageId"
+                       bindLabel="name" bindValue="id" placeholder="انتخاب زبان" style="width: 100%;">
+            </ng-select>
+        </div>
+
+        <div class="p-col-8">
+            <textarea [(ngModel)]="article.articleAbstract" class="form-control" rows="3" id="articleAbstract"
+                      maxlength="600"
+                      placeholder="چکیده" formControlName="articleAbstract"></textarea>
+        </div>
+        <div class="p-col-2"></div>
+
+        <div class="custom-control custom-checkbox custom-control-inline mb-3 p-col-2">
+            <label class="btn-raised btn-primary" ngbButtonLabel>
+                <input formControlName="confirmed" type="checkbox" ngbButton [(ngModel)]="article.confirmed"> تایید
+                شده
+            </label>
+        </div>
+
+        <div class="p-col-12 p-grid">
+            <div class="p-col-6" style="text-align: left">
+                <button class="btn btn-primary fix-back-btn"
+                        [routerLink]="['/sources/article-list']"
+                        type="button">
+                    <i class="ft-arrow-right"></i>
+                    بازگشت
+                </button>
+            </div>
+            <div class="p-col-6" style="text-align: right;">
+                <button [disabled]="!articleDetailForm.valid" type="submit" class="btn btn-raised btn-info"
+                        style="margin-bottom: 0;">بعدی
+                    <span>
+                  <i class="ft-chevron-left"></i>
+                </span>
+                </button>
+            </div>
+        </div>
+
+    </form>
+</div>

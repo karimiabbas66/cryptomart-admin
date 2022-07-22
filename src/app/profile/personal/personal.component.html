@@ -1,0 +1,299 @@
+<div class="row">
+    <div class="p-grid p-col-12" style="text-align: right">
+        <div class="p-col-12" style="position: relative;text-align: center">
+            <div style="text-align: center;width: 20%;position: relative; margin: auto">
+                <i *ngIf="person.photo" title="حذف" style="bottom: -21px;right: 83px; position: absolute;color: #ef5369;cursor: pointer;font-size: 19px;"
+                   class="fa fa-remove" (click)="removeProfileImage()"></i>
+                <img title="برای ویرایش کلیک کنید" *ngIf="person.photo" (click)="openChangeImageDialog(profileImage)" style="cursor: pointer;box-shadow: 0 0 16px #bfb0b0; border-radius:100%; margin: auto;display: block;height: 100px;width: 100px;"
+                     [src]="downloadUrl + person.photo">
+                <img title="برای ویرایش کلیک کنید" *ngIf="!person.photo"(click)="openChangeImageDialog(profileImage)" style="cursor: pointer;box-shadow: 0 0 16px #bfb0b0; border-radius:100%; margin: auto;display: block;height: 100px;width: 100px;"
+                     src="../../../assets/img/portrait/avatars/profile-avatar.png">
+            </div>
+        </div>
+        <form [formGroup]="personalForm" (ngSubmit)="submitPersonalForm()" class="editForm p-grid p-col-12">
+            <div class="p-xl-1 p-lg-1 p-md-1 p-sm-12 p-col-12"></div>
+            <div class="p-xl-5 p-lg-5 p-md-5 p-sm-12 p-col-12 form-group">
+                <div class="p-col-12">
+                    <label for="firstname" >نام</label>
+                    <input [(ngModel)]="person.firstName" type=text class="round form-control" id="firstname"
+                           formControlName="firstName"
+                           name="first-name" value="{{person.firstName}}"/>
+                </div>
+
+                <div class="p-col-12">
+                    <label for="phone">موبایل</label>
+                    <input type=text class="form-control round" id="phone" formControlName="mainPhone"
+                           [(ngModel)]="person.mainPhone"
+                           name="main-phone" value="{{person.mainPhone}}">
+                </div>
+
+                <div class="p-col-12">
+                    <label for="address">آدرس</label>
+                    <textarea class="form-control round" id="address"
+                           [(ngModel)]="person.address" formControlName="address"
+                              name="address" value="{{person.address}}"></textarea>
+                </div>
+
+
+            </div>
+
+            <div class="p-xl-5 p-lg-5 p-md-5 p-sm-12 p-col-12 form-group">
+                <div class="p-col-12">
+                    <label for="lastname" >نام خانوادگی</label>
+                    <input [(ngModel)]="person.lastName" type=text class="form-control round" id="lastname"
+                           formControlName="lastName"
+                           name="last-name" value="{{person.lastName}}">
+                </div>
+
+                <div class="p-col-12">
+                    <label for="nationalCode" >کد ملی</label>
+                    <input type=text class="form-control round" id="nationalCode"
+                           [(ngModel)]="person.nationalCode" formControlName="nationalCode"
+                           name="national-code" value="{{person.nationalCode}}">
+                </div>
+
+                <div class="p-col-12 p-mt-5" style="margin-top: -0.1rem !important;">
+                    <p for="birthDate" class="col-form-label">تاریخ تولد</p>
+                    <dp-date-picker
+                            dir="rtl"
+                            id="birthDate"
+                            #startCalender
+                            [(ngModel)]="birthDate"
+                            mode="day"
+                            placeholder="birthDate"
+                            formControlName="birthDate"
+                            theme="dp-material">
+                    </dp-date-picker>
+                </div>
+
+
+            </div>
+            <hr style="width:100%;color: slategray">
+            <div class="p-grid p-col-12">
+                <div class="p-xl-1 p-lg-1 p-md-1 p-sm-12 p-col-12"></div>
+                <div class="p-xl-5 p-lg-6 p-md-6 p-sm-12 p-col-12 form-group p-grid" id="gender">
+                    <p class="d-block">جنسیت :</p>
+                    <div class="custom-control custom-radio custom-control-inline float-left">
+                        <input [checked]="person.gender == true" [(ngModel)]="person.gender"
+                               value=true
+                               type="radio"
+                               name="gender"
+                               id="gender-man"
+                               formControlName="gender"
+                               class="custom-control-input">
+                        <label class="custom-control-label"
+                               for="gender-man">مرد</label>
+                    </div>
+
+                    <div class="custom-control custom-radio custom-control-inline  float-left">
+                        <input [checked]="person.gender == false" [(ngModel)]="person.gender"
+                               value=false
+                               type="radio"
+                               name="gender"
+                               formControlName="gender"
+                               id="gender-woman"
+                               class="custom-control-input">
+                        <label class="custom-control-label" for="gender-woman">زن</label>
+                    </div>
+                </div>
+
+                <div class="p-xl-5 p-lg-5 p-md-5 p-sm-12 p-col-12 form-group p-grid" id="marital">
+                    <p class="d-block">وضعیت تاهل :</p>
+                    <div class="custom-control custom-radio custom-control-inline float-left">
+                        <input [checked]="person.marital== 'SINGLE'" [(ngModel)]="person.marital"
+                               value="SINGLE"
+                               type="radio"
+                               name="marital"
+                               formControlName="marital"
+                               id="marital-single"
+                               class="custom-control-input">
+                        <label class="custom-control-label" for="marital-single">مجرد</label>
+                    </div>
+                    <div class="custom-control custom-radio custom-control-inline  float-left">
+                        <input [checked]="person.marital == 'MARRIED'" [(ngModel)]="person.marital"
+                               value="MARRIED"
+                               type="radio"
+                               name="marital"
+                               formControlName="marital"
+                               id="marital-married"
+                               class="custom-control-input">
+                        <label class="custom-control-label" for="marital-married">متاهل</label>
+                    </div>
+                </div>
+
+                <hr style="width:100%;color: slategray">
+                <div class="p-xl-1 p-lg-1 p-md-1 p-sm-12 p-col-12"></div>
+                <div style="padding-right: 1.5rem" class="p-xl-6 p-lg-6 p-md-6 p-sm-12 p-col-12 form-group p-grid">
+                    <p class="d-block">حساب کاربری :</p>
+                    <div style="margin-right: -30px" class="p-col-12">
+                        <div class="custom-control custom-checkbox custom-control-inline float-left">
+                            <input [(ngModel)]="access.isUser"
+                                   class="custom-control-input"
+                                   type="checkbox"
+                                   id="user"
+                                   [ngModelOptions]="{standalone: true}"
+                                   name="user">
+                            <label class="custom-control-label px-3" for="user">
+                                کاربر
+                            </label>
+                        </div>
+                    </div>
+                    <div style="margin-right: -30px" class="p-col-12">
+                        <div class="custom-control custom-checkbox custom-control-inline float-left">
+                            <input [(ngModel)]="access.isAdmin"
+                                   class="custom-control-input"
+                                   type="checkbox"
+                                   id="admin"
+                                   [ngModelOptions]="{standalone: true}"
+                                   name="admin">
+                            <label style="margin-right: -7px" class="custom-control-label px-3" for="admin">
+                                ادمین
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <hr style="width:100%;color: slategray">
+            </div>
+            <div class="p-col-12 p-grid">
+                <div class="p-col-6" style="text-align: left">
+                    <button class="btn btn-primary fix-back-btn"
+                            [routerLink]="['/profile/profile-list']"
+                            type="button">
+                        بازگشت
+                        <i class="ft-arrow-right"></i>
+                    </button>
+                </div>
+                <div class="p-col-6" style="text-align: right;">
+                    <button style="padding-right: 23px; padding-left: 23px" [disabled]="!personalForm.valid"
+                            class="btn btn-primary fix-submit-btn"
+                            type="submit">
+                        ثبت
+                        <i class="ft-save"></i>
+                    </button>
+                </div>
+
+
+            </div>
+        </form>
+    </div>
+</div>
+
+<hr>
+<div class="row">
+    <div class="p-grid p-col-12">
+        <div class="editForm p-grid p-col-12">
+            <div class="p-col-12 p-text-center">
+                <h5 style="font-weight: bold" class="pt-2 pb-4">اطلاعات تماس</h5>
+            </div>
+            <form [formGroup]="contactForm" class="editForm p-grid p-col-12" (ngSubmit)="createContact()">
+                <div class="p-xl-1 p-lg-1 p-md-1 p-sm-12 p-col-12 form-group"></div>
+                <div class="p-xl-3 p-lg-3 p-md-3 p-sm-12 p-col-12">
+                    <ng-select class="disable-clear-all" [clearable]="false" [searchable]="false"
+                               formControlName="contactType"
+                               [items]="contentTypeSelect"
+                               bindLabel="name" placeholder="نوع اطلاعات">
+                        <ng-template ng-label-tmp let-item="item">
+                            <img style="margin-left: 6px" height="20" width="20" [src]="item.avatar"/>
+                            <b> </b>
+                            <span style="font-family: iransans">{{item.name}}</span>
+                        </ng-template>
+                        <ng-template ng-option-tmp let-item="item" let-index="index">
+                            <img style="margin-left: 6px" height="20" width="20" [src]="item.avatar"/>
+                            <span style="font-family: iransans">{{item.name}}</span>
+                        </ng-template>
+                    </ng-select>
+                    <small style="text-align: right" class="form-text text-muted danger" *ngIf="!contactForm.get('contactType').valid
+                && (contactForm.get('contactType').dirty || contactForm.get('contactType').touched)">
+                        این فیلد الزامی است.
+                    </small>
+                </div>
+                <div class="p-xl-3 p-lg-3 p-md-3 p-sm-12 p-col-12">
+                    <input id="subject" class="round form-control" formControlName="content"
+                           placeholder="محتوا"/>
+                    <small style="text-align: right" class="form-text text-muted danger" *ngIf="!contactForm.get('content').valid
+                                &&contactForm.get('content').errors.required
+                                && (contactForm.get('content').dirty || contactForm.get('content').touched)">
+                        این فیلد الزامی است.
+                    </small>
+                    <small style="text-align: right" class="form-text text-muted danger" *ngIf="!contactForm.get('content').valid
+                                &&contactForm.get('content').errors.email
+                                && (contactForm.get('content').dirty || contactForm.get('content').touched)">
+                        فرمت ایمیل صحیح نیست
+                    </small>
+                    <small style="text-align: right" class="form-text text-muted danger" *ngIf="!contactForm.get('content').valid
+                                &&contactForm.get('content').errors.pattern
+                                && (contactForm.get('content').dirty || contactForm.get('content').touched)">
+                        فرمت شماره صحیح نیست
+                    </small>
+                </div>
+                <div class="p-xl-1 p-lg-1 p-md-1 p-sm-12 p-col-12 add-cent-mob">
+                    <button title="جدید" type="submit" class="circle-add btn-new btn btn-raised "
+                            aria-label="Add"
+                            [disabled]="!contactForm.valid">
+                        <i class="ft-plus"></i>
+                    </button>
+                </div>
+
+            </form>
+
+            <div class="p-grid p-col-12">
+                <div class="p-col-1"></div>
+                <div style="position: relative" class="p-col-11 p-grid">
+                    <div class="card text-center p-col-12 p-lg-3 p-xl-3 p-md-4 p-sm-6 ml-1"
+                         *ngFor="let contact of person.contacts"
+                         [ngClass]="{'bg-warning': contact.type == 'EMAIL', 'bg-primary': contact.type == 'PHONE', 'bg-success': contact.type == 'MOBILE'}">
+                        <div class="card-body">
+                            <p class="card-text">{{contact.content}}</p>
+                            <div class="">
+                                <a title="حذف" class="tbl-btn-del" (click)="deleteContact(contact.id)">
+                                    <i class="fa ft-trash-2 table-operation"></i>
+                                </a>
+                                <a *ngIf="contact.type=='MOBILE'&&contact.content!=person.mainPhone"
+                                   title="انتخاب به عنوان شماره اصلی" class="tbl-btn-active"
+                                   (click)="editMainContact(contact.content)">
+                                    <i class="fa fa-check table-operation"></i>
+                                </a>
+                                <a title="این موبایل به عنوان شماره اصلی انتخاب شده است"
+                                   *ngIf="contact.type=='MOBILE'&&contact.content==person.mainPhone&&on"
+                                   style="position: absolute; left: 2px;top: 2px">
+                                    <i style="font-size: 22px; color: gold;" class="fa fa-star table-operation"></i>
+                                </a>
+                                <a title="این موبایل به عنوان شماره اصلی انتخاب شده است"
+                                   *ngIf="contact.type=='MOBILE'&&contact.content==person.mainPhone&&!on"
+                                   style="position: absolute; left: 2px;top: 2px">
+                                    <i style="font-size: 22px; color: #f5f7fa;" class="fa fa-star table-operation"></i>
+                                </a>
+
+                                <a title="موبایل" *ngIf="contact.type=='MOBILE'"
+                                   style="position: absolute; right: 4px;top: 2px">
+                                    <i style="font-size: 35px;color: #f5f7fa;" class="fa fa-mobile table-operation"></i>
+                                </a>
+
+                                <a title="ایمیل" *ngIf="contact.type=='EMAIL'"
+                                   style="position: absolute; right: 2px;top: 2px">
+                                    <i style="font-size: 28px;color: #f5f7fa;" class="fa ft-mail table-operation"></i>
+                                </a>
+
+                                <a title="تلفن" *ngIf="contact.type=='PHONE'"
+                                   style="position: absolute; right: 2px;top: 2px">
+                                    <i style="font-size: 28px;color: #f5f7fa;" class="fa fa-phone table-operation"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<ng-template #profileImage let-modal>
+    <div class="modal-header">
+        <h5 class="modal-title">عکس پروفایل</h5>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true" style="color: black; float:left;">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body ">
+        <app-image-upload shape="circle" [aspectRatio]="1" [enableRatio]="true" (resultImage)="setProfileImage($event)"></app-image-upload>
+    </div>
+</ng-template>

@@ -1,0 +1,538 @@
+<div class="col-lg-12 col-md-12 bg-white px-4 pt-3">
+    <div class="form-group form-inline">
+        <div class="p-col-12 page-title">{{fieldMeta.title}}</div>
+    </div>
+    <ngb-tabset #tabset (tabChange)="tabChange($event)">
+        <ngb-tab title="مشخصات نمایه" id="info">
+            <ng-template ngbTabContent>
+                <div class="p-grid" style="text-align: right">
+                    <div class="p-col-12">
+                        <form [formGroup]="fieldMetaForm" class="editForm p-grid p-col-12" (ngSubmit)="edit()">
+                            <div class="p-col-5">
+                                <div class="form-group" style="float:right;">
+                                    <label class="form-control-label" style="float:right;"
+                                           for="fieldName">نمایه </label>
+                                    <br/>
+                                    <input id="fieldName" class="round form-control " formControlName="name"
+                                           [(ngModel)]="fieldMeta.title"
+                                           placeholder="نام نمایه"/>
+                                    <div *ngIf="fieldMetaForm.controls['name'].invalid && (fieldMetaForm.controls['name'].dirty || fieldMetaForm.controls['name'].touched)"
+                                         class="alert alert-danger">
+                                        <div *ngIf="fieldMetaForm.controls['name'].errors.required">این فیلد اجباری
+                                            است
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="p-col-1">
+                            </div>
+                            <div class="p-col-5">
+                                <div class="form-group">
+                                    <tag-input class="form-group " formControlName="keywords"
+                                               (onAdd)="onAddTag($event)"
+                                               [secondaryPlaceholder]="'عناوین دیگر'"
+                                               [theme]="'bootstrap'"
+                                               (onRemove)="onRemoveTag($event)"
+                                               [ngModel]="fieldMeta.keywords" [placeholder]="''"
+                                               editable="true">
+                                    </tag-input>
+                                </div>
+                            </div>
+                            <div class="p-col-1">
+                            </div>
+
+
+                            <div class="p-col-5">
+                                <div style="float:right;">
+                                    <label class="form-control-label" style="float:right;" for="createdDate">تاریخ
+                                        ایجاد</label>
+                                    <br/>
+                                    <span id="createdDate"
+                                          style="float:right;">{{field.createdDate | persianDate }}</span>
+                                </div>
+                            </div>
+                            <div class="p-col-1">
+                            </div>
+                            <div class="p-col-5">
+                                <div style="float:right;">
+                                    <label class="form-control-label" style="float:right;">
+                                        کاربر ایجاد کننده</label>
+                                    <br/>
+                                    <span id="userCreation">{{field.userId}}</span>
+                                </div>
+                            </div>
+                            <div class="p-col-1">
+                            </div>
+
+                            <div class="p-col-5">
+                                <div style="float:right;">
+                                    <label class="form-control-label" style="float:right;" for="fieldLength">
+                                        بیشترین طول مسیر تا منظومه</label>
+                                    <br/>
+                                    <span id="fieldLength"
+                                          style="float:right;">{{ distance}}</span>
+                                </div>
+                            </div>
+                            <div class="p-col-1">
+                            </div>
+                            <div class="p-col-5  form-group">
+
+                                <ng-select notFoundText="موردی یافت نشد" formControlName="fieldType"
+                                           [items]="fieldTypes"
+                                           placeholder="جنس نمایه"
+                                           bindLabel="name"
+                                           [loading]="loading"
+                                           bindValue="value"
+                                           (clear)="close()"
+                                           (close)="close()"
+                                           [searchable]="false"
+                                           [(ngModel)]="fieldMeta.fieldType">
+                                </ng-select>
+
+                            </div>
+
+                            <div class="p-col-5">
+                                <label class="form-control-label" style="float:right;" for="describe">تعریف</label>
+                                <textarea class="form-control" rows="3" placeholder="تعریف" class="form-control" id="describe"
+                                          formControlName="describe" [(ngModel)]="fieldMeta.describe"></textarea>
+                            </div>
+                            <div class="p-col-1">
+                            </div>
+                            <div class="p-col-5">
+                                <label class="form-control-label" style="float:right;" for="description">توضیحات</label>
+                                <textarea class="form-control" rows="3" placeholder="توضیحات" class="form-control" id="description"
+                                          formControlName="description" [(ngModel)]="fieldMeta.description"></textarea>
+                            </div>
+                            <div class="p-col-5">
+
+                                <label
+                                        for="customCheckboxInline1"
+                                >
+                                    مجوز نمایه زدن
+                                </label>
+                                <input id="customCheckboxInline1" [ngModelOptions]="{standalone: true}" type="checkbox" [(ngModel)]="fieldMeta.hasAccess">
+
+
+                            </div>
+                            <div class="p-col-1">
+                            </div>
+
+                            <div class="p-col-12 p-grid">
+                                <div class="p-col-6" style="text-align: left">
+                                    <button class="btn btn-primary fix-back-btn"
+                                            [routerLink]="['/dashboard/field']"
+                                            type="button">
+                                        بازگشت
+                                        <i class="ft-arrow-right"></i>
+                                    </button>
+                                </div>
+                                <div class="p-col-6">
+                                    <button style="padding-right: 15px;padding-left: 15px"
+                                            class="btn btn-primary btn-raised"
+                                            type="submit">
+                                        ویرایش
+                                        <i class="ft-save"></i>
+                                    </button>
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </ng-template>
+        </ngb-tab>
+        <ngb-tab title="ساختار نمایه" id="fieldStructured">
+            <ng-template ngbTabContent>
+                <div class="col-lg-12 col-md-12 bg-white px-4 pt-3">
+
+                    <div class="p-col-12 page-title">فرزندان</div>
+                    <div>
+                        <div class="recover-pass">
+                            <div class="p-grid p-col-12 ui-sm-12 new-btn-container">
+                                <button title="جدید" type="button" (click)="open(child)"
+                                        class="btn-new btn btn-raised" aria-label="Add">
+                                    <i class="ft-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th style="text-align: center;">ردیف</th>
+                                <th style="text-align: center;">نام</th>
+                                <th style="text-align: center;">نوع رابطه</th>
+                                <th style="text-align: center;">لایه</th>
+                                <th style="text-align: center;">عملیات</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr *ngFor="let item of childsPath ;let i=index; " class='clickable-row'>
+                                <td style="text-align: center;">{{childRow + i + 1}}</td>
+                                <td style="text-align: center;"><strong>{{ item.name }}</strong></td>
+                                <td style="text-align: center;"><strong>{{ item.rels[0].propertyList[0].value}}</strong>
+                                </td>
+                                <td style="text-align: center;"><strong>{{ 1 }}</strong></td>
+                                <td style="text-align: center;">
+                                    <a title="ویرایش" class="tbl-btn-new"
+                                       (click)="goForDetail(item.id)">
+                                        <i class="fa ft-edit table-operation"></i></a
+                                    >
+
+                                    <a class="tbl-btn-del"
+                                    ><i class="fa ft-trash-2 table-operation"
+                                        (click)="deleteField(item.id,this.id,'child')"></i></a
+                                    >
+
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="d-flex justify-content-between p-2">
+                        <ngb-pagination #ngbPaginationChild [collectionSize]="childSize" [page]="1" [pageSize]="5"
+                                        [maxSize]="5"
+                                        [rotate]="true" [ellipses]="false" [boundaryLinks]="true"
+                                        (pageChange)="lazyloadChildPaths($event)"
+                        >
+                        </ngb-pagination>
+                    </div>
+                </div>
+
+                <div class="col-lg-12 col-md-12 bg-white px-4 pt-3">
+                    <div class="p-col-12 page-title">پدران</div>
+                    <div>
+                        <div class="recover-pass">
+                            <div class="p-grid p-col-12 ui-sm-12 new-btn-container">
+                                <button title="جدید" type="button" (click)="openForAddParent(child)"
+                                        class="btn-new btn btn-raised" aria-label="Add">
+                                    <i class="ft-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <thead>
+                                <tr>
+                                    <th style="text-align: center;">ردیف</th>
+                                    <th style="text-align: center;">نام</th>
+                                    <th style="text-align: center;">نوع رابطه</th>
+                                    <th style="text-align: center;">لایه</th>
+                                    <th style="text-align: center;">عملیات</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr *ngFor="let item of parentsPath; let i=index;" class='clickable-row'>
+                                    <td style="text-align: center;">{{parentRow + i + 1}}</td>
+                                    <td style="text-align: center;"><strong>{{ item.name }}</strong></td>
+                                    <td style="text-align: center;"><strong>{{ item.rels[0].propertyList[0].value}}</strong>
+                                    </td>
+                                    <td style="text-align: center;"><strong>{{ 1 }}</strong></td>
+                                    <td style="text-align: center;">
+                                        <a title="ویرایش" class="tbl-btn-new"
+                                            (click)="goForDetail(item.id)">
+                                            <i class="fa ft-edit table-operation"></i></a
+                                        >
+                                        <a class="tbl-btn-del" (click)="deleteField(this.id,item.id,'parent')"
+
+                                        ><i class="fa ft-trash-2 table-operation"></i> </a
+                                        >
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-between p-2">
+                        <ngb-pagination #ngbPaginationParent [collectionSize]="parentSize" [page]="1" [pageSize]="5"
+                                        [maxSize]="5"
+                                        [rotate]="true" [ellipses]="false" [boundaryLinks]="true"
+                                        (pageChange)="lazyloadParentPaths($event)">
+                        </ngb-pagination>
+                    </div>
+                </div>
+            </ng-template>
+
+        </ngb-tab>
+
+    </ngb-tabset>
+
+    <ng-template #child let-c="close" let-d="dismiss">
+        <div class="modal-header px-4">
+            <h4 *ngIf="addChild" class="modal-title">اضافه کردن فرزند جدید به<span class="field-modal-title">({{fieldMeta.title}})</span></h4>
+            <h4 *ngIf="!addChild" class="modal-title">اضافه کردن پدر جدید به<span class="field-modal-title">({{fieldMeta.title}})</span></h4>
+            <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+                <span aria-hidden="true" style="color: black">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body px-4">
+            <div>
+                <div class="form-group">
+                    <div class="input-group">
+                        <div *ngIf="addChild" class="p-grid p-col-12">
+                            <div class="p-col-4" style="text-align: center">
+                                <div class="custom-control custom-radio custom-control-inline">
+                                    <input [checked]='true' [(ngModel)]="selectedValue"
+                                           value=1
+                                           type="radio"
+                                           id="customRadioInline1"
+                                           class="custom-control-input">
+                                    <label class="custom-control-label"
+                                           for="customRadioInline1">انتخاب از لیست</label>
+                                </div>
+                            </div>
+                            <div class="p-col-5" style="text-align: right">
+                                <div class="custom-control custom-radio custom-control-inline">
+                                    <input value=2
+                                           [(ngModel)]="selectedValue"
+                                           type="radio"
+                                           id="customRadioInline2"
+                                           class="custom-control-input">
+                                    <label class="custom-control-label" for="customRadioInline2">ایجاد نمایه جدید</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div *ngIf="selectedValue==2" class="p-grid p-col-12">
+
+
+                            <form [formGroup]="newFieldForm" (ngSubmit)="AddNodeAndRelation()"
+                                  class="editForm p-grid p-col-12">
+                                <div class="p-col-12" style="direction: rtl">
+                                    <input class="round form-control" formControlName="title" placeholder="نام نمایه"
+                                           [(ngModel)]="newField.name" style="float:right;width: 100%">
+                                    <small style="text-align: right" class="form-text text-muted danger"
+                                           *ngIf="!newFieldForm.get('title').valid &&
+                       (newFieldForm.get('title').dirty
+               || newFieldForm.get('title').touched)">
+                                        این فیلد الزامی است.
+                                    </small>
+                                </div>
+                                <div class="p-col-12"></div>
+                                <div class="p-col-12"></div>
+                                <div class="p-col-12">
+                                    <div class="form-group" style="position: relative">
+                                        <div style="position: absolute;top: -23px;">
+                                            <i class="ft-help-circle"
+                                               style="font-size: 13px;color: gray;   margin-left: 4px;font-weight: bold;"></i>
+                                            <span style="font-size: 13px; color: gray">پس از تایپ هر کلمه کلید Enter را بزنید</span>
+                                        </div>
+                                        <tag-input class="form-group"
+                                                   formControlName="keyword"
+                                                   (onAdd)="onadd($event)"
+                                                   (onRemove)="onRemove($event)"
+                                                   [secondaryPlaceholder]="'عناوین دیگر'"
+                                                   [theme]="'bootstrap'"
+                                                   [placeholder]="''"
+                                                   editable="true">
+                                        </tag-input>
+                                    </div>
+                                </div>
+                                <div class="form-group p-col-5">
+                                    <ng-select notFoundText="موردی یافت نشد" [items]="fieldTypes"
+                                               placeholder="جنس نمایه"
+                                               bindLabel="name"
+                                               formControlName="type"
+                                               bindValue="value"
+                                               [searchable]="false"
+                                               [(ngModel)]="newField.fieldType">
+                                    </ng-select>
+                                </div>
+                                <div class="p-col-5">
+
+                                    <label
+                                            for="customCheckboxInline11"
+                                    >
+                                        مجوز نمایه زدن
+                                    </label>
+                                    <input id="customCheckboxInline11" [ngModelOptions]="{standalone: true}" type="checkbox"
+                                           [(ngModel)]="hasAccess">
+
+
+                                </div>
+                                <div class="p-col-6">
+                                    <label style="float: right" for="describe">تعریف</label>
+                                    <textarea class="form-control" id="describe1" rows="3" class="form-control"
+                                              formControlName="describe" [(ngModel)]="newField.describe"></textarea>
+                                </div>
+                                <div class="p-col-6">
+                                    <label style="float: right" for="description" >توضیحات</label>
+                                    <textarea class="form-control" rows="3" class="form-control"
+                                              id="description1"
+                                              formControlName="description" [(ngModel)]="newField.description"></textarea>
+                                </div>
+                                <div class="form-group p-col-5">
+                                    <label style="float: right" for="typerel">نوع رابطه</label>
+                                    <ng-select [items]="secondRelationNames"
+                                               id="typerel"
+                                               formControlName="relType"
+                                               notFoundText="موردی یافت نشد"
+                                               placeholder="نوع رابطه"
+                                               (clear)="resetSecondSelect()"
+                                               [(ngModel)]="secondSelectedRelationName">
+
+                                    </ng-select>
+
+                                </div>
+                                <div class="p-col-12">
+                                    <div class="modal-footer">
+                                        <div class="p-grid p-col-12">
+                                            <div class="p-col-6" style="text-align: left">
+                                                <button class="btn btn-primary fix-back-btn"
+                                                        (click)="closeModal()"
+                                                        type="button">
+                                                    انصراف
+                                                    <i class="ft-arrow-right"></i>
+                                                </button>
+                                            </div>
+                                            <div class="p-col-6" style="text-align: right;">
+                                                <button [disabled]="!newFieldForm.valid"
+                                                        class="btn btn-primary fix-submit-btn"
+                                                        type="submit">
+                                                    ثبت
+                                                    <i class="ft-save"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div *ngIf="selectedValue== 1" class="p-grid p-col-12" style="text-align: right">
+                            <div class="p-col-5">
+                                <div class="form-group">
+                                    <div style="position: relative" class="form-group form-inline">
+                                        <div style="padding-right: 0" class="p-col-12">
+                                            <ng-select [items]="firstRelationNames"
+                                                       notFoundText="موردی یافت نشد"
+                                                       placeholder="نوع رابطه"
+                                                       (clear)="resetFirstSelect()"
+                                                       [(ngModel)]="firstSelectedRelationName">
+
+                                            </ng-select>
+                                        </div>
+
+
+                                        <div class="p-col-12" style="padding-right: 0">
+                                            <ng-select
+                                                    appendTo="body"
+                                                    (scroll)="onScroll($event)"
+                                                    [virtualScroll]="true"
+                                                    (scrollToEnd)="onScrollToEnd()"
+                                                    [loading]="loading"
+                                                    (clear)="close()"
+                                                    (close)="close()"
+                                                    (search)="onSearch($event)"
+                                                    style="width: 100%;"
+                                                    bindLabel="title"
+                                                    bindValue="id"
+                                                    notFoundText="موردی یافت نشد"
+                                                    [(ngModel)]="selectedHistoryId"
+                                                    (ngModelChange)="showDetail()"
+                                                    [items]="fields" [placeholder]="placeHolder">
+                                            </ng-select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div *ngIf="showInf" class="p-grid p-col-12" style="position: relative">
+                                <div class="p-col-12" style="position: absolute;right: 0;text-align: right">
+                                    <label>کلمات کلیدی</label>
+                                </div>
+                                <textarea style="margin-top: 40px;    height: 78px;
+                            width: 50%;" [disabled]="true" [(ngModel)]="selectedFieldMeta.keywords"></textarea>
+                            </div>
+
+                            <div class="p-col-12">
+                                <div class="modal-footer">
+                                    <div class="p-grid p-col-12">
+                                        <div class="p-col-6" style="text-align: left">
+                                            <button class="btn btn-primary fix-back-btn"
+                                                    (click)="closeModal()"
+                                                    type="button">
+                                                انصراف
+                                                <i class="ft-arrow-right"></i>
+                                            </button>
+                                        </div>
+                                        <div class="p-col-6" style="text-align: right;">
+                                            <button [disabled]="!this.selectedHistoryId"
+                                                    class="btn btn-primary fix-submit-btn"
+                                                    (click)="goForAdd()"
+                                                    type="button">
+                                                ثبت
+                                                <i class="ft-save"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+<!--            <form role="form" class="form form-horizontal" [formGroup]="addChildForm"-->
+<!--                  (ngSubmit)="createNewChildOrParents(this.id)">-->
+<!--                <div class="p-col-12 p-grid">-->
+<!--                    <div class="p-lg-3 p-md-12 p-sm-12"></div>-->
+<!--                    <div style="direction: rtl" class="p-lg-6 p-md-12 p-sm-12 p-grid">-->
+<!--                        <div class="p-col-12">-->
+<!--                            <ng-select formControlName="child"-->
+<!--                                       appendTo="body"-->
+<!--                                       notFoundText="موردی یافت نشد"-->
+<!--                                       (scroll)="onScroll($event)"-->
+<!--                                       [virtualScroll]="true"-->
+<!--                                       (scrollToEnd)="onScrollToEnd()"-->
+<!--                                       (search)="searchChild($event)"-->
+<!--                                       style="width: 100%;"-->
+<!--                                       bindLabel="title"-->
+<!--                                       bindValue="id"-->
+<!--                                       [(ngModel)]="childDto.childId"-->
+<!--                                       [items]="fields" placeholder="فرزند جدید">-->
+<!--                            </ng-select>-->
+<!--                            <small style="text-align: right" class="form-text text-muted danger" *ngIf="!addChildForm.get('child').valid-->
+<!--                && (addChildForm.get('child').dirty || addChildForm.get('child').touched)">-->
+<!--                                این فیلد الزامی است-->
+<!--                            </small>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div class="p-lg-3 p-md-12 p-sm-12"></div>-->
+<!--                    <div class="p-lg-3 p-md-12 p-sm-12"></div>-->
+<!--                    <div style="direction: rtl" class="p-lg-6 p-md-12 p-sm-12 p-grid">-->
+<!--                        <div class="p-col-12">-->
+<!--                            <div>-->
+<!--                                <ng-select formControlName="relationName" [items]="relationNames"-->
+<!--                                           placeholder="نوع رابطه"-->
+<!--                                           notFoundText="موردی یافت نشد"-->
+<!--                                           [(ngModel)]="childDto.relationName">-->
+<!--                                </ng-select>-->
+<!--                                <small style="text-align: right" class="form-text text-muted danger" *ngIf="!addChildForm.get('relationName').valid-->
+<!--                && (addChildForm.get('relationName').dirty || addChildForm.get('relationName').touched)">-->
+<!--                                    این فیلد الزامی است.-->
+<!--                                </small>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div class="p-lg-3 p-md-12 p-sm-12"></div>-->
+<!--                </div>-->
+<!--                <div class="modal-footer px-4">-->
+<!--                    <div class="p-grid p-col-12">-->
+<!--                        <div class="p-lg-3 p-md-12 p-sm-12"></div>-->
+<!--                        <div style="padding-right: 40px" class="p-lg-6 p-md-12 p-sm-12">-->
+<!--                            <button style="width: 100%; " class="btn btn-raised btn-primary"-->
+<!--                                    [disabled]="!addChildForm.valid">-->
+<!--                                <a-->
+<!--                                        class="text-decoration-none text-white "-->
+<!--                                >ایجاد</a-->
+<!--                                >-->
+<!--                            </button>-->
+<!--                        </div>-->
+<!--                        <div class="p-lg-3 p-md-12 p-sm-12"></div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </form>-->
+        </div>
+
+    </ng-template>
+</div>

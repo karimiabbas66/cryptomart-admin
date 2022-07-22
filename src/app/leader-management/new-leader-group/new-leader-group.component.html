@@ -1,0 +1,54 @@
+<div class="p-grid p-col-12" style="text-align: right; direction: rtl;">
+    <div class="p-col-12 page-title">مشخصات گروه</div>
+    <div class="p-col-12">
+        <form #leader [formGroup]="leaderGroupForm" class="editForm p-grid p-col-12" (ngSubmit)="createNewGroup()">
+
+            <div class="p-col-3"></div>
+            <div class="p-col-6 p-grid">
+                <div class="p-col-12">
+                    <label for="name">نام</label>
+                    <input id="name" class="round form-control"  formControlName="name"
+                           [(ngModel)]="userEntity.name"/>
+                    <small class="form-text text-muted danger" *ngIf="!leaderGroupForm.controls['name'].valid
+                && (leaderGroupForm.controls['name'].dirty || leaderGroupForm.controls['name'].touched)">
+                        این فیلد الزامی است.
+                    </small>
+                </div>
+                <div class="p-col-12">
+                    <label for="desc">توضیحات</label>
+                <textarea id="desc" class="form-control"  formControlName="description"
+                          [(ngModel)]="userEntity.desciption">
+                </textarea>
+                </div>
+            </div>
+            <div class="p-col-3"></div>
+
+
+            <div class="p-col-12 p-grid">
+                <div class="p-col-6" style="text-align: left">
+                    <button class="btn btn-primary fix-back-btn"
+                            [routerLink]="['/user/leader-group']"
+                            type="button">
+                        بازگشت
+                        <i class="ft-arrow-right"></i>
+                    </button>
+                </div>
+                <div class="p-col-6">
+                    <button style="padding-right: 30px;padding-left: 30px" [disabled]="!leaderGroupForm.valid"
+                            class="btn btn-primary btn-raised"
+                            type="submit">
+                        ثبت
+                    </button>
+                </div>
+            </div>
+
+        </form>
+
+
+    </div>
+</div>
+
+
+
+
+

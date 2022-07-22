@@ -1,0 +1,73 @@
+<ng-template #modalAuthor let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title">ثبت پدید آورنده جدید</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true" style="color: black; float:left;">&times;</span>
+        </button>
+    </div>
+    <app-author-detail [modal]="true" (passEntry)="getNewAuthor($event)"></app-author-detail>
+</ng-template>
+<form class="p-col-12 basic-container" [formGroup]="authorForm">
+    <div formArrayName="authors">
+        <div class="p-grid p-col-12">
+            <div class="p-col-3">
+                <button class="btn btn-raised  mr-1 btn-adn" aria-label="Add"
+                        (click)="addFormGroup()" type="button">
+                    <i class="ft-icon ft-plus-circle">
+                        <span>افزودن پدید آورنده</span>
+                    </i>
+                </button>
+            </div>
+            <div class="p-col-4">
+                <button class="btn btn-raised mr-1 btn-info" aria-label="Add"
+                        (click)="openModal(modalAuthor)" type="button">
+                    <i class="ft-icon ft-plus-circle">
+                            <span>ثبت پدید آورنده جدید
+                            </span>
+                    </i>
+                </button>
+            </div>
+
+        </div>
+        <div class="p-grid p-col-12 row"
+             *ngFor="let author of formData.controls; let i = index"
+             [formGroupName]="i">
+            <div class="p-col-1">
+                <button class="btn btn-raised mr-1 btn-danger" aria-label="Add"
+                        (click)="removeOrClearForm(i)" type="button">
+                    <i class="ft-minus-circle"></i>
+                </button>
+            </div>
+            <div class="p-col-5">
+                <ng-select formControlName="author" (search)="searchAuthor($event)" [items]="authors"
+                           bindLabel="fullName"
+                           placeholder="انتخاب پدید آورنده" (scroll)="onScroll($event)"
+                           notFoundText="موردی یافت نشد"
+                           [virtualScroll]="true"
+                           (scrollToEnd)="onScrollToEnd()" style="width: 100%;">
+                </ng-select>
+            </div>
+            <div class=" p-col-5">
+                <ng-select formControlName="authorType" [items]="authorTypes" bindLabel="title"
+                           notFoundText="موردی یافت نشد"
+                           placeholder="انتخاب نوع پدید آورنده" style="width: 100%;">
+                </ng-select>
+            </div>
+        </div>
+    </div>
+</form>
+<div class="p-col-6 custom-control custom-checkbox custom-control-inline mb-3 p-col-2">
+    <label class="btn-raised btn-primary" ngbButtonLabel>
+        <input type="checkbox" ngbButton [(ngModel)]="confirmed"> تایید شده
+    </label>
+</div>
+
+<div class=" p-col-12 text-center">
+    <button [disabled]="!authorForm.valid" type="button" (click)="addAuthors()" class="btn btn-raised btn-info"
+            style="margin-bottom: 0;">
+        بعدی
+        <span>
+                  <i class="ft-chevron-left"></i>
+                </span>
+    </button>
+</div>

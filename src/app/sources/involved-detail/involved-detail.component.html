@@ -1,0 +1,217 @@
+<div class="p-grid p-col-12 bg-white px-4 pt-3" style="text-align: right;direction: rtl;">
+    <div class="p-col-12 page-title">مشخصات دست اندرکار</div>
+    <div class="p-col-12">
+        <app-profile-search [multiple]="false" (final)="getProfile($event)"></app-profile-search>
+    </div>
+    <div class="p-col-12">
+        <form [formGroup]="involvedForm" class="editForm  p-col-12" (ngSubmit)="edit()">
+
+            <div class="p-col-12 p-grid">
+                <div class="p-col-5">
+                    <input id="firstName" [attr.disabled]="fromProfile ? '' : null" class="round form-control"
+                           formControlName="firstName"
+                           [(ngModel)]="involvedModel.firstName"
+                           placeholder="نام دست اندرکار"/>
+                    <small class="form-text text-muted danger" *ngIf="!involvedForm.get('firstName').valid
+                    && (involvedForm.get('firstName').dirty || involvedForm.get('firstName').touched)">
+                        این فیلد الزامی است.
+                    </small>
+                </div>
+                <div class="p-col-2">
+                </div>
+                <div class="p-col-5">
+                    <input id="lastName" [attr.disabled]="fromProfile ? '' : null" class="round form-control"
+                           formControlName="lastName"
+                           [(ngModel)]="involvedModel.lastName"
+                           placeholder="نام خانوادگی دست اندرکار"/>
+                    <small class="form-text text-muted danger" *ngIf="!involvedForm.get('lastName').valid
+                    && (involvedForm.get('lastName').dirty || involvedForm.get('lastName').touched)">
+                        این فیلد الزامی است.
+                    </small>
+                </div>
+            </div>
+            <div class="p-col-12 p-grid">
+                <div class="p-col-3"></div>
+
+                <div class="p-col-6">
+                    <ng-select formControlName="gender" notFoundText="موردی یافت نشد" [items]="genders"
+                               [(ngModel)]="involvedModel.gender" bindLabel="name" bindValue="id" placeholder="جنسیت">
+                    </ng-select>
+                </div>
+
+                <div class="p-col-3"></div>
+            </div>
+
+            <div class="p-col-6">
+                <label class="d-block">نوع تاریخ</label>
+                <div class="custom-control custom-radio custom-control-inline float-left">
+                    <input [value]="0"
+                           formControlName="dateType"
+                           type="radio" [(ngModel)]="involvedModel.dateType"
+                           id="customRadioInline1"
+                           class="custom-control-input">
+                    <label class="custom-control-label"
+                           for="customRadioInline1">تاریخ شمسی</label>
+                </div>
+                <div class="custom-control custom-radio custom-control-inline  float-left">
+                    <input [value]="1"
+                           formControlName="dateType"
+                           type="radio" [(ngModel)]="involvedModel.dateType"
+                           id="customRadioInline3"
+                           class="custom-control-input">
+                    <label class="custom-control-label" for="customRadioInline3">تاریخ هجری</label>
+                </div>
+                <div class="custom-control custom-radio custom-control-inline float-left">
+                    <input [value]="2"
+                           formControlName="dateType"
+                           type="radio" [(ngModel)]="involvedModel.dateType"
+                           id="customRadioInline2"
+                           class="custom-control-input">
+                    <label class="custom-control-label"
+                           for="customRadioInline2">تاریخ میلادی</label>
+                </div>
+            </div>
+
+            <div class="p-col-12 p-grid">
+                <div class="p-col-5">
+                    <persian-date-picker *ngIf="involvedModel.dateType == 0" [placeholder]="birthDatePlaceholder"
+                                         [disableDatePicker]="fromProfile"
+                                         [epochDate]="involvedModel.birthDate"
+                                         (passEntry)="onBirthDateChange($event)"></persian-date-picker>
+                    <islamic-date-picker *ngIf="involvedModel.dateType == 1" [placeholder]="birthDatePlaceholder"
+                                         [disableDatePicker]="fromProfile"
+                                         [epochDate]="involvedModel.birthDate"
+                                         (passEntry)="onBirthDateChange($event)"></islamic-date-picker>
+                    <gregorian-date-picker *ngIf="involvedModel.dateType == 2" [placeholder]="birthDatePlaceholder"
+                                           [disableDatePicker]="fromProfile"
+                                           [epochDate]="involvedModel.birthDate"
+                                           (passEntry)="onBirthDateChange($event)"></gregorian-date-picker>
+                </div>
+                <div class="p-col-2"></div>
+                <div class="p-col-5">
+                    <persian-date-picker *ngIf="involvedModel.dateType == 0" [placeholder]="deathDatePlaceholder"
+                                         [epochDate]="involvedModel.deathDate"
+                                         (passEntry)="onDeathDateChange($event)"></persian-date-picker>
+                    <islamic-date-picker *ngIf="involvedModel.dateType == 1" [placeholder]="deathDatePlaceholder"
+                                         [epochDate]="involvedModel.deathDate"
+                                         (passEntry)="onDeathDateChange($event)"></islamic-date-picker>
+                    <gregorian-date-picker *ngIf="involvedModel.dateType == 2" [placeholder]="deathDatePlaceholder"
+                                           [epochDate]="involvedModel.deathDate"
+                                           (passEntry)="onDeathDateChange($event)"></gregorian-date-picker>
+                </div>
+            </div>
+        </form>
+
+        <hr>
+        <div class="row">
+            <div class="p-grid p-col-12">
+                <div class="editForm p-grid p-col-12">
+                    <div class="p-col-12 p-text-center">
+                        <h5 style="font-weight: bold" class="pt-2 pb-4">اطلاعات تماس</h5>
+                    </div>
+                    <form [formGroup]="contactForm" class="editForm p-grid p-col-12" (ngSubmit)="createContact()">
+                        <div class="p-xl-3 p-lg-1 p-md-1 p-sm-12 p-col-12 form-group"></div>
+                        <div class="p-xl-3 p-lg-3 p-md-3 p-sm-12 p-col-12">
+                            <ng-select class="disable-clear-all" [clearable]="false" [searchable]="false"
+                                       formControlName="contactType"
+                                       [items]="contentTypeSelect"
+                                       bindLabel="name" placeholder="نوع اطلاعات">
+                                <ng-template ng-label-tmp let-item="item">
+                                    <img style="margin-left: 6px" height="20" width="20" [src]="item.avatar"/>
+                                    <b> </b>
+                                    <span style="font-family: iransans">{{item.name}}</span>
+                                </ng-template>
+                                <ng-template ng-option-tmp let-item="item" let-index="index">
+                                    <img style="margin-left: 6px" height="20" width="20" [src]="item.avatar"/>
+                                    <span style="font-family: iransans">{{item.name}}</span>
+                                </ng-template>
+                            </ng-select>
+                            <small style="text-align: right" class="form-text text-muted danger" *ngIf="!contactForm.get('contactType').valid
+                && (contactForm.get('contactType').dirty || contactForm.get('contactType').touched)">
+                                این فیلد الزامی است.
+                            </small>
+                        </div>
+                        <div class="p-xl-3 p-lg-3 p-md-3 p-sm-12 p-col-12">
+                            <input id="subject" class="round form-control" formControlName="content"
+                                   placeholder="محتوا"/>
+                            <small style="text-align: right" class="form-text text-muted danger" *ngIf="!contactForm.get('content').valid
+                                &&contactForm.get('content').errors.required
+                                && (contactForm.get('content').dirty || contactForm.get('content').touched)">
+                                این فیلد الزامی است.
+                            </small>
+                            <small style="text-align: right" class="form-text text-muted danger" *ngIf="!contactForm.get('content').valid
+                                &&contactForm.get('content').errors.email
+                                && (contactForm.get('content').dirty || contactForm.get('content').touched)">
+                                فرمت ایمیل صحیح نیست
+                            </small>
+                            <small style="text-align: right" class="form-text text-muted danger" *ngIf="!contactForm.get('content').valid
+                                &&contactForm.get('content').errors.pattern
+                                && (contactForm.get('content').dirty || contactForm.get('content').touched)">
+                                فرمت شماره صحیح نیست
+                            </small>
+                        </div>
+                        <div class="p-xl-3 p-lg-1 p-md-1 p-sm-12 p-col-12 add-cent-mob">
+                            <button title="جدید" type="submit" class="circle-add btn-new btn btn-raised "
+                                    aria-label="Add"
+                                    [disabled]="!contactForm.valid">
+                                <i class="ft-plus"></i>
+                            </button>
+                        </div>
+
+                    </form>
+
+                    <div class="p-grid p-col-12">
+                        <div class="p-col-1"></div>
+                        <div style="position: relative" class="p-col-11 p-grid">
+                            <div class="card text-center p-col-12 p-lg-3 p-xl-3 p-md-4 p-sm-6 ml-1"
+                                 *ngFor="let contact of involvedModel.contacts;  let i = index"
+                                 [ngClass]="{'bg-warning': contact.type == 'EMAIL', 'bg-primary': contact.type == 'PHONE', 'bg-success': contact.type == 'MOBILE'}">
+                                <div class="card-body">
+                                    <p class="card-text">{{contact.content}}</p>
+                                    <div class="">
+                                        <a title="حذف" class="tbl-btn-del" (click)="deleteContact(i)">
+                                            <i class="fa ft-trash-2 table-operation"></i>
+                                        </a>
+                                        <a title="موبایل" *ngIf="contact.type=='MOBILE'"
+                                           style="position: absolute; right: 4px;top: 2px">
+                                            <i style="font-size: 35px;color: #f5f7fa;"
+                                               class="fa fa-mobile table-operation"></i>
+                                        </a>
+
+                                        <a title="ایمیل" *ngIf="contact.type=='EMAIL'"
+                                           style="position: absolute; right: 2px;top: 2px">
+                                            <i style="font-size: 28px;color: #f5f7fa;"
+                                               class="fa ft-mail table-operation"></i>
+                                        </a>
+
+                                        <a title="تلفن" *ngIf="contact.type=='PHONE'"
+                                           style="position: absolute; right: 2px;top: 2px">
+                                            <i style="font-size: 28px;color: #f5f7fa;"
+                                               class="fa fa-phone table-operation"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="custom-control custom-checkbox custom-control-inline mb-3 p-col-2">
+            <label class="btn-raised btn-primary" ngbButtonLabel>
+                <input type="checkbox" ngbButton [(ngModel)]="involvedModel.confirmed"> تایید شده
+            </label>
+        </div>
+
+        <div class="p-col-12 text-center">
+            <button
+                    class="btn btn-primary fix-submit-btn"
+                    [disabled]="!involvedForm.valid" type="button" (click)="edit()">
+                ثبت
+                <i class="ft-save"></i>
+            </button>
+        </div>
+
+    </div>
+</div>

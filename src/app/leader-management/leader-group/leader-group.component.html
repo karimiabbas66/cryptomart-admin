@@ -1,0 +1,210 @@
+<div class="col-lg-12 col-md-12 bg-white px-4 pt-3">
+    <div class="p-col-12 page-title"> لیست گروه های راهبری</div>
+    <br/>
+
+    <div class="form-group form-inline">
+        جستجوی گروه های راهبری :
+        <input class="form-control ml-2" type="text" [(ngModel)]="filterName" (keyup)="onchange()">
+    </div>
+
+    <div class="recover-pass">
+        <div class="p-grid p-col-12 ui-sm-12 new-btn-container">
+            <button title="راهبر جدید" [routerLink]="['/user/new-leader-group']" type="button"
+                    class="btn-new btn btn-raised " aria-label="Add">
+                <i class="ft-plus"></i>
+            </button>
+        </div>
+    </div>
+
+    <div class="col-lg-12 col-md-12 bg-white px-4 pt-3">
+        <div class="table-responsive">
+
+            <table class="table table-striped " style="cursor: pointer; ">
+                <thead>
+
+                <tr>
+                    <th style="text-align: center;">نام گروه</th>
+                    <th style="text-align: center">توضیحات</th>
+                    <th style="text-align: center;">عملیات</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                <img *ngIf="showProgress" src="assets/img/gif/loading.gif"
+                     style="position: absolute;width: 10vw;left: 50%">
+                <tr *ngFor="let item of data" style="text-align: center">
+                    <td><strong>{{item.name}}</strong></td>
+                    <td><strong>{{item.desciption}}</strong></td>
+                    <td>
+                        <div ngbDropdown class="d-inline-block">
+                            <button class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle>
+                                <i style="margin-left: 8px" class="ft-settings"></i>
+                            </button>
+                            <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                                <a title="ویرایش" class="menu-btn-item"
+                                   (click)="open(content,item)">
+                                    ویرایش</a
+                                >
+                                <a title="حذف" class="menu-btn-item"
+
+                                   (click)="deleteGroup(item.userEntityId)">حذف</a
+                                >
+
+                                <a title="دسترسی" class="menu-btn-item"
+
+                                   (click)="openAccessPage(accessPage,item)">
+                                    دسترسی
+                                </a
+                                >
+
+                                <a title="اعضاء" class="menu-btn-item"
+
+                                   (click)="openUserMemberPage(userMember,item)">اعضاء</a
+                                >
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+            <div style="margin-bottom: 60px" class="d-flex justify-content-between p-2">
+                <ngb-pagination #ngbPagination [collectionSize]="totalRecords" [page]="1" [pageSize]="pagesize"
+                                [maxSize]="5"
+                                [rotate]="true" [ellipses]="false" [boundaryLinks]="true"
+                                (pageChange)="lazyLoadUserEntity($event)">
+                </ngb-pagination>
+                <select class="custom-select" style="width: auto" name="pagesize" [(ngModel)]="pagesize" (ngModelChange)="changePageSize()" >
+                    <option [ngValue]="5">5</option>
+                    <option [ngValue]="10">10</option>
+                    <option [ngValue]="20">20</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<ng-template #content let-modal>
+    <div class="modal-header">
+        <h6 class="modal-title" id="modal-basic-title">ویرایش گروه راهبری</h6>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true" style="color: black; float:left;">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body ">
+        <form role="form" class="form form-horizontal" [formGroup]="updateLeaderGroupForm"
+              (ngSubmit)="updateUserEntity()">
+            <div class="p-col-12 p-grid">
+                <div class="p-col-3"></div>
+                <div class="p-col-6 p-grid">
+                    <div class="p-col-12">
+                        <label
+                                for="name">نام</label>
+                        <input class="round form-control" formControlName="name" id="name"
+                               (ngModelChange)="isEnabled=true"
+                               [(ngModel)]="selectedItem.name"/>
+                        <small class="form-text text-muted danger" *ngIf="!updateLeaderGroupForm.controls['name'].valid
+                && (updateLeaderGroupForm.controls['name'].dirty || updateLeaderGroupForm.controls['name'].touched)">
+                            این فیلد الزامی است.
+                        </small>
+                    </div>
+                    <div class="p-col-12">
+                        <label
+                                for="desciption">توضیحات</label>
+                        <textarea class="form-control" formControlName="description" id="desciption"
+                                  (ngModelChange)="isEnabled=true"
+                                  [(ngModel)]="selectedItem.desciption">
+                    </textarea>
+                    </div>
+                </div>
+                <div class="p-col-3"></div>
+            </div>
+
+
+            <div class="p-col-12 p-grid">
+                <div class="p-col-6">
+                    <button class="btn btn-primary fix-back-btn"
+                            (click)="closeModal()"
+                            type="button">
+                        انصراف
+                        <i class="ft-arrow-right"></i>
+                    </button>
+                </div>
+                <div style="text-align: right;" class="p-col-6">
+                    <button style="padding-right: 20px;padding-left: 20px"
+                            [disabled]="!updateLeaderGroupForm.valid && isEnabled"
+                            class="btn btn-primary btn-raised"
+                            type="submit">
+                        ویرایش
+                    </button>
+                </div>
+
+            </div>
+        </form>
+    </div>
+</ng-template>
+
+<ng-template #userMember let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title">لیست اعضا</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true" style="color: black; float:left;">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body ">
+        <app-user-member [userEntityId]="selectedUserEntityId"></app-user-member>
+    </div>
+</ng-template>
+
+<ng-template #accessPage let-modal>
+    <div class="modal-header">
+        <h5 class="modal-title">دسترسی ها</h5>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true" style="color: black; float:left;">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body ">
+        <button title="نمایش همه" style="margin-left: 7px; padding-left: 10px; padding-right: 10px"
+                class="btn btn-raised btn-primary"
+                type="button" (click)="expandall()"
+        >
+            <i class="fa fa-expand"></i>
+        </button>
+        <button title="بستن همه" style="padding-left: 10px; padding-right: 10px" class="btn btn-raised btn-primary"
+                type="button" (click)="collapseAll()"
+        >
+            <i class="fa fa-compress"></i>
+        </button>
+        <p-tree
+                selectionMode="checkbox"
+
+                [value]="resourceNodes"
+                [(selection)]="selected"
+        >
+            <ng-template let-node>
+                <span>{{node.label}}</span>
+            </ng-template>
+        </p-tree>
+        <div class="modal-footer px-4">
+            <div class="p-grid p-col-12">
+                <div class="p-lg-6 p-md-12 p-sm-12" style="text-align: left">
+                    <button class="btn btn-primary fix-back-btn"
+                            (click)="closeModal()"
+                            type="button">
+                        انصراف
+                        <i class="ft-arrow-right"></i>
+                    </button>
+                </div>
+                <div style="text-align: right" class="p-lg-6 p-md-12 p-sm-12">
+                    <button style="padding-left: 21px; padding-right: 21px" class="btn btn-raised btn-primary"
+                            (click)="saveUserAccess()"
+                            [disabled]="disableSaveAccess()"
+                    >ثبت
+                        <i class="ft-save"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-template>

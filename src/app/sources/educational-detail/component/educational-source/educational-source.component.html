@@ -1,0 +1,186 @@
+<div>
+    <form class="p-col-12 basic-container" [formGroup]="sourceForm">
+        <div class=" p-col-5">
+            <ng-select formControlName="referenceType" [items]="referenceTypes"
+                       notFoundText="موردی یافت نشد" (change)="getReferencesType($event)"
+                       bindLabel="title"
+                       placeholder="انتخاب نوع مرجع" style="width: 100%;">
+            </ng-select>
+        </div>
+        <div class="p-col-12"></div>
+        <div class="p-col-12"></div>
+
+        <div class=" p-col-12 text-center" *ngIf="typeId == 0">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>نام</th>
+                    <th>موضوع</th>
+                    <th>نام کوتاه</th>
+                    <th>تعداد صفحات</th>
+                    <th>نوبت چاپ</th>
+                    <th>انتخاب</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr class='clickable-row'
+                    *ngFor="let book of bookModel">
+                    <td><strong>{{ book.title }}</strong></td>
+                    <td><strong>{{ book.subject }}</strong></td>
+                    <td><strong>{{ book.shortTitle }}</strong></td>
+                    <td><strong>{{ book.pageCount }}</strong></td>
+                    <td><strong>{{ book.editionNumber }}</strong></td>
+                    <td>
+                        <button [disabled]="!multiSource && selectedReference.length > 1" title="انتخاب"
+                                class="tbl-btn-del"
+                                (click)="selectBookForReference(book)">
+                            <i class="fa ft-check table-operation"></i>
+                        </button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <div class="d-flex justify-content-between p-2">
+                <ngb-pagination [collectionSize]="totalRecords" [page]="1" [pageSize]="tableSize"
+                                (pageChange)="getBookList($event)">
+                </ngb-pagination>
+            </div>
+        </div>
+
+        <div class=" p-col-12 text-center" *ngIf="typeId == 1">
+            <table class="table table-striped text-center">
+                <thead>
+                <tr>
+                    <th>عنوان فارسی</th>
+                    <th>عنوان انگلیسی</th>
+                    <th>سال</th>
+                    <th>سطح</th>
+                    <th>انتخاب</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let item of thesisModel" class="clickable-row">
+                    <td><strong>{{ item.persianTitle }}</strong></td>
+                    <td><strong>{{ item.englishTitle }}</strong></td>
+                    <td><strong>{{ item.year }}</strong></td>
+                    <td><strong>{{ item.levelTitle }}</strong></td>
+                    <td>
+                        <button [disabled]="!multiSource && selectedReference.length > 1" title="انتخاب"
+                                class="tbl-btn-del"
+                                (click)="selectThesisForReference(item)">
+                            <i class="fa ft-check table-operation"></i>
+                        </button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <div class="d-flex justify-content-between p-2">
+                <ngb-pagination [collectionSize]="totalRecords" [page]="1" [pageSize]="tableSize"
+                                (pageChange)="getThesisList($event)">
+                </ngb-pagination>
+            </div>
+        </div>
+
+        <div class=" p-col-12 text-center" *ngIf="typeId == 2">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>عنوان</th>
+                    <th>شماره اختصاصی</th>
+                    <th>تعداد صفحات</th>
+                    <th>انتخاب</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let item of articleModel" class='clickable-row'>
+                    <td><strong>{{ item.title }}</strong></td>
+                    <td><strong>{{ item.doiNumber }}</strong></td>
+                    <td><strong>{{ item.totalPageNumber }}</strong></td>
+                    <td>
+                        <button [disabled]="!multiSource && selectedReference.length > 1" title="انتخاب"
+                                class="tbl-btn-del"
+                                (click)="selectArticleForReference(item)">
+                            <i class="fa ft-check table-operation"></i>
+                        </button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <div class="d-flex justify-content-between p-2">
+                <ngb-pagination [collectionSize]="totalRecords" [page]="1" [pageSize]="tableSize"
+                                (pageChange)="getArticleList($event)">
+                </ngb-pagination>
+            </div>
+        </div>
+
+        <div class=" p-col-12 text-center" *ngIf="typeId == 3">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>تولید کنده/تقریر کننده</th>
+                    <th>درس</th>
+                    <th>موضوع</th>
+                    <th>صفحات</th>
+                    <th>انتخاب</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let item of educationalModel" class="clickable-row">
+                    <td><strong>{{ item.creator }}</strong></td>
+                    <td><strong>{{ item.lecture }}</strong></td>
+                    <td><strong>{{ item.topic }}</strong></td>
+                    <td><strong>{{ item.page }}</strong></td>
+                    <td>
+                        <button [disabled]="!multiSource && selectedReference.length > 1" title="انتخاب"
+                                class="tbl-btn-del"
+                                (click)="selectEducationalForReference(item)">
+                            <i class="fa ft-check table-operation"></i>
+                        </button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <div class="d-flex justify-content-between p-2">
+                <ngb-pagination [collectionSize]="totalRecords" [page]="1" [pageSize]="tableSize"
+                                (pageChange)="getEducationalList($event)">
+                </ngb-pagination>
+            </div>
+        </div>
+
+        <div class=" p-col-12 text-center">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>نام منبع</th>
+                    <th>نوع منبع</th>
+                    <th>حذف</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr class='clickable-row' *ngFor="let reference of selectedReference">
+                    <td>{{reference.referenceName}}</td>
+                    <td>{{selectedChoiceType(reference)}}</td>
+                    <td>
+                        <a title="حذف" class="tbl-btn-del"
+                           (click)="removeSelectedReference(reference)">
+                            <i class="fa ft-trash-2 table-operation"></i>
+                        </a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </form>
+</div>
+<div class="p-col-12 fg-actions d-flex text-center">
+    <div class="p-col-4"></div>
+    <div class="p-col-4 recover-pass">
+        <div class="p-col-12 text-center">
+            <button type="button" (click)="addReference()"
+                    class="btn btn-primary fix-submit-btn" style="margin-bottom: 0;">
+                <a class="text-decoration-none text-white">ثبت و ذخیره</a>
+                <i class="ft-save" style="padding-right: 5px; color: white;"></i>
+            </button>
+        </div>
+    </div>
+</div>

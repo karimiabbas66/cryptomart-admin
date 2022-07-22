@@ -1,0 +1,150 @@
+<div class="col-lg-12 col-md-12 bg-white px-4 pt-3">
+  <div class="p-col-12 page-title">
+    جزئیات درخواست احراز هویت
+  </div>
+  <div class="p-col-12 p-grid">
+    <div class="p-col-12" style="margin-bottom: 20px">
+      <div class="p-col-6 date-cont" >
+        <span>تاریخ ایجاد: </span>
+        <span>{{selectedReq.requestDate | persianDate}}</span>
+      </div>
+      <div *ngIf="selectedReq.changeStatusDate" class="p-col-6 date-cont" >
+        <span>تاریخ بروزرسانی: </span>
+        <span>{{selectedReq.changeStatusDate | persianDate}}</span>
+      </div>
+    </div>
+    <div class="p-col-12 user-title-cont">
+      <span style="font-weight: bold;">اطلاعات کاربر</span>
+    </div>
+    <div class="p-col-12 p-grid user-cont" >
+      <div class="p-col-12">
+        <img style="margin: 0 auto; width: 80px" *ngIf="selectedUser && selectedUser.photo" [src]="downloadUrl + selectedUser.photo">
+        <img style="margin: 0 auto; width: 80px" *ngIf="!selectedUser || !selectedUser.photo" src="../../../assets/img/portrait/avatars/profile-avatar.png">
+      </div>
+      <div class="p-col-12" style="background-color: #92eab0;border-radius: 5px;">
+        <span>نام:</span>
+        <span>{{selectedUser.firstName}}</span>
+      </div>
+      <div class="p-col-12">
+        <span>نام خانوادگی:</span>
+        <span>{{selectedUser.lastName}}</span>
+      </div>
+      <div class="p-col-12" style="background-color: #92eab0;border-radius: 5px;">
+        <span>کدملی:</span>
+        <span>{{selectedUser.nationalCode}}</span>
+      </div>
+      <div class="p-col-12">
+        <span>شماره تماس:</span>
+        <span>{{selectedUser.mainPhone}}</span>
+      </div>
+    </div>
+
+    <div style="margin-top: 40px" *ngIf="selectedAdmin && selectedAdmin.userName" class="p-col-12 user-title-cont">
+      <span style="font-weight: bold;">اطلاعات راهبر</span>
+    </div>
+    <div *ngIf="selectedAdmin && selectedAdmin.userName" class="p-col-12 p-grid admin-cont" >
+      <div class="p-col-12">
+        <img style="margin: 0 auto; width: 80px" *ngIf="selectedAdmin && selectedAdmin.photo" [src]="downloadUrl + selectedAdmin.photo">
+        <img style="margin: 0 auto; width: 80px" *ngIf="!selectedAdmin || !selectedAdmin.photo" src="../../../assets/img/portrait/avatars/profile-avatar.png">
+      </div>
+      <div class="p-col-12" style="background-color: #a1c0db;border-radius: 5px;">
+        <span>نام:</span>
+        <span>{{selectedAdmin.firstName}}</span>
+      </div>
+      <div class="p-col-12">
+        <span>نام خانوادگی:</span>
+        <span>{{selectedAdmin.lastName}}</span>
+      </div>
+      <div class="p-col-12" style="background-color: #a1c0db;border-radius: 5px;">
+        <span>کدملی:</span>
+        <span>{{selectedAdmin.nationalCode}}</span>
+      </div>
+      <div class="p-col-12">
+        <span>شماره تماس:</span>
+        <span>{{selectedAdmin.mainPhone}}</span>
+      </div>
+    </div>
+
+    <div style="margin-top: 40px" class="p-grid p-col-12" *ngIf="forShow && forShow.length>0">
+      <div style="text-align: right" *ngFor="let item of forShow" class="p-col-4">
+        <div class="item-files">
+          <div>
+            <img (click)="showImage(item.fileId, bannerimage)" style="width: 150px; cursor: pointer" [src]="downloadUrl + item.fileId">
+          </div>
+          <div>
+            <span style="display: block"> {{item.title}} </span>
+            <span (click)="goForDownload(item.fileId)" style="color: blue; cursor: pointer; font-weight: bold"> دانلود</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="p-col-12 stat-cont p-grid">
+      <span  style="margin: 0 auto; display: block">
+        <span style="display: block"> وضعیت درخواست:</span>
+      </span>
+      <div class="p-col-12">
+        <div class="custom-control custom-radio custom-control-inline float-left">
+          <input [checked]="selectedReq.status== true" [(ngModel)]="selectedReq.status"
+                 [value]=true
+                 type="radio"
+                 name="marital"
+                 id="marital-single"
+                 class="custom-control-input">
+          <label class="custom-control-label" for="marital-single">تایید شود</label>
+        </div>
+        <div class="custom-control custom-radio custom-control-inline  float-left">
+          <input [checked]="selectedReq.status== false" [(ngModel)]="selectedReq.status"
+                 [value]=false
+                 type="radio"
+                 name="marital"
+                 id="marital-married"
+                 class="custom-control-input">
+          <label class="custom-control-label" for="marital-married">رد شود</label>
+        </div>
+        <div class="p-col-12" style="margin-top: 36px">
+          <label for="desc">توضیح</label>
+          <textarea id="desc" style="width: 100%" [(ngModel)]="selectedReq.description"></textarea>
+
+          <div class="p-col-12 p-grid">
+            <div class="p-col-12 p-grid">
+              <div class="p-col-6" style="text-align: left">
+                <button class="btn btn-primary fix-back-btn"
+                        [routerLink]="['/profile/authentication-request-list']"
+                        type="button">
+                  بازگشت
+                  <i class="ft-arrow-right"></i>
+                </button>
+              </div>
+              <div class="p-col-6" style="text-align: right;">
+                <button (click)="goForSave()"
+                        class="btn btn-primary fix-submit-btn"
+                        type="button">
+                  ثبت
+                  <i class="ft-save"></i>
+                </button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<ng-template #bannerimage let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title">تصویر مدرک</h5>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true" style="color: black; float:left;">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body ">
+    <div class="img-zoom-container" style="text-align: center">
+      <span class="down-cont" (click)="goForDownload(selectedForShow)">دانلود</span>
+      <img id="myimage" [src]="downloadUrl + selectedForShow" width="700vw">
+    </div>
+  </div>
+</ng-template>

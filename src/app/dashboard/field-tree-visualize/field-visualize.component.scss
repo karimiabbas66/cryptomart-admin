@@ -1,0 +1,121 @@
+.search-bot {
+  position: absolute;
+  top: 1px;
+  left: 17px;
+}
+
+::ng-deep .ng-dropdown-panel .ng-dropdown-panel-items .ng-option.ng-option-selected {
+  font-weight: bold;
+}
+.field-modal-title{
+  margin-right: 8px;
+  background-color: #8cbfc0;
+  border-radius: 6px;
+  padding-right: 4px;
+  padding-left: 5px;
+}
+
+::ng-deep .shine:hover {
+  stroke: #baaeae;
+  stroke-width: 7px;
+  opacity: 1;
+  stroke-dasharray: none;
+}
+
+::ng-deep .ng-input {
+  padding-right: 10px !important;
+  padding-left: 50px !important;
+}
+
+::ng-deep .ng-dropdown-panel .scroll-host {
+  text-align: right !important;
+}
+
+::ng-deep .ng-select .ng-select-container .ng-value-container .ng-placeholder {
+  margin-right: 8px !important;
+}
+
+::ng-deep .ng-select.ng-select-single .ng-select-container .ng-value-container .ng-value {
+  padding-right: 1px !important;
+}
+
+::ng-deep .modal-content {
+  direction: rtl;
+}
+
+button {
+  color: white !important;
+}
+
+::ng-deep .modal-dialog {
+  max-width: 50vw;
+}
+
+::ng-deep .bootstrap.ng2-tag-input {
+  border-radius: 6px;
+  border: 1px solid #9e9595;
+  color: #ced4da;
+
+}
+
+::ng-deep .bootstrap.ng2-tag-input ::placeholder {
+  color: #bdc3c9;
+  font-weight: bold;
+}
+
+::ng-deep .close {
+  float: left;
+  padding: unset !important;
+  margin: unset !important;
+  border: unset !important;
+}
+
+::ng-deep .modal-footer {
+  border: unset;
+}
+
+::ng-deep .ng-dropdown-panel {
+  text-align: right;
+}
+
+::ng-deep .bootstrap.ng2-tag-input {
+  width: 100%;
+}
+
+.search-bot {
+  position: absolute;
+  left: 0;
+  border-radius: 5px 0 0 4px;
+  top: 0;
+  height: 99%;
+}
+
+::ng-deep .tag__text {
+  font-family: iransans, serif;
+  margin-left: 10px;
+}
+
+::ng-deep .bootstrap.ng2-tag-input {
+  width: 100% !important;
+}
+
+::ng-deep .ng2-tag-input__text-input {
+  min-width: 17.8vw !important;
+  font-family: iransans !important;
+}
+
+::ng-deep .bootstrap.ng2-tag-input ::placeholder {
+  color: #bdc3c9;
+  font-size: 1rem;
+  font-weight: normal;
+}
+
+.link-node {
+  text-align: center;
+  border-radius: 12px;
+  background-color: #3f9ea1;
+  box-shadow: 3px 3px 7px grey;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}

@@ -1,0 +1,379 @@
+<div class="chat-application">
+    <div #contentOverlay class="content-overlay" (click)="onContentOverlay()"></div>
+    <div [perfectScrollbar] #chatSidebar class="chat-sidebar float-left d-none d-sm-none d-md-block d-lg-block">
+        <div class="chat-sidebar-content">
+            <div class="chat-fixed-search p-2">
+                <form>
+                    <div class="position-relative has-icon-left">
+                        <input (keypress)="keyPress($event)"
+                               class="form-control"
+                               id="timesheetinput1"
+                               name="employeename"
+                               type="text">
+                        <div style="left: 0" class="form-control-position">
+                            <i class="ft-search"></i>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div style="padding-top: 60px">
+                <div style="height: 40px;text-align: right;padding-top: 8px;">
+                    <span (click)="openModal(content)" class="create-gr"> ایجاد گروه</span>
+                </div>
+                <div class="status-container">
+                    <span class="online">آنلاین</span>
+                    <span class="offline">آفلاین</span>
+                    <ui-switch (valueChange)="setOnline()" size="small"
+                               [checked]="status"></ui-switch>
+                </div>
+                <div *ngFor="let user of chatUsers" id="users-list" class="list-group position-relative">
+                    <div class="users-list-padding">
+                        <a class="list-group-item bg-blue-grey bg-lighten-5 border-right-primary border-right-2"
+                           (click)="SetActive($event, user.id, 'F', user.isActive)">
+                        <span class="media">
+                          <span class="avatar avatar-md avatar-online">
+                          </span>
+                          <div class="media-body text-left">
+                              <img class="task-search-profile-image"
+                                   *ngIf="!map || !map.get(user.id) || !map.get(user.id).photo"
+                                   src="../../../assets/img/portrait/avatars/profile-avatar.png">
+                              <img class="task-search-profile-image"
+                                   *ngIf="map && map.get(user.id) && map.get(user.id).photo"
+                                   [src]="downloadUrl + map.get(user.id).photo">
+                            <h6 style="display: inline" class="list-group-item-heading">{{user.username}}
+                            </h6>
+                              <span *ngIf="!user.isActive"
+                                    style="height: 13px;border-radius: 100%; width: 13px; background-color: #b1abab; float: left"></span>
+                              <span *ngIf="user.isActive"
+                                    style="height: 13px;border-radius: 100%; width: 13px; background-color: green; float: left"></span>
+                          </div>
+                        </span>
+                        </a>
+                    </div>
+                </div>
+
+                <div *ngFor="let group of chatGroups" id="grout-list" class="list-group position-relative">
+                    <div class="users-list-padding">
+                        <a class="list-group-item bg-blue-grey bg-lighten-5 border-right-primary border-right-2"
+                           (click)="SetActive($event, group.id, 'G', true)">
+                        <span class="media">
+                          <span class="avatar avatar-md avatar-online">
+                          </span>
+                          <div class="media-body text-left">
+                              <img class="task-search-profile-image"
+                                   *ngIf="!map || !map.get(group.id) || !map.get(group.id).photo"
+                                   src="../../../assets/img/portrait/avatars/profile-avatar.png">
+                              <img class="task-search-profile-image"
+                                   *ngIf="map && map.get(group.id) && map.get(group.id).photo"
+                                   [src]="downloadUrl + map.get(group.id).photo">
+                            <h6 style="display: inline" class="list-group-item-heading">{{group.name}}
+                            </h6>
+<!--                                                            <span *ngIf="!user.isActive"-->
+<!--                                                                  style="height: 13px;border-radius: 100%; width: 13px; background-color: #b1abab; float: left"></span>-->
+<!--                                                            <span *ngIf="user.isActive"-->
+<!--                                                                  style="height: 13px;border-radius: 100%; width: 13px; background-color: green; float: left"></span>-->
+                          </div>
+                        </span>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="chat-name p-2 bg-white">
+        <div class="media">
+            <span class="chat-app-sidebar-toggle ft-align-justify font-large-1 mr-2 d-none d-block d-sm-block d-md-none"
+                  (click)="onSidebarToggle()"></span>
+            <div *ngIf="selectedContact && selectedContact.id" class="media-body text-left">
+                <img class="task-search-profile-image"
+                     *ngIf="!map || !map.get(selectedContact.id) || !map.get(selectedContact.id).photo"
+                     src="../../../assets/img/portrait/avatars/profile-avatar.png">
+                <img class="task-search-profile-image"
+                     *ngIf="map && map.get(selectedContact.id) && map.get(selectedContact.id).photo"
+                     [src]="downloadUrl + map.get(selectedContact.id).photo">
+                <span *ngIf="map && selectedContact && selectedContact.id && map.get(selectedContact.id) && selectedType=='F'">{{map.get(selectedContact.id).userName}}</span>
+                <span (click)="goForOpenModalOfDel(showUsers)" style="cursor: pointer; color: blue; font-weight: bold" *ngIf="groupInfo && selectedContact && selectedContact.id && selectedType=='G'">{{groupInfo.name}}</span>
+                <h6 style="padding-right: 55px; display: inline"
+                    *ngIf="map && selectedContact && selectedContact.id && map.get(selectedContact.id)">{{map.get(selectedContact.id).firstName + ' ' + map.get(selectedContact.id).lastName}}</h6>
+                <div *ngIf="selectedContact.type=='G'"  ngbDropdown class="d-inline-block" style="float: left">
+                    <button class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle>
+                        <i style="margin-left: 8px" class="ft-settings"></i>
+                    </button>
+                    <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+
+                        <a title="ترک گروه" class="menu-btn-item" (click)="leftFromGroup()">
+                            <span style="padding: 4px 4px;font-size: 13px;cursor: pointer; background-color: #336668;border-radius: 3px;color: white;">ترک گروه<i style="margin-right: 29px" class="fa fa-sign-out"></i> </span>
+                        </a>
+<!--                        <a title="حذف گروه" class="menu-btn-item">حذف گروه</a>-->
+                        <a *ngIf="currentuserId == groupInfo.ownerId" title="افزون عضو" class="menu-btn-item"><app-profile-search [multiple]="false" searchText="افزودن عضو" (final)="goForAdd($event)"></app-profile-search></a>
+
+                        <a *ngIf="currentuserId == groupInfo.ownerId" (click)="goForOpenModalOfDel(deleteUser)" title="حذف عضو" class="menu-btn-item" style="margin-top: -7px">
+                            <span style="padding: 4px 4px;font-size: 13px;cursor: pointer; background-color: #336668;border-radius: 3px;color: white;">حذف عضو<i style="margin-right: 23px" class="fa fa-trash"></i> </span>
+                        </a>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <section class="chat-app-window" #scrollMe [scrollTop]="scrollMe.scrollHeight">
+
+        <div class="chats back-chat">
+
+            <div *ngIf="mainChat && mainChat.length>0" class="chats p-grid p-col-12">
+                <div style="text-align: center; margin: 0 auto">
+                    <span style="cursor: pointer; padding-left: 20px; padding-right: 20px;border-radius: 7px; background-color: yellow "
+                          (click)="moreMessage()">بیشتر</span>
+                </div>
+                <div *ngFor="let chat of mainChat" class="p-col-12">
+<!--                    <div *ngIf="chat.type=='J'" class="p-col-12">-->
+<!--                        <span>{{map.get(chat.fromUserId).userName}}</span>-->
+<!--                    </div>-->
+                    <div class="p-col-6 my-chat" *ngIf="(chat.type != 'J' && chat.type != 'BU' && chat.type != 'BA') && chat.side == 'left'">
+                        <div class="chat-group-from" *ngIf="selectedType === 'G'">
+                            <span *ngIf="map && chat && chat.fromUserId && map.get(chat.fromUserId).userName">
+                                <img class="task-search-profile-image"
+                                     *ngIf="!map || !map.get(chat.fromUserId) || !map.get(chat.fromUserId).photo"
+                                     src="../../../assets/img/portrait/avatars/profile-avatar.png">
+                                <img class="task-search-profile-image"
+                                 *ngIf="map && chat && chat.fromUserId && map.get(chat.fromUserId) && map.get(chat.fromUserId).photo"
+                                 [src]="downloadUrl + map.get(chat.fromUserId).photo">
+                                {{map.get(chat.fromUserId).userName}}
+                            </span>
+                        </div>
+                        <span *ngIf="chat.type === 'text'">{{chat.message}}</span>
+                        <div *ngIf="chat.type === '2'">
+                            <img style="width: 100px" [src]="downloadUrl + chat.message">
+                        </div>
+                        <div *ngIf="chat.type === '3'">
+                            <vg-player style="width: 104%;margin-right: -4px;">
+                                <audio [vgMedia]="media1" #media1 id="singleAudio" preload="auto" controls>
+                                    <source [src]="downloadUrl + chat.message" type="audio/mp3">
+                                </audio>
+                            </vg-player>
+                        </div>
+                        <div *ngIf="chat.type === '4'">
+                            <vg-player style="height: 200px; width: 200px">
+                                <video [vgMedia]="media" #media id="singleVideo" preload="auto" controls>
+                                    <source [src]="downloadUrl + chat.message" type="video/mp4">
+                                </video>
+                            </vg-player>
+                        </div>
+
+
+                        <div style="padding-top: 6px"><span class="chat-time">{{chat.time | persianDateNoDay}}</span>
+                        </div>
+                    </div>
+                    <div class="p-col-6 other-chat" *ngIf="(chat.type != 'J' && chat.type != 'BU' && chat.type != 'BA') && chat.side == 'right'">
+                        <span *ngIf="chat.type === 'text'">{{chat.message}}</span>
+                        <div *ngIf="chat.type === '2'">
+                            <img style="width: 100px" [src]="downloadUrl + chat.message">
+                        </div>
+                        <div *ngIf="chat.type === '3'">
+                            <vg-player style="width: 104%;margin-right: -4px;">
+                                <audio [vgMedia]="media1" #media1 id="singleAudio2" preload="auto" controls>
+                                    <source [src]="downloadUrl + chat.message" type="audio/mp3">
+                                </audio>
+                            </vg-player>
+                        </div>
+                        <div *ngIf="chat.type === '4'">
+                            <vg-player style="height: 200px; width: 200px">
+                                <video [vgMedia]="media" #media id="singleVideo1" preload="auto" controls>
+                                    <source [src]="downloadUrl + chat.message" type="video/mp4">
+                                </video>
+                            </vg-player>
+                        </div>
+                        <div style="padding-top: 6px"><span class="chat-time">{{chat.time | persianDateNoDay}}</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+    <section style="margin-right: 300px; display: inline">
+        <emoji-mart class="emoji-mart" *ngIf="isEmojiPickerVisible" (emojiSelect)="addEmoji($event)"
+                    title="Choose your emoji"></emoji-mart>
+    </section>
+    <section class="chat-app-form bg-blue-grey bg-lighten-5">
+        <form class="chat-app-input row mt-2">
+            <fieldset class="form-group position-relative has-icon-left col-lg-10 col-8 m-0 px-3">
+                <div class="container">
+                    <div class="form-control-position">
+                        <i class="icon-emoticon-smile" (click)="showEmoji()"></i>
+                    </div>
+                    <textarea class="form-control" id="iconLeft4" placeholder="پیامتان را بنویسید"
+                              [disabled]="disableText"
+                              (keydown.enter)="onAddMessage();$event.preventDefault()"
+                              #messageInput></textarea>
+
+                    <div class="form-control-position control-position-right">
+                        <i class="ft-image mr-1" (click)="showUpMenu = !showUpMenu"></i>
+                        <div *ngIf="showUpMenu" class="upload-contain">
+                            <div class="up-but file-color" (click)="setType('2')"><span><i
+                                    class="fa fa-image"></i> </span></div>
+                            <div class="up-but music-color" (click)="setType('3')"><span><i
+                                    class="fa fa-music"></i></span></div>
+                            <div class="up-but movie-color" (click)="setType('4')"><span><i
+                                    class="fa fa-play"></i></span></div>
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+            <fieldset class="form-group position-relative has-icon-left col-lg-2 col-4 m-0">
+                <button [disabled]="disableText" type="button" class="btn btn-raised btn-primary px-4"
+                        (click)="onAddMessage()">
+                    <i class="fa fa-paper-plane-o d-block d-xl-inline-block d-lg-none p-0"></i>
+                </button>
+
+            </fieldset>
+        </form>
+    </section>
+</div>
+<div *ngIf="progress && progress>0" class="waiting">
+    {{progress}}%
+</div>
+<input accept="image/*" id="uploadfile1" #uploadfile style="visibility: hidden" type="file"
+       (change)="upload($event.target.files[0])">
+<input accept="audio/*" id="uploadfile2" #uploadfile2 style="visibility: hidden" type="file"
+       (change)="upload($event.target.files[0])">
+<input accept="video/*" id="uploadfile3" #uploadfile3 style="visibility: hidden" type="file"
+       (change)="upload($event.target.files[0])">
+
+
+<ng-template #content let-modal>
+    <div class="modal-header">
+        <h6 class="modal-title" id="modal-basic-title">ایجاد گروه</h6>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true" style="color: black; float:left;">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body ">
+        <div class="p-col-12 p-grid">
+            <div class="p-col-12">
+                <label style="float: right" for="g-name">نام گروه</label>
+                <input id="g-name" class="round form-control"
+                       [(ngModel)]="groupName"
+                />
+            </div>
+
+            <div class="p-col-12 p-grid">
+                <div class="p-col-6">
+                    <button class="btn btn-primary fix-back-btn"
+                            (click)="modalService.dismissAll()"
+                            type="button">
+                        انصراف
+                        <i class="ft-arrow-right"></i>
+                    </button>
+                </div>
+                <div style="text-align: right;" class="p-col-6">
+                    <button style="padding-right: 20px;padding-left: 20px"
+                            [disabled]="!groupName"
+                            class="btn btn-primary btn-raised"
+                            (click)="createGroup()"
+                            type="button">
+                        ایجاد گروه
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</ng-template>
+
+
+<ng-template #deleteUser let-modal>
+    <div class="modal-header">
+        <h6 class="modal-title" id="modal-basic-title1">حذف عضو</h6>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true" style="color: black; float:left;">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body ">
+        <div class="p-col-12 p-grid">
+            <div style="text-align: center" class="p-col-4" *ngFor="let item of groupLists">
+                <div class="p-col-12 p-grid items-chat">
+                    <i *ngIf="item.isOwner" title="مدیر گروه" class="fa fa-star" style="position: absolute; color: #eac91b"></i>
+                    <div class="p-col-12">
+                        <img class="task-search-profile-image" *ngIf="item.photo" [src]="downloadUrl + item.photo">
+                        <img class="task-search-profile-image" *ngIf="!item.photo" src="../../../assets/img/portrait/avatars/profile-avatar.png">
+                    </div>
+                    <div class="p-col-12">
+                        <span>نام کاربری: </span>
+                        <span>{{item.userName}}</span>
+                    </div>
+                    <div class="p-col-12">
+                        <span>نام : </span>
+                        <span>{{item.firstName}}</span>
+                    </div>
+                    <div class="p-col-12">
+                        <span>نام خانوادگی : </span>
+                        <span>{{item.lastName}}</span>
+                    </div>
+                    <div class="p-col-12">
+                        <span style="margin-right: 5px;"><i (click)="goForDeleteUserFromGroup(item.id)" class="fa remove-icon-trash fa-trash"></i></span>
+                    </div>
+                </div>
+            </div>
+            <div class="p-col-12 p-grid" style="margin-top: 20px">
+                <div class="p-col-12" style="text-align: center">
+                    <button class="btn btn-primary fix-back-btn"
+                            (click)="modalService.dismissAll()"
+                            type="button">
+                        انصراف
+                        <i class="ft-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-template>
+
+
+<ng-template #showUsers let-modal>
+    <div class="modal-header">
+        <h6 class="modal-title" id="modal-basic-title12">اعضای گروه</h6>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true" style="color: black; float:left;">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body ">
+        <div class="p-col-12 p-grid">
+            <div style="text-align: center" class="p-col-4" *ngFor="let item of groupLists">
+                <div class="p-col-12 p-grid items-chat">
+                    <i *ngIf="item.isOwner" title="مدیر گروه" class="fa fa-star" style="position: absolute; color: #eac91b"></i>
+                    <div class="p-col-12">
+                        <img class="task-search-profile-image" *ngIf="item.photo" [src]="downloadUrl + item.photo">
+                        <img class="task-search-profile-image" *ngIf="!item.photo" src="../../../assets/img/portrait/avatars/profile-avatar.png">
+                    </div>
+                    <div class="p-col-12">
+                        <span>نام کاربری: </span>
+                        <span>{{item.userName}}</span>
+                    </div>
+                    <div class="p-col-12">
+                        <span>نام : </span>
+                        <span>{{item.firstName}}</span>
+                    </div>
+                    <div class="p-col-12">
+                        <span>نام خانوادگی : </span>
+                        <span>{{item.lastName}}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="p-col-12 p-grid" style="margin-top: 20px">
+                <div class="p-col-12" style="text-align: center">
+                    <button class="btn btn-primary fix-back-btn"
+                            (click)="modalService.dismissAll()"
+                            type="button">
+                        بستن
+                        <i class="ft-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-template>

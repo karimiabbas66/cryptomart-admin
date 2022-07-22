@@ -1,0 +1,77 @@
+.inputComment {
+  background-color: #388e90;
+  padding: 10px;
+  text-align: center;
+  border-radius: 8px;
+  box-shadow: 2px 2px 4px grey;
+
+}
+
+.sum-vote {
+  position: absolute;
+  left: 27px;
+  top: 24px;
+}
+
+.star-rate {
+  position: absolute;
+  left: 38px;
+  top: 10px
+}
+.comment-person-info{
+  position: absolute;
+  right: 14px;
+  top: 11px;
+  font-size: 10px;
+  font-family: 'iransans', serif;
+  background-color: #d9def1;
+  border-radius: 5px;
+  padding: 0 5px;
+}
+
+.comment-person-image{
+  position: absolute;
+  right: -34px;
+  top: 12px;
+  font-size: 10px;
+  font-family: 'iransans', serif;
+}
+.comment-profile-image{
+  float: left;
+  height: 35px;
+  width: 35px;
+  border-radius: 100%;
+  box-shadow: 1px 1px 5px grey;
+}
+.vote-text {
+  border-radius: 4px;
+  background-color: #d9def1;
+  padding-right: 3px;
+  padding-left: 3px;
+  font-size: 11px;
+}
+
+.comment-container {
+  text-align: right;
+  background-color: #ffffff;
+  border-radius: 3px;
+  padding-left: 50px;
+  padding-top: 41px;
+  min-height: 50px;
+  box-shadow: 1px 1px 3px #c3bcbc;
+}
+
+button {
+  color: white !important;
+}
+
+.reply-comment {
+  position: absolute;
+  right: -24px;
+  color: #0ABC76;
+  border-radius: 5px;
+  padding: 5px 6px;
+  cursor: pointer;
+  top: 45px;
+  font-size: 16px;
+}

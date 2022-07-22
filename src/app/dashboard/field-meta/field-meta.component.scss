@@ -1,0 +1,54 @@
+.field-modal-title{
+  margin-right: 8px;
+  background-color: #8cbfc0;
+  border-radius: 6px;
+  padding-right: 4px;
+  padding-left: 5px;
+}
+
+::ng-deep .ng-input{
+  padding-right: 10px !important;
+  padding-left: 50px !important;
+}
+button{
+  color: white !important;
+}
+::ng-deep .ng-dropdown-panel .scroll-host{
+  text-align: right !important;
+}
+::ng-deep .ng-select .ng-select-container .ng-value-container .ng-placeholder{
+  margin-right: 8px !important;
+}
+::ng-deep .ng-select.ng-select-single .ng-select-container .ng-value-container .ng-value{
+  padding-right: 8px !important;
+}
+::ng-deep .modal-header{
+  direction: rtl !important;
+}
+::ng-deep .close{
+  float: left;
+  padding: unset !important;
+  margin: unset !important;
+  border: unset !important;
+}
+
+::ng-deep .tag__text{
+  font-family: iransans, serif;
+  margin-left: 10px;
+}
+::ng-deep .bootstrap.ng2-tag-input{
+  width: 100% !important;
+}
+::ng-deep .ng2-tag-input__text-input{
+  min-width: 28.8vw !important;
+  font-family: iransans !important;
+  font-weight: lighter !important;
+}
+::ng-deep .bootstrap.ng2-tag-input ::placeholder {
+  color: #bdc3c9;
+  font-size: 1rem;
+  font-weight: normal;
+}
+::ng-deep .modal.show .modal-dialog{
+  direction: rtl;
+}

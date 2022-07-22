@@ -1,0 +1,123 @@
+<!--  <div class="container-fluid">-->
+<!--    <div class="row full-height-vh m-0">-->
+<!--      <div class="ui-g-4 ui-md-6 ui-sm-12">-->
+<!--        <ngb-alert *ngIf="error" (close)="error = null" class="animate-show animate-hide" type="danger"-->
+<!--                   [dismissible]="true " style="position: absolute">-->
+<!--          {{error}}-->
+<!--        </ngb-alert>-->
+<!--      </div>-->
+
+<!--      <div class="col-12 d-flex align-items-center justify-content-center">-->
+<!--        <div class=" col-lg-6 col-md-6 col-sm-12 card">-->
+<!--          <div class="card-content">-->
+<!--            <div class="card-body login-img">-->
+<!--              <div class="row m-0">-->
+<!--                <div class="col-lg-6 d-lg-block d-none py-2 px-3 text-center align-middle">-->
+<!--                  <img src="../../assets/img/gallery/dark-bg.jpg" alt="" class="img-fluid mt-5"-->
+<!--                       width="400" height="230"/>-->
+<!--                </div>-->
+<!--                <div class="col-lg-6 col-md-12 bg-white px-4 pt-3">-->
+<!--                  <h4 class="card-title mb-2">ثبت کتاب جدید</h4>-->
+<!--                  <p class="card-text mb-3">-->
+<!--                    لطفا اطلاعات کتاب را وارد کنید.-->
+<!--                  </p>-->
+<!--                  <form [formGroup]="formGroup">-->
+<!--                    <div class="form-group">-->
+<!--                      <input type="text" formControlName="bookName" class="form-control mb-3"-->
+<!--                             placeholder="نام کتاب" [(ngModel)]="bookDetailsModel.title"-->
+<!--                             [ngClass]="{'is-invalid': submitted && controls.bookName.errors}"/>-->
+
+<!--                      <div *ngIf="submitted && controls.bookName.errors" class="invalid-feedback">-->
+<!--                        <div *ngIf="controls.bookName.errors.required">این فیلد اجباری است</div>-->
+<!--                      </div>-->
+<!--                    </div>-->
+
+<!--                    <div class="form-group ">-->
+<!--                      <input type="number" formControlName="pagesNumber" class="form-control mb-3 "-->
+<!--                             placeholder="تعداد صفحه" [(ngModel)]="bookDetailsModel.page"-->
+<!--                             [ngClass]="{'is-invalid': submitted && controls.pagesNumber.errors}"/>-->
+<!--                      <div *ngIf="submitted && controls.pagesNumber.errors" class="invalid-feedback">-->
+<!--                        <div *ngIf="controls.pagesNumber.errors.required">این فیلد اجباری است</div>-->
+<!--                      </div>-->
+<!--                    </div>-->
+
+<!--                    <div class="form-group ">-->
+<!--                      <input type="text" formControlName="fileTypeName" class="form-control mb-3 "-->
+<!--                             placeholder="نوع فایل" [(ngModel)]="bookDetailsModel.fileType"-->
+<!--                             [ngClass]="{'is-invalid': submitted && controls.fileTypeName.errors}"/>-->
+<!--                      <div *ngIf="submitted && controls.fileTypeName.errors" class="invalid-feedback">-->
+<!--                        <div *ngIf="controls.fileTypeName.errors.required">این فیلد اجباری است</div>-->
+<!--                      </div>-->
+<!--                    </div>-->
+<!--                    <br/>-->
+
+<!--                    <div>-->
+<!--                      <label class="custom-file">-->
+<!--                        <input [disabled]=" !bookDetailsModel.fileType" type="file" ng2FileSelect [uploader]="uploader">-->
+<!--                        <span class="custom-file-control"></span>-->
+<!--                      </label>-->
+<!--                      <div class="drop-box" ng2FileDrop-->
+<!--                           [ngClass]="{'dragover': isDropOver}"-->
+<!--                           [uploader]="uploader"-->
+<!--                           (fileOver)="fileOverAnother($event)">-->
+<!--                      </div>-->
+<!--                      <br/>-->
+<!--                    </div>-->
+<!--                    <button (click)="uploadFile()" class="btn btn-primary">-->
+<!--                      <a class="text-decoration-none text-white ">بارگذاری</a>-->
+<!--                    </button>-->
+
+
+<!--                    <div class="fg-actions d-flex justify-content-between ">-->
+<!--                      <div style="width: 100% " class="recover-pass ">-->
+<!--                        <div class="form-group ">-->
+<!--                            <button [disabled]="!formGroup.valid" type="submit" style="width: 100% "-->
+<!--                                    class="btn btn-primary " (click)="saveBookDetails()">-->
+<!--                            <a class="text-decoration-none text-white">ثبت</a>-->
+<!--                          </button>-->
+<!--                        </div>-->
+<!--                      </div>-->
+<!--                    </div>-->
+<!--                  </form>-->
+<!--                  <hr class="m-0 "/>-->
+
+<!--                </div>-->
+
+<!--                <div class="col-lg-12 col-md-12 bg-white px-4 pt-3">-->
+<!--                    <div class="form-group form-inline">-->
+<!--                      جستجوی متن کامل:-->
+<!--                      <input class="form-control ml-2" type="text" (input)="onchange($event)">-->
+<!--                    </div>-->
+
+<!--                  <div class="table-responsive">-->
+<!--                    <table class="table table-striped">-->
+<!--                    <thead>-->
+<!--                    <tr>-->
+<!--                      <th>نام</th>-->
+<!--                      <th>تعداد صفحات</th>-->
+<!--                      <th>نوبت چاپ</th>-->
+<!--                      <th>عنوان جستجو</th>-->
+<!--                    </tr>-->
+<!--                    </thead>-->
+<!--                    <tbody>-->
+<!--                    <tr *ngFor="let item of testList ">-->
+<!--                      <td><strong>{{ item.title }}</strong></td>-->
+<!--                      <td><strong>{{ item.page }}</strong></td>-->
+<!--                      <td><strong>{{ item.volume }}</strong></td>-->
+<!--                      <td><strong>{{ item.subject }}</strong></td>-->
+<!--                    </tr>-->
+<!--                    </tbody>-->
+<!--                  </table>-->
+<!--                  </div>-->
+<!--                  <div class="d-flex justify-content-between p-2">-->
+<!--                    <ngb-pagination [collectionSize]="total" [page]="1" [pageSize]="tableSize" (pageChange)="getTestList($event)">-->
+<!--                    </ngb-pagination>-->
+<!--                  </div>-->
+<!--                  </div>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->

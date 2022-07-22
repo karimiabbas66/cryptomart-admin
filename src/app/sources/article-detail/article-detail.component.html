@@ -1,0 +1,71 @@
+<div class="p-grid p-col-12 bg-white px-4 pt-3" style="text-align: right">
+    <div class="p-col-12 page-title">مشخصات مقاله</div>
+    <div class="p-col-12">
+        <a title="مشاهده فایل مقاله" class="tbl-btn-new"
+           [routerLink]="['/sources/article-editor']" [queryParams]="{ id: articleId, number: 1}">
+            <i class="fa ft-edit table-operation"></i>
+        </a>
+    </div>
+    <div class="p-col-12">
+        <aw-wizard #wizard navBarLayout="large-empty-symbols" navBarDirection="ltr">
+            <aw-wizard-step stepTitle="مرحله اول"
+                            [navigationSymbol]="{ symbol: '&#xf249;', fontFamily: 'FontAwesome' }">
+                <app-article-info *ngIf="step >= 1" [article]="article"
+                                  (articleInfo)="onArticleInfo($event)">
+                </app-article-info>
+            </aw-wizard-step>
+
+            <aw-wizard-step [stepTitle]="'انتخاب پدید آورنده'"
+                            [navigationSymbol]="{ symbol: '&#xf007;', fontFamily: 'FontAwesome' }">
+                <app-article-author  *ngIf="step >= 2" [article]="articleId ? article : null" (authorInfoEmitter)="onAuthorInfo($event)"></app-article-author>
+                <div class="form-group text-center space-20">
+                    <button uiSref="personal" type="button" class="btn btn-raised btn-secondary mr-1" awPreviousStep>
+                                  <span>
+                                      <i class="ft-chevron-right"></i>
+                                  </span> قبلی
+                    </button>
+                </div>
+            </aw-wizard-step>
+
+            <aw-wizard-step [stepTitle]="'انتخاب مالک مقاله'"
+                            [navigationSymbol]="{ symbol: '&#xf1ad;', fontFamily: 'FontAwesome' }">
+                <app-article-owner *ngIf="step >= 3" [article]="articleId ? article : null" [allOwners]="allOwners"
+                                   (ownerInfoEmitter)="onOwnerInfo($event)"></app-article-owner>
+                <div class="form-group text-center space-20">
+                    <button uiSref="personal" type="button" class="btn btn-raised btn-secondary mr-1" awPreviousStep>
+                                  <span>
+                                      <i class="ft-chevron-right"></i>
+                                  </span> قبلی
+                    </button>
+                </div>
+            </aw-wizard-step>
+
+            <aw-wizard-step [stepTitle]="'انتخاب مرجع'"
+                            [navigationSymbol]="{ symbol: '&#xf1ad;', fontFamily: 'FontAwesome' }">
+                <app-article-reference *ngIf="step >= 4" [article]="articleId ? article : null" (referenceEmitter)="onArticleReference($event)"></app-article-reference>
+                <div class="form-group text-center space-20">
+                    <button uiSref="personal" type="button" class="btn btn-raised btn-secondary mr-1" awPreviousStep>
+                                  <span>
+                                      <i class="ft-chevron-right"></i>
+                                  </span> قبلی
+                    </button>
+                </div>
+            </aw-wizard-step>
+
+
+            <aw-wizard-step [stepTitle]="'بارگذاری فایل کتاب'"
+                            [navigationSymbol]="{ symbol: '&#xf093;', fontFamily: 'FontAwesome' }">
+                <app-article-file *ngIf="step >= 5" [file]="file" (fileEmitter)="onFileInfo($event)"></app-article-file>
+                <div class="form-group text-center space-20">
+                    <button uiSref="personal" type="button" class="btn btn-raised btn-secondary mr-1" awPreviousStep>
+                                  <span>
+                                      <i class="ft-chevron-right"></i>
+                                  </span> قبلی
+                    </button>
+                </div>
+
+            </aw-wizard-step>
+
+        </aw-wizard>
+    </div>
+</div>

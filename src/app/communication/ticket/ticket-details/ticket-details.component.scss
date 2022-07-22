@@ -1,0 +1,135 @@
+.profile-title{
+  font-weight: bold;
+}
+.back-check{
+  background-color: #27595b;
+  color: white;
+}
+.border-title{
+  border: 2px solid lightgray;
+}
+.file-cont{
+  color: blue;
+  text-align: right;
+  margin-top: 5px;
+  cursor: pointer;
+}
+.ticket-list{
+  padding-top: 50px;
+  margin-top: 5px;
+  background-color: #e2e8e72e;
+  min-height: 200px;
+  border-radius: 5px;
+}
+.responsible{
+  position: relative;
+  padding: 1.125em 1.5em;
+  border-radius: 25px;
+  font-size: small;
+  font-weight: 900;
+}
+
+.pm-admin-style{
+  padding-top: inherit;
+  padding-bottom: inherit;
+  font-size: medium;
+  margin:auto;
+  position: relative;
+  border-width: thin;
+  border-radius: 15px;
+  background-color: #f4d948;
+  color: black;
+  min-height: 115px;
+  direction: rtl;
+}
+
+.pm-admin-style::before{
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 0;
+  bottom: 100%;
+  right: 1.5em;
+  border: .75rem solid transparent;
+  border-top: none;
+
+  border-bottom-color: #f4d948;
+  filter: drop-shadow(0 -0.0625rem 0.0625rem rgba(0, 0, 0, .1));
+}
+
+.pm-referred-style{
+  padding-top: inherit;
+  padding-bottom: inherit;
+  font-size: medium;
+  margin:auto;
+  position: relative;
+  border-width: thin;
+  border-radius: 15px;
+  background-color: #929191;
+  color: black;
+  min-height: 115px;
+  direction: rtl;
+}
+
+.pm-referred-style::before{
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 0;
+  bottom: 100%;
+  right: 1.5em;
+  border: .75rem solid transparent;
+  border-top: none;
+
+  border-bottom-color: #929191;
+  filter: drop-shadow(0 -0.0625rem 0.0625rem rgba(0, 0, 0, .1));
+}
+
+.pm-user{
+  padding-top: inherit;
+  padding-bottom: inherit;
+  font-size: medium;
+  margin:inherit;
+  position: relative;
+  border-width: thin;
+  border-radius: 15px;
+  background-color: white;
+  color: #444513;
+  box-shadow: 0 1px 6px grey;
+  min-height: 115px;
+  direction: rtl;
+}
+
+.pm-user::before {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 0;
+  bottom: 100%;
+  left: 1.5em;
+  border: .75rem solid transparent;
+  border-top: none;
+
+  border-bottom-color: white;
+  filter: drop-shadow(0 -0.0625rem 0.0625rem rgba(0, 0, 0, .1));
+}
+button{
+  color: white !important;
+}
+.profile-img{
+  position: relative;
+  height: 30px;
+  margin-right: 19px;
+  margin-bottom: 5px;
+  border-radius: 100%;
+  width: 30px;
+}
+
+.menu-btn-item{
+  display: block;
+  text-align: right;
+  font-weight: bold;
+  padding-right: 6px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}

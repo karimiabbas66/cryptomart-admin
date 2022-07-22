@@ -1,0 +1,91 @@
+<div style="text-align: right" class="col-lg-12 col-md-12 bg-white px-4 pt-3">
+    <div class="p-col-12 page-title">نظرات</div>
+    <div class="p-col-12 p-grid">
+        <form [formGroup]="commentForm" class="editForm p-grid p-col-12" (ngSubmit)="goForSave()">
+            <div class="p-col-12 p-grid">
+                <div class="p-col-9">
+                    <label for="comment">نظر شما</label>
+                    <textarea id="comment" class="round form-control" formControlName="content"
+                              [(ngModel)]="comment.content"></textarea>
+                    <small class="form-text text-muted danger"
+                           *ngIf="!commentForm.get('content').valid &&
+                       (commentForm.get('content').dirty
+               || commentForm.get('content').touched)">
+                        این فیلد الزامی است.
+                    </small>
+                </div>
+                <div class="p-col-3" style="text-align: right;">
+                    <button style="margin-top: 20%" [disabled]="!commentForm.valid"
+                            class="btn btn-primary"
+                            title="ارسال نظر"
+                            type="submit">
+                        <i class="fa fa-send"></i>
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<ul>
+    <ng-container
+            *ngTemplateOutlet="recursiveListTmpl; context:{ list: comments }"
+    ></ng-container>
+</ul>
+
+<ng-template #recursiveListTmpl let-list="list" style="background-color: white">
+    <div *ngFor="let item of list" dir="rtl" class="p-col-12 p-grid">
+
+
+        <div style="direction: ltr" class="p-col-12" style="position: relative">
+            <span *ngIf="personalInfoMap.get(item.comment.userProfileId)" class="comment-person-info">
+                <span style="font-weight: bold">{{personalInfoMap.get(item.comment.userProfileId).firstName + ' ' + personalInfoMap.get(item.comment.userProfileId).lastName + ' '}}</span>
+                <span>{{item.comment.createDate | persianDate}}</span>
+            </span>
+            <span class="comment-person-image">
+                <img *ngIf="personalInfoMap.get(item.comment.userProfileId) && personalInfoMap.get(item.comment.userProfileId).photo"
+                     class="comment-profile-image" [src]="downloadUrl + personalInfoMap.get(item.comment.userProfileId).photo">
+                <img *ngIf="!personalInfoMap.get(item.comment.userProfileId) || !personalInfoMap.get(item.comment.userProfileId).photo"
+                     class="comment-profile-image"
+                     src="../../../assets/img/portrait/avatars/task-profile.png">
+            </span>
+            <div class="p-col-12 comment-container">{{item.comment.content}}</div>
+            <div class="star-rate">
+                <star-rating [value]="resolveValueOfVote(item.comment.vote)"
+                             totalstars="5"
+                             checkedcolor="gold"
+                             uncheckedcolor="black"
+                             size="16px"
+                             readonly="false"
+                             (rate)="voteThis(item.comment.id, $event)"></star-rating>
+            </div>
+            <div *ngIf="voteMap.get(item.comment.id)" class="sum-vote">
+                <span class="vote-text">{{voteMap.get(item.comment.id) ? voteMap.get(item.comment.id).sumOfVote : 0}}
+                    امتیاز از مجموع {{voteMap.get(item.comment.id) ? voteMap.get(item.comment.id).numberOfVote : 0}}
+                    نظر</span>
+            </div>
+
+            <span title="پاسخ به این نظر" class="reply-comment" (click)="showInputComment(item.comment.id)">
+                <i class="fa fa-reply"></i>
+            </span>
+            <div *ngIf="openReply.get(item.comment.id)" class="inputComment p-grid p-col-12">
+                <div style="display: inline-block" class="p-col-8">
+                    <textarea style="width: 100%;margin-bottom: -8px; border-radius: 6px;" type="text"
+                              placeholder="پاسخ شما به این نظر" [(ngModel)]="replyCont"></textarea>
+                </div>
+                <div class="p-col-4" style="display: inline; text-align: right">
+                    <button style="background-color: #8cbfc0" class="btn btn-primary" type="submit"
+                            (click)="submitComment(item.comment)">
+                        <i class="fa fa-send"></i>
+                    </button>
+                </div>
+            </div>
+            <div *ngIf="item.reply.length > 0" dir="rtl" style="padding-right: 40px;margin-top: -13px">
+                <ng-container
+                        *ngTemplateOutlet="recursiveListTmpl; context:{ list: item.reply }">
+                </ng-container>
+            </div>
+        </div>
+    </div>
+</ng-template>

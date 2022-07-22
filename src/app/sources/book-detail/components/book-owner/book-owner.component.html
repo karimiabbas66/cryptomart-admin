@@ -1,0 +1,79 @@
+<ng-template #newModal let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title">انتخاب سازمان</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true" style="color: black; float:left;">&times;</span>
+        </button>
+    </div>
+    <app-organization [modal]="true" (passEntry)="getNewAuthor($event)"></app-organization>
+</ng-template>
+<div class="p-grid p-col-12" style="margin: 0;">
+    <form class="p-col-12 basic-container" [formGroup]="ownerForm">
+        <div formArrayName="owners">
+            <div class="p-grid p-col-12">
+                <div class="p-col-3">
+<!--                    <button class="btn btn-raised  mr-1 btn-adn" aria-label="Add" type="button">-->
+<!--                        <i class="ft-icon ft-plus-circle">-->
+                            <app-profile-search [multiple]="false" (final)="getProfile($event)"></app-profile-search>
+<!--                        </i>-->
+<!--                    </button>-->
+                </div>
+                <div class="p-col-4">
+                    <button class="btn btn-raised mr-1 btn-info" aria-label="Add"
+                            (click)="openModal(newModal)" type="button">
+                        <i class="ft-icon ft-plus-circle">
+                            <span>افزودن از سازمان ها</span>
+                        </i>
+                    </button>
+                </div>
+            </div>
+            <div class="p-grid p-col-12 row"
+                 *ngFor="let owner of formData.controls; let i = index"
+                 [formGroupName]="i">
+                <div class="p-col-1">
+                    <button class="btn btn-raised mr-1 btn-danger" aria-label="Add"
+                            (click)="removeOrClearForm(i)" type="button">
+                        <i class="ft-minus-circle"></i>
+                    </button>
+                </div>
+                <div class="p-col-3">
+                    <ng-select formControlName="owner"
+                               bindLabel="fullName" placeholder="انتخاب مالک"
+                               notFoundText="موردی یافت نشد" style="width: 100%;">
+                    </ng-select>
+                    <!--          <input id="owner" class="round form-control" formControlName="owner" -->
+                    <!--                 readonly placeholder="انتخاب مالک" style="width: 100%;"/>-->
+                </div>
+                <div class="p-col-2">
+                    <input id="title" class="round form-control" formControlName="ownerType" disabled
+                           placeholder="توع مالک"/>
+                </div>
+                <div class="p-col-3">
+                    <app-uploader (fileUuid)="afterUploadBookFile($event, i)"
+                                  [patch]="'book-owner'" [index]="i"></app-uploader>
+                </div>
+                <div *ngIf="map" class="p-col-3">
+                    <button class="btn btn-raised mr-1 btn-info" aria-label="Add" [disabled]="map.get(i) == null"
+                            (click)="goForDownload(i)" type="button">
+                        <i class="ft-plus-circle"> دریافت فایل</i>
+                    </button>
+                </div>
+
+                </div>
+        </div>
+    </form>
+    <div class="p-col-6 custom-control custom-checkbox custom-control-inline mb-3 p-col-2">
+        <label class="btn-raised btn-primary" ngbButtonLabel>
+            <input type="checkbox" ngbButton [(ngModel)]="confirmed"> تایید شده
+        </label>
+    </div>
+    <div class=" p-col-12 text-center">
+        <button [disabled]="_allOwners.length < 1" type="button" (click)="addAuthors()" class="btn btn-raised btn-info"
+                style="margin-bottom: 0;">بعدی
+            <span>
+                  <i class="ft-chevron-left"></i>
+                </span>
+        </button>
+    </div>
+
+</div>

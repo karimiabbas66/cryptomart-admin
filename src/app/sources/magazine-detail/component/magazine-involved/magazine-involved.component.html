@@ -1,0 +1,76 @@
+<ng-template #modalInvolved let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title">ثبت دست اندرکار جدید</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true" style="color: black; float:left;">&times;</span>
+        </button>
+    </div>
+    <app-involved-detail (passEntry)="getNewInvolved($event)"></app-involved-detail>
+</ng-template>
+
+<form class="p-col-12 basic-container" [formGroup]="magazineInvolvedForm">
+    <div formArrayName="involves">
+        <div class="p-grid p-col-12">
+            <div class="p-col-3">
+                <button class="btn btn-raised  mr-1 btn-adn" aria-label="Add"
+                        (click)="addFormGroup()" type="button">
+                    <i class="ft-icon ft-plus-circle">
+                        <span>افزودن دست اندر کار</span>
+                    </i>
+                </button>
+            </div>
+            <div class="p-col-4">
+                <button class="btn btn-raised mr-1 btn-info" aria-label="Add"
+                        (click)="openModal(modalInvolved)" type="button">
+                    <i class="ft-icon ft-plus-circle">
+                            <span>ثبت دست اندر کار جدید
+                            </span>
+                    </i>
+                </button>
+            </div>
+            <div class="p-grid p-col-12 row"
+                 *ngFor="let involved of formData.controls; let i = index"
+                 [formGroupName]="i">
+                <div class="p-col-1">
+                    <button class="btn btn-raised mr-1 btn-danger" aria-label="Add"
+                            (click)="removeOrClearForm(i)" type="button">
+                        <i class="ft-minus-circle"></i>
+                    </button>
+                </div>
+                <div class="p-col-5">
+                    <ng-select formControlName="involve" (search)="searchInvolves($event)" [items]="involves"
+                               bindLabel="fullName"
+                               placeholder="انتخاب دست اتدرکار" (scroll)="onScroll($event)"
+                               notFoundText="موردی یافت نشد"
+                               [virtualScroll]="true"
+                               (scrollToEnd)="onScrollToEnd()" style="width: 100%;">
+                    </ng-select>
+                </div>
+                <div class=" p-col-5">
+                    <ng-select formControlName="involveType" [items]="involvedType" bindLabel="title"
+                               notFoundText="موردی یافت نشد"
+                               placeholder="انتخاب نوع دست اتدرکار" style="width: 100%;">
+                    </ng-select>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+<div class="p-col-6 custom-control custom-checkbox custom-control-inline mb-3 p-col-2">
+    <label class="btn-raised btn-primary" ngbButtonLabel>
+        <input type="checkbox" ngbButton [(ngModel)]="confirmed"> تایید شده
+    </label>
+</div>
+<div class="p-col-12 fg-actions d-flex text-center">
+    <div class="p-col-4"></div>
+    <div class="p-col-4 recover-pass">
+        <div class="p-col-12 text-center">
+            <button [disabled]="!magazineInvolvedForm.valid" type="button" (click)="addInvolves()"
+                    class="btn btn-primary fix-submit-btn" style="margin-bottom: 0;">
+                <a class="text-decoration-none text-white">ثبت و ذخیره</a>
+                <i class="ft-save" style="padding-right: 5px; color: white;"></i>
+            </button>
+        </div>
+    </div>
+</div>
+

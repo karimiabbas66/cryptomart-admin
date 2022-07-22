@@ -1,0 +1,167 @@
+<ng-template #newModal let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title">ثبت ناشر جدید</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true" style="color: black; float:left;">&times;</span>
+        </button>
+    </div>
+    <app-publisher-detail [modal]="true" (passEntry)="getNewAuthor($event)"></app-publisher-detail>
+</ng-template>
+<div class="p-grid p-col-12" style="margin: 0;">
+    <form class="p-col-12 basic-container" [formGroup]="publisherForm" (ngSubmit)="addPublishers()">
+        <div class="p-grid p-col-12">
+            <div class="p-grid p-col-12">
+                <div class="p-col-4">
+                    <button class="btn btn-raised mr-1 btn-info" aria-label="Add"
+                            (click)="openModal(newModal)" type="button">
+                        <i class="ft-icon ft-plus-circle">
+                            <span>ثبت ناشر جدید
+                            </span>
+                        </i>
+                    </button>
+                </div>
+            </div>
+
+        </div>
+        <div class="p-grid p-col-12">
+            <div class="p-col-4">
+                <ng-select formControlName="publisherModel" (search)="searchPublisher($event)" [items]="publishers"
+                           bindLabel="publisherName" [(ngModel)]="selectedPublisher"
+                           notFoundText="موردی یافت نشد" placeholder="انتخاب ناشر" (scroll)="onScroll($event)"
+                           [virtualScroll]="true" (change)="onSelectPublisher($event)"
+                           (scrollToEnd)="onScrollToEnd()" style="width: 100%;">
+                </ng-select>
+                <small class="form-text text-muted danger" *ngIf="!publisherForm.get('publisherModel').valid
+                && (publisherForm.get('publisherModel').dirty || publisherForm.get('publisherModel').touched)">
+                    این فیلد الزامی است.
+                </small>
+            </div>
+<!--            <div class="p-col-4">-->
+<!--                <ng-select formControlName="province" [items]="provinces"-->
+<!--                           notFoundText="موردی یافت نشد" [(ngModel)]="province"-->
+<!--                           bindLabel="title" placeholder="انتخاب استان" style="width: 100%;"-->
+<!--                           [virtualScroll]="true" (change)="onSelectProvince()">-->
+<!--                </ng-select>-->
+<!--                <small class="form-text text-muted danger" *ngIf="!publisherForm.get('province').valid-->
+<!--                && (publisherForm.get('province').dirty || publisherForm.get('province').touched)">-->
+<!--                    این فیلد الزامی است.-->
+<!--                </small>-->
+
+<!--            </div>-->
+            <div class=" p-col-4">
+                <input id="city" class="round form-control" placeholder="مکان نشر" disabled
+                       formControlName="city" [(ngModel)]="cityName">
+
+<!--                <ng-select formControlName="city" [(ngModel)]="selectedCity"-->
+<!--                           notFoundText="موردی یافت نشد"-->
+<!--                           [items]="cities" bindLabel="title"-->
+<!--                           placeholder="انتخاب شهر" style="width: 100%;">-->
+<!--                </ng-select>-->
+                <small class="form-text text-muted danger" *ngIf="!publisherForm.get('city').valid
+                && (publisherForm.get('city').dirty || publisherForm.get('city').touched)">
+                    این فیلد الزامی است.
+                </small>
+
+            </div>
+            <div class=" p-col-4">
+                <input id="publishedNumber" class="round form-control" formControlName="publishedNumber"
+                       [(ngModel)]="publishedNumber" type="number" min="1"
+                       placeholder="نوبت چاپ"/>
+            </div>
+
+            <div class=" p-col-4">
+                <input id="isbn" class="round form-control" formControlName="isbn"
+                       [(ngModel)]="isbn" type="number" min="1"
+                       placeholder="شابک"/>
+            </div>
+            <div class=" p-col-4">
+                <ng-select formControlName="publisherType" [items]="publisherTypes" bindLabel="title"
+                           notFoundText="موردی یافت نشد" [(ngModel)]="selectedType"
+                           placeholder="انتخاب نوع نشر" style="width: 100%;">
+                </ng-select>
+                <small class="form-text text-muted danger" *ngIf="!publisherForm.get('publisherType').valid
+                && (publisherForm.get('publisherType').dirty || publisherForm.get('publisherType').touched)">
+                    این فیلد الزامی است.
+                </small>
+
+            </div>
+            <div class="p-col-4">
+
+                <ng-select formControlName="resourceType" notFoundText="موردی یافت نشد" [items]="sourceTypes"
+                           bindLabel="name" bindValue="id" placeholder="نوع چاپ"
+                           [(ngModel)]="resourceTypeId">
+                </ng-select>
+            </div>
+
+<!--            <div class="p-col-3" style="padding-top: 0;">-->
+<!--                <persian-date-picker [placeholder]="publishDatePlaceholder"-->
+<!--                                     [epochDate]="publishDate" (passEntry)="onDeathDateChange($event)">-->
+<!--                </persian-date-picker>-->
+<!--            </div>-->
+
+            <div class="p-col-6">
+                <label class="d-block">نوع تاریخ</label>
+                <div class="custom-control custom-radio custom-control-inline float-left">
+                    <input [value]="0"
+                           formControlName="dateType"
+                           type="radio" [(ngModel)]="dateType"
+                           id="customRadioInline1"
+                           class="custom-control-input">
+                    <label class="custom-control-label"
+                           for="customRadioInline1">تاریخ شمسی</label>
+                </div>
+                <div class="custom-control custom-radio custom-control-inline  float-left">
+                    <input [value]="1"
+                           formControlName="dateType"
+                           type="radio"  [(ngModel)]="dateType"
+                           id="customRadioInline3"
+                           class="custom-control-input">
+                    <label class="custom-control-label" for="customRadioInline3">تاریخ هجری</label>
+                </div>
+                <div class="custom-control custom-radio custom-control-inline float-left">
+                    <input [value]="2"
+                           formControlName="dateType"
+                           type="radio" [(ngModel)]="dateType"
+                           id="customRadioInline2"
+                           class="custom-control-input">
+                    <label class="custom-control-label"
+                           for="customRadioInline2">تاریخ میلادی</label>
+                </div>
+            </div>
+
+            <div class="p-col-12 p-grid">
+                <div class="p-col-5">
+                    <persian-date-picker *ngIf="dateType == 0" [placeholder]="publishDatePlaceholder"
+                                         [epochDate]="publishDate" (passEntry)="onDeathDateChange($event)"></persian-date-picker>
+                    <islamic-date-picker *ngIf="dateType == 1" [placeholder]="publishDatePlaceholder"
+                                         [epochDate]="publishDate" (passEntry)="onDeathDateChange($event)"></islamic-date-picker>
+                    <gregorian-date-picker *ngIf="dateType == 2" [placeholder]="publishDatePlaceholder"
+                                           [epochDate]="publishDate"  (passEntry)="onDeathDateChange($event)"></gregorian-date-picker>
+                </div>
+            </div>
+
+            <div class="p-col-6 custom-control custom-checkbox custom-control-inline mb-3 p-col-2">
+                <label class="btn-raised btn-primary" ngbButtonLabel>
+                    <input type="checkbox" formControlName="confirmed" ngbButton [(ngModel)]="confirmed"> تایید شده
+                </label>
+            </div>
+        </div>
+
+        <div class="p-col-12 text-center">
+
+            <div class=" p-col-12 text-center">
+                <button [disabled]="!publisherForm.valid" type="submit" class="btn btn-raised btn-info"
+                        style="margin-bottom: 0;">بعدی
+                    <span>
+                  <i class="ft-chevron-left"></i>
+                </span>
+                </button>
+            </div>
+        </div>
+
+    </form>
+</div>
+
+<!--<div style="position: relative;">-->
+<!--    <img *ngIf="showProgress" src="assets/img/gif/loading.gif" style="position: absolute;width: 10vw;left: 50%">-->
+<!--</div>-->

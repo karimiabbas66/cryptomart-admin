@@ -1,0 +1,139 @@
+<div class="p-col-12 p-grid">
+
+    <div class="p-col-3 p-grid back-check border-title"><span class="profile-title">مشخصات ارسال کننده</span></div>
+    <div class="p-col-12 p-grid back-check border-title" style="border-radius: 5px">
+        <div class="p-col-6 p-grid" style="text-align: center">
+                <div class="p-col-12"><span class="profile-title">نام: </span> <span>{{profile.creatorFirstName}}</span></div>
+            <div class="p-col-12"><span class="profile-title">نام خانوادگی: </span><span>{{profile.creatorLastName}}</span></div>
+            <div class="p-col-12"><span class="profile-title">نام کاربری: </span><span>{{profile.userName}}</span></div>
+            <div class="p-col-12"><span class="profile-title">کد ملی: </span><span>{{profile.creatorNationalCode}}</span></div>
+        </div>
+
+        <div class="p-col-6" style="text-align: center; border-radius: 5px">
+            <div class="p-col-12"><span class="profile-title">همراه: </span><span>{{profile.mobile}}</span></div>
+            <div class="p-col-12"><span class="profile-title">عنوان: </span><span>{{profile.title}}</span></div>
+            <div class="p-col-12"><span class="profile-title">نوع: </span><span>{{profile.categoryEnum | ticketCategory}}</span></div>
+            <div class="p-col-12"><span class="profile-title">تاریخ ایجاد: </span><span>{{profile.createDate | persianDate}}</span></div>
+        </div>
+    </div>
+    <div class="p-col-12 p-grid ticket-list">
+            <div style="margin-bottom: 25px"  class="p-col-12 p-grid" *ngFor="let ticket of tickets">
+                <div *ngIf="ticket.responsibleId" class="p-col-12 p-grid"  style="direction: rtl; color: #fff5f5">
+                    <div class="p-col-4 p-grid responsible">
+                        <div class="p-col-12 p-grid" style="direction: rtl">
+                            <img *ngIf="ticket.responsibleId && ticketMap && ticketMap.get(ticket.responsibleId)
+
+                             && ticketMap.get(ticket.responsibleId).photo" class="profile-img" [src]="downloadUrl + ticketMap.get(ticket.responsibleId).photo">
+                         <img *ngIf="!ticketMap || !ticket.responsibleId || !ticketMap.get(ticket.responsibleId) || !ticketMap.get(ticket.responsibleId).photo" class="profile-img" src="../../../../assets/img/portrait/avatars/profile-avatar.png">
+                            <span style="color: black" *ngIf=" ticketMap && ticket.responsibleId && ticketMap.get(ticket.responsibleId)">{{ticketMap.get(ticket.responsibleId).firstName + ' ' + ticketMap.get(ticket.responsibleId).lastName  + ','}}
+                        </span><span style="color: black">{{ticket.createDate | persianDate}}</span>
+                        </div>
+                        <div *ngIf="ticket.chatType == 'PARAPH'" class="p-col-12 p-grid pm-referred-style">
+                            <span>{{ticket.description}}</span></div>
+                        <div *ngIf="ticket.fileUuid" (click)="goForDownload(ticket.fileUuid)" class="file-cont">
+                            <i class="fa fa-download"></i>
+                            <span style="margin-right: 5px; font-weight: bold">فایل</span>
+                        </div>
+                        <div *ngIf="ticket.chatType != 'PARAPH'" class="p-col-12 p-grid pm-admin-style">
+                            <span>{{ticket.description}}</span></div>
+                        <div *ngIf="ticket.fileUuid" (click)="goForDownload(ticket.fileUuid)" class="file-cont">
+                            <i class="fa fa-download"></i>
+                            <span style="margin-right: 5px; font-weight: bold">فایل</span>
+                        </div>
+                    </div>
+                    </div>
+                <div *ngIf="!ticket.responsibleId" class="p-col-12 p-grid"  style="direction: ltr; color: #fff5f5">
+                    <div class="p-col-4">
+                        <div class="p-col-12 p-grid pm-user">
+                            <span>{{ticket.description}}</span>
+                        </div>
+                        <div *ngIf="ticket.fileUuid" (click)="goForDownload(ticket.fileUuid)" class="file-cont">
+                            <i class="fa fa-download"></i>
+                            <span style="margin-left: 5px; font-weight: bold">فایل</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+<!--        <div class="p-col-12 p-grid">-->
+<!--            <div class="p-col-4 p-grid pm-admin-style" style="margin-right: 5px">-->
+<!--                <input type="text" [(ngModel)]="reply.description"><button type="submit" (click)="onSend()">ارسال</button>-->
+<!--            </div>-->
+<!--        </div>-->
+        <div class="p-col-12 p-grid" style="direction: rtl">
+            <div class="p-col-12 p-grid" *ngIf="isTicketParentClosed == false">
+                <label style="padding-right: inherit">متن پیام</label>
+                <textarea  [(ngModel)]="reply.description" class="p-col-12" style="border-radius: 10px" rows="3" id="textArea" required></textarea>
+                <div class="p-col-6 p-grid" style="margin-top: 1px">
+                    <button class="btn btn-primary fix-submit-btn"
+                            type="submit" [disabled]="!reply.description" (click)="onSend()">ارسال</button>
+                    <button class="btn btn-primary fix-back-btn" type="submit" (click)="closeTicketParent()">بستن تیکت</button>
+                </div>
+                <div class="p-col-6 p-grid" style="direction: ltr; margin-top: 1px">
+                    <button class="btn btn-primary fix-submit-btn" type="button" (click)="markAsUnread()"
+                            [routerLink]="['/communication/ticket-list']">تغییر به خوانده نشده</button>
+                </div>
+
+                <div class="p-col-12 p-grid">
+                    <div class="p-col-4 p-grid">
+                        <div class="custom-control custom-radio custom-control-inline float-left">
+                            <input [checked]="reply.referType == null" [(ngModel)]="reply.referType"
+                                   [value]="null"
+                                   type="radio"
+                                   name="not-referred"
+                                   id="not-referred"
+                                   class="custom-control-input">
+                            <label class="custom-control-label"
+                                   for="not-referred">خودم پاسخ می دهم</label>
+                        </div>
+                        <div class="custom-control custom-radio custom-control-inline float-left">
+                            <input [checked]="reply.referType == 0" [(ngModel)]="reply.referType"
+                                   value=0
+                                   type="radio"
+                                   name="refer"
+                                   id="refer-admin"
+                                   class="custom-control-input">
+                            <label class="custom-control-label"
+                                   for="refer-admin">ارجاع به شخص</label>
+                            <app-profile-search *ngIf="reply.referType == 0"
+                                                [isAdmin]="true"
+                                                (final)="setReferredToAndBy($event)"></app-profile-search>
+                        </div>
+                        <div class="custom-control custom-radio custom-control-inline float-left">
+                            <input [checked]="reply.referType == 1" [(ngModel)]="reply.referType"
+                                   value=1
+                                   type="radio"
+                                   name="refer"
+                                   id="refer-group"
+                                   class="custom-control-input">
+                            <label class="custom-control-label"
+                                   for="refer-group">ارجاع به گروه</label>
+                            <div ngbDropdown class="d-inline-block" *ngIf="reply.referType == 1">
+                                <button class="btn btn-outline-primary" id="groupMenu" ngbDropdownToggle>{{selectGroup}}</button>
+                                <div class="dropdown-menu" aria-labelledby="groupMenu" ngbDropdownMenu>
+                                    <button class="dropdown-item" *ngFor="let group of adminGroups" (click)="changeAdminGroup(group)" >{{group.name}}</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-col-4 text-center">
+                        <div class="p-col-12">{{placeholder}}</div>
+                        <app-uploader (fileUuid)="afterUploadLicenses($event)"
+                                      [patch]="'license'"></app-uploader>
+                    </div>
+                    <div class="p-col-4">
+                    </div>
+
+                    <div class="p-col-12 text-center">
+                        <div *ngIf="reply.fileUuid" (click)="goForDownload(reply.fileUuid)" class="file-cont">
+                            <i class="fa fa-download"></i>
+                            <span>فایل</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="p-col-12 p-grid" *ngIf="isTicketParentClosed == true">
+                <label style="padding-right: inherit">تیکت بسته شده است</label>
+            </div>
+        </div>
+    </div>
+</div>

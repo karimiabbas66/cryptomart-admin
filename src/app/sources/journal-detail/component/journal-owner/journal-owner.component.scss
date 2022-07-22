@@ -1,0 +1,19 @@
+button{
+  color: white !important;
+}
+::ng-deep .modal-header .close{
+  margin-left: 0;
+  border: 1px solid white;
+}
+
+
+::ng-deep .modal-dialog{
+  direction: rtl;
+}
+
+.btn-outline-primary{
+  background-color: #336668 !important
+}
+.btn-outline-primary{
+  margin-bottom: 0;
+}

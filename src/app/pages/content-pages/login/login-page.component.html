@@ -1,0 +1,99 @@
+<!--Login Page Starts-->
+<section id="login">
+    <div>
+        <img src="../../../../assets/img/logos/logo-big-white.png" style="height: 50px;
+display: block; margin: auto">
+        <div style="text-align: center; color: white; font-weight: bold">کریپتومارت</div>
+    </div>
+    <div class="container-fluid">
+        <div class="row full-height-vh m-0">
+            <div class="col-12 d-flex align-items-center justify-content-center">
+                <div class="card">
+                    <div class="card-content">
+                        <div class="card-body login-img">
+                            <div class="row m-0">
+                                <div class="col-lg-6 d-lg-block d-none py-2 px-3 text-center align-middle">
+                                    <img src="../../assets/img/gallery/error.png" alt="" class="img-fluid mt-5"
+                                         width="400" height="230"/>
+                                </div>
+                                <div class="col-lg-6 col-md-12 bg-white px-4 pt-3">
+                                    <h4 class="card-title mb-2">ورود</h4>
+                                    <p class="card-text mb-3">
+                                        خوش آمدید، لطفا به حساب کاربری خود وارد شوید.
+                                    </p>
+                                    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+                                        <div class="form-group">
+                                            <input type="text" formControlName="username"
+                                                   class="custom-field form-control mb-3"
+                                                   placeholder="نام کاربری"
+                                                   [ngClass]="{'is-invalid': submitted && controls.username.errors}"/>
+
+                                            <small class="form-text text-muted danger"
+                                                   *ngIf="!loginForm.get('username').valid &&
+                       (loginForm.get('username').dirty
+               || loginForm.get('username').touched)">
+                                                این فیلد الزامی است.
+                                            </small>
+
+                                        </div>
+
+                                        <div class="form-group ">
+                                            <input type="password" formControlName="password" class="form-control mb-3 "
+                                                   placeholder="رمز عبور "
+                                                   [ngClass]="{'is-invalid': submitted && controls.password.errors}"/>
+                                            <small class="form-text text-muted danger"
+                                                   *ngIf="!loginForm.get('password').valid &&
+                       (loginForm.get('password').dirty
+               || loginForm.get('password').touched)">
+                                                این فیلد الزامی است.
+                                            </small>
+                                        </div>
+                                        <div class="d-flex justify-content-between mt-2 ">
+                                            <div class="forgot-password-option ">
+                                                <a [routerLink]="[ '/pages/forgotpassword'] "
+                                                   class="text-decoration-none text-primary ">فراموشی رمز؟</a
+                                                >
+                                            </div>
+                                        </div>
+
+
+                                        <br/>
+                                        <!--                                        <div class="ui-g-6 field-container" style="position: center">-->
+                                        <!--                                            <input id="captcha"-->
+                                        <!--                                                   placeholder="کد امنیتی"-->
+                                        <!--                                                   type="text"-->
+                                        <!--                                                   formControlName="captchaAnswer"-->
+                                        <!--                                                   class="form-control mb-3 ltr"-->
+                                        <!--                                                   autocomplete="off"-->
+                                        <!--                                                   [(ngModel)]="captchaAnswer"-->
+                                        <!--                                                   [ngClass]="{'is-invalid': submitted && controls.captchaAnswer.errors}"/>-->
+                                        <!--                                            <div *ngIf="submitted && controls.captchaAnswer.errors" class="invalid-feedback">-->
+                                        <!--                                                <div *ngIf="controls.captchaAnswer.errors.required">این فیلد اجباری است</div>-->
+                                        <!--                                            </div>-->
+                                        <!--                                        </div>-->
+
+                                        <div class="fg-actions d-flex justify-content-between ">
+                                            <div style="width: 100% " class="recover-pass ">
+                                                <div class="form-group ">
+                                                    <button [disabled]="!loginForm.valid" style="width: 100% "
+                                                            class="btn btn-primary ">
+                                                        <a
+                                                                class="text-decoration-none text-white "
+                                                        >ورود</a
+                                                        >
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                    <hr class="m-0 "/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--Login Page Ends-->

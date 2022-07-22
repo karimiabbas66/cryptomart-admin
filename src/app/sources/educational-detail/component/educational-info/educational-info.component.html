@@ -1,0 +1,178 @@
+<div class="p-grid p-col-12 bg-white px-4 pt-3" style="text-align: right;direction: rtl;">
+    <div class="p-col-12 page-title">مشخصات محتوای آموزشی
+    </div>
+    <div class="p-col-3"></div>
+    <div class="p-xl-5 p-lg-5 p-md-5 p-sm-12 p-col-6 form-group p-grid" id="marital">
+        <p class="d-block">نوع محتوای آموزشی :</p>
+        <div class="custom-control custom-radio custom-control-inline float-left">
+            <input (click)="chooseCourse()"
+                   [(ngModel)]="model.educationalType"
+                   value="course"
+                   type="radio"
+                   name="educationalType"
+                   id="type-course"
+                   class="custom-control-input">
+            <label class="custom-control-label" for="type-course">جزوه یا تقریر</label>
+        </div>
+        <div class="custom-control custom-radio custom-control-inline  float-left">
+            <input (click)="chooseLesson()"
+                   [(ngModel)]="model.educationalType"
+                   value="lesson"
+                   type="radio"
+                   name="educationalType"
+                   id="type-lesson"
+                   class="custom-control-input">
+            <label class="custom-control-label" for="type-lesson">طرح درس(ارائه یا تدریس)</label>
+        </div>
+    </div>
+    <div class="p-col-3"></div>
+
+    <div *ngIf="model.educationalType == 'COURSE_RESOURCE'">
+        <form [formGroup]="courseForm" class="editForm p-grid p-col-12" (ngSubmit)="edit()">
+
+            <div class="p-col-4">
+                <input id="courseCreator" class="round form-control" formControlName="creator"
+                       [(ngModel)]="courseModel.creator" placeholder="تقریرکننده"/>
+                <small class="form-text text-muted danger"
+                       *ngIf="!courseForm.get('creator').valid && (courseForm.get('creator').dirty
+                    || courseForm.get('creator').touched)">
+                    این فیلد الزامی است.
+                </small>
+            </div>
+            <div class="p-col-4">
+                <input id="courseLecture" class="round form-control" formControlName="lecture"
+                       [(ngModel)]="courseModel.lecture" placeholder="درس"/>
+                <small class="form-text text-muted danger"
+                       *ngIf="!courseForm.get('lecture').valid && (courseForm.get('lecture').dirty
+                    || courseForm.get('lecture').touched)">
+                    این فیلد الزامی است.
+                </small>
+            </div>
+            <div class="p-col-4">
+                <input id="courseTeacher" class="round form-control" formControlName="teacher"
+                       [(ngModel)]="courseModel.teacher" placeholder="استاد"/>
+                <small class="form-text text-muted danger"
+                       *ngIf="!courseForm.get('teacher').valid && (courseForm.get('teacher').dirty
+                    || courseForm.get('teacher').touched)">
+                    این فیلد الزامی است.
+                </small>
+            </div>
+            <div class="p-col-1"></div>
+            <div class="p-col-2">
+                <ng-select formControlName="languageId" [items]="languages"
+                           notFoundText="موردی یافت نشد" [(ngModel)]="courseModel.languageId"
+                           bindLabel="name" bindValue="id" placeholder="انتخاب زبان" style="width: 100%;">
+                </ng-select>
+            </div>
+            <div class="p-col-4">
+                <input id="coursePages" class="round form-control" formControlName="pages" type="number"
+                       [(ngModel)]="courseModel.pages" placeholder="صفحات">
+            </div>
+            <div class="p-col-4">
+                <input id="courseSessionNumbers" class="round form-control" formControlName="sessionNumbers"
+                       type="number"
+                       [(ngModel)]="courseModel.sessionNumbers" placeholder="تعداد جلسات">
+            </div>
+            <div class="p-col-5">
+                <input id="courseTopic" class="round form-control" formControlName="topic"
+                       [(ngModel)]="courseModel.topic" placeholder="موضوع">
+            </div>
+            <div class="p-col-5">
+                <input id="coursePlace" class="round form-control" formControlName="place"
+                       [(ngModel)]="courseModel.place" placeholder="محل تدریس">
+            </div>
+            <div class="p-col-12">
+                <input id="courseDescription" class="round form-control" formControlName="description"
+                       [(ngModel)]="courseModel.description" placeholder="توضیحات">
+            </div>
+            <div class="p-col-12">
+                <div class="custom-control custom-checkbox custom-control-inline mb-3 p-col-2">
+                    <label class="btn-raised btn-primary" ngbButtonLabel>
+                        <input formControlName="confirmed" type="checkbox" ngbButton
+                               [(ngModel)]="courseModel.confirmed">تایید
+                        شده</label>
+                </div>
+            </div>
+
+        </form>
+    </div>
+    <div *ngIf="model.educationalType == 'LESSON_PLAN'">
+        <form [formGroup]="lessonForm" class="editForm p-grid p-col-12" (ngSubmit)="edit()">
+
+            <div class="p-col-4">
+                <input id="LessonProducer" class="round form-control" formControlName="producer"
+                       [(ngModel)]="lessonModel.producer" placeholder="تولیدکننده"/>
+                <small class="form-text text-muted danger"
+                       *ngIf="!lessonForm.get('producer').valid && (lessonForm.get('producer').dirty
+                    || lessonForm.get('producer').touched)">
+                    این فیلد الزامی است.
+                </small>
+            </div>
+            <div class="p-col-4">
+                <input id="Lessonlecture" class="round form-control" formControlName="lecture"
+                       [(ngModel)]="lessonModel.lecture" placeholder="درس"/>
+                <small class="form-text text-muted danger"
+                       *ngIf="!lessonForm.get('lecture').valid && (lessonForm.get('lecture').dirty
+                    || lessonForm.get('lecture').touched)">
+                    این فیلد الزامی است.
+                </small>
+            </div>
+            <div class="p-col-4">
+                <input id="LessonStory" class="round form-control" formControlName="story"
+                       [(ngModel)]="lessonModel.story" placeholder="داستان">
+            </div>
+            <div class="p-col-1"></div>
+            <div class="p-col-2">
+                <ng-select formControlName="languageId" [items]="languages"
+                           notFoundText="موردی یافت نشد" [(ngModel)]="lessonModel.languageId"
+                           bindLabel="name" bindValue="id" placeholder="انتخاب زبان" style="width: 100%;">
+                </ng-select>
+            </div>
+            <div class="p-col-4">
+                <input id="LessonPages" class="round form-control" formControlName="pages" type="number"
+                       [(ngModel)]="lessonModel.pages" placeholder="صفحات">
+            </div>
+            <div class="p-col-4">
+                <input id="teachNumber" class="round form-control" formControlName="teachNumber" type="number"
+                       [(ngModel)]="lessonModel.teachNumber" placeholder="تعداد دوره تدریس شده">
+            </div>
+            <div class="p-col-5">
+                <input id="LessonTopic" class="round form-control" formControlName="topic"
+                       [(ngModel)]="lessonModel.topic" placeholder="موضوع">
+            </div>
+            <div class="p-col-5">
+                <input id="lastPlaceTeach" class="round form-control" formControlName="lastPlaceTeach"
+                       [(ngModel)]="lessonModel.lastPlaceTeach" placeholder="محل آخرین دوره تدریس">
+            </div>
+            <div class="p-col-12">
+                <input id="LessonDescription" class="round form-control" formControlName="description"
+                       [(ngModel)]="lessonModel.description" placeholder="توضیحات">
+            </div>
+            <div class="p-col-12">
+                <div class="custom-control custom-checkbox custom-control-inline mb-3 p-col-2">
+                    <label class="btn-raised btn-primary" ngbButtonLabel>
+                        <input formControlName="confirmed" type="checkbox" ngbButton
+                               [(ngModel)]="lessonModel.confirmed">تایید
+                        شده</label>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="p-col-6" style="text-align: left">
+        <button class="btn btn-primary fix-back-btn"
+                [routerLink]="['/sources/educational-list']"
+                type="button">
+            <i class="ft-arrow-right"></i>
+            بازگشت
+        </button>
+    </div>
+    <div class="p-col-6" style="text-align: right;">
+        <button class="btn btn-primary fix-submit-btn" type="button" (click)="edit()"
+                [disabled]="!lessonForm.valid && !courseForm.valid">
+            بعدی
+            <i class="ft-save"></i>
+        </button>
+    </div>
+
+</div>

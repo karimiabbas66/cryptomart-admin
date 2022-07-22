@@ -1,0 +1,265 @@
+<div class="col-lg-12 col-md-12 bg-white px-4 pt-3">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="p-col-12 page-title">لیست وظایف</div>
+            <p class="content-sub-header"></p>
+        </div>
+    </div>
+
+    <div class="p-col-12 p-grid header-search" style="background-color: #589a94" ngbPanelTitle>
+        <h6 (click)="this.showSearchPanel = !showSearchPanel" class="mb-0" style="font-weight: bold; color: white"><i
+                class="fa fa-search"></i> جستجوی وظایف </h6>
+    </div>
+    <div *ngIf="showSearchPanel" class="contain-form editForm p-grid p-col-12">
+        <form class="p-col-12 p-grid editForm form-group">
+            <div class="p-col-1">
+            </div>
+            <div class="p-col-4">
+                <label for="task-id">شماره وظیفه</label>
+                <input id="task-id" class="round form-control" [(ngModel)]="example.id" [ngModelOptions]="{standalone: true}"/>
+            </div>
+            <div class="p-col-1">
+            </div>
+            <div class="p-col-4">
+                <label for="task-name">نام وظیفه</label>
+                <input id="task-name" class="round form-control" [(ngModel)]="example.name" [ngModelOptions]="{standalone: true}"/>
+            </div>
+            <div class="p-col-2"></div>
+            <div class="p-col-1"></div>
+            <div style="margin-top: 20px;" class="p-col-4">
+                <app-profile-search searchText="ایجاد کننده" [multiple]="false" (final)="setCreator($event)"></app-profile-search>
+                <span *ngIf="example.creator">
+                    <i (click)="this.example.creator = null" title="حذف" class="fa fa-remove remove-user"></i>
+                </span>
+                <div class="info-search" *ngIf="example.creator">
+                    <img class="task-search-profile-image" *ngIf="!creator.photo" src="../../../assets/img/portrait/avatars/profile-avatar.png">
+                    <img class="task-search-profile-image" *ngIf="creator.photo" [src]="downloadUrl + creator.photo">
+                    <span>{{creator.firstName + ' ' + creator.lastName}}</span>
+                </div>
+            </div>
+            <div class="p-col-1"></div>
+            <div style="margin-top: 20px;" class="p-col-4">
+                <app-profile-search searchText="انجام دهنده" [multiple]="false" (final)="setAssignee($event)"></app-profile-search>
+                <span *ngIf="example.assignee">
+                    <i (click)="this.example.assignee = null" title="حذف" class="fa fa-remove remove-user"></i>
+                </span>
+                <div class="info-search" *ngIf="example.assignee">
+                    <img class="task-search-profile-image" *ngIf="!assignee.photo" src="../../../assets/img/portrait/avatars/profile-avatar.png">
+                    <img class="task-search-profile-image" *ngIf="assignee.photo" [src]="downloadUrl + assignee.photo">
+                    <span>{{assignee.firstName + ' ' + assignee.lastName}}</span>
+                </div>
+            </div>
+            <div class="p-col-2"></div>
+
+            <div class="p-col-1"></div>
+            <div class="p-col-4">
+                <persian-date-picker placeholder="از تاریخ"
+                                     [epochDate]="fromCreateDate" (passEntry)="setFromDate($event)"></persian-date-picker>
+            </div>
+            <div class="p-col-1"></div>
+            <div class="p-col-4">
+                <persian-date-picker placeholder="تا تاریخ"
+                                     [epochDate]="toCreateDate" (passEntry)="setToDate($event)"></persian-date-picker>
+            </div>
+            <div class="p-col-1"></div>
+
+            <div class="p-col-12 p-grid">
+                <div class="p-col-6" style="text-align: left">
+                    <button style="padding-right: 16px;padding-left: 12px"
+                            (click)="resetSearch()"
+                            class="btn btn-danger btn-raised"
+                            type="submit">
+                        انصراف
+                        <i class="ft-arrow-right"></i>
+                    </button>
+                </div>
+                <div class="p-col-6">
+                    <button style="padding-right: 15px;padding-left: 10px"
+                            (click)="onSearchItems()"
+                            class="btn btn-primary btn-raised"
+                            type="submit">
+                        جستجو
+                        <i class="ft-search"></i>
+                    </button>
+                </div>
+            </div>
+        </form>
+
+    </div>
+
+
+    <div style="margin-top: 6px" class="new-btn-container p-grid p-col-12 ui-sm-12">
+        <button title="جدید" [routerLink]="['/communication/task-detail']" type="button" class="btn-new btn btn-raised"
+                aria-label="Add">
+            <i class="ft-plus"></i>
+        </button>
+    </div>
+
+
+    <!-- Taskboard Starts -->
+    <section id="taskboard">
+        <div class="row">
+            <div style="padding-right: 0; padding-left: 3px" class="col-md-3 col-12">
+                <h5 class="ml-2 mt-2 text-bold-500 text-left"><i class="ft-list mr-1  float-left"></i>صف وظایف
+                </h5>
+                <div class='dragdrop-container' [dragula]='"task-group"' [dragulaModel]='todo' list-name="todo">
+                    <div *ngFor='let todo of todo' (mousedown)="setItem(todo)" class="task-card-main">
+                        <div [routerLink]="['/communication/task-detail']" [queryParams]="{ id: todo.id}">
+                            <div [ngClass]="resolveCardClass(todo.priority)">
+                                <div class="clearfix">
+                                    <div class="p-col-12 task-id-st">
+                                        <span>{{todo.id}}</span>
+                                        <div class="parent-img-list">
+                                            <img *ngIf="assigneeProfiles.get(todo.assignee) && assigneeProfiles.get(todo.assignee).photo"
+                                                 [title]="assigneeProfiles.get(todo.assignee) ? (assigneeProfiles.get(todo.assignee).firstName + ' ' + assigneeProfiles.get(todo.assignee).lastName) : ''"
+                                                 class="task-profile-image"
+                                                 [src]="downloadUrl + assigneeProfiles.get(todo.assignee).photo">
+                                            <img *ngIf="!assigneeProfiles.get(todo.assignee) || !assigneeProfiles.get(todo.assignee).photo"
+                                                 [title]="assigneeProfiles.get(todo.assignee) ? (assigneeProfiles.get(todo.assignee).firstName + ' ' + assigneeProfiles.get(todo.assignee).lastName) : ''"
+                                                 class="task-profile-image"
+                                                 src="../../../assets/img/portrait/avatars/task-profile.png">
+                                        </div>
+                                    </div>
+                                    <span class="task-card-title">{{todo.name}}</span>
+                                    <div class="p-col-12" style="position: absolute; left: 2px; bottom: 2px">
+                                        <span class="low-pr" *ngIf="todo.priority ==0"><i class="fa fa-lightbulb-o"></i></span>
+                                        <span class="middle-pr" *ngIf="todo.priority ==1"><i
+                                                class="fa fa-line-chart"></i></span>
+                                        <span class="high-pr" *ngIf="todo.priority ==2"><i class="fa fa-ban"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div *ngIf="taskTodoMore.more">
+                    <button class="btn btn-danger" (click)="getMoreTask(1)">بیشتر</button>
+                </div>
+            </div>
+
+            <div style="padding-right: 2px; padding-left:3px" class="col-md-3 col-12">
+                <h5 class="ml-2 mt-2 text-bold-500 text-left"><i class="ft-trending-up mr-1  float-left"></i> در حال
+                    انجام
+                </h5>
+                <div class='dragdrop-container' [dragula]='"task-group"' [dragulaModel]='inProcess'
+                     list-name="inprogress">
+                    <div *ngFor='let inProcess of inProcess' (mousedown)="setItem(inProcess)" class="task-card-main">
+                        <div [routerLink]="['/communication/task-detail']" [queryParams]="{ id: inProcess.id}">
+                            <div [ngClass]="resolveCardClass(inProcess.priority)">
+                                <div class="clearfix">
+                                    <div class="p-col-12 task-id-st">
+                                        <span>{{inProcess.id}}</span>
+                                        <div class="parent-img-list">
+                                            <img *ngIf="assigneeProfiles.get(inProcess.assignee) && assigneeProfiles.get(inProcess.assignee).photo"
+                                                 [title]="assigneeProfiles.get(inProcess.assignee) ? (assigneeProfiles.get(inProcess.assignee).firstName + ' ' + assigneeProfiles.get(inProcess.assignee).lastName) : ''"
+                                                 class="task-profile-image"
+                                                 [src]="downloadUrl + assigneeProfiles.get(inProcess.assignee).photo">
+                                            <img *ngIf="!assigneeProfiles.get(inProcess.assignee) || !assigneeProfiles.get(inProcess.assignee).photo"
+                                                 [title]="assigneeProfiles.get(inProcess.assignee) ? (assigneeProfiles.get(inProcess.assignee).firstName + ' ' + assigneeProfiles.get(inProcess.assignee).lastName) : ''"
+                                                 class="task-profile-image"
+                                                 src="../../../assets/img/portrait/avatars/task-profile.png">
+                                        </div>
+                                    </div>
+                                    <span class="task-card-title">{{inProcess.name}}</span>
+                                    <div class="p-col-12" style="position: absolute; left: 2px; bottom: 2px">
+                                        <span class="low-pr" *ngIf="inProcess.priority ==0"><i
+                                                class="fa fa-lightbulb-o"></i></span>
+                                        <span class="middle-pr" *ngIf="inProcess.priority ==1"><i
+                                                class="fa fa-line-chart"></i></span>
+                                        <span class="high-pr" *ngIf="inProcess.priority ==2"><i
+                                                class="fa fa-ban"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div *ngIf="taskInProgressMore.more">
+                    <button class="btn btn-danger" (click)="getMoreTask(2)">بیشتر</button>
+                </div>
+            </div>
+
+            <div style="padding-right: 2px; padding-left: 3px" class="col-md-3 col-12">
+                <h5 class="ml-2 mt-2 text-bold-500 text-left"><i class="ft-alert-octagon mr-1  float-left"></i>در حال
+                    تست
+                </h5>
+                <div class='dragdrop-container' [dragula]='"task-group"' [dragulaModel]='backLog' list-name="test">
+                    <div *ngFor='let backLog of backLog' (mousedown)="setItem(backLog)" class="task-card-main">
+                        <div [routerLink]="['/communication/task-detail']" [queryParams]="{ id: backLog.id}">
+                            <div [ngClass]="resolveCardClass(backLog.priority)">
+                                <div class="clearfix">
+                                    <div class="p-col-12 task-id-st">
+                                        <span>{{backLog.id}}</span>
+                                        <div class="parent-img-list">
+                                            <img *ngIf="assigneeProfiles.get(backLog.assignee) && assigneeProfiles.get(backLog.assignee).photo"
+                                                 [title]="assigneeProfiles.get(backLog.assignee) ? (assigneeProfiles.get(backLog.assignee).firstName + ' ' + assigneeProfiles.get(backLog.assignee).lastName) : ''"
+                                                 class="task-profile-image"
+                                                 [src]="downloadUrl + assigneeProfiles.get(backLog.assignee).photo">
+                                            <img *ngIf="!assigneeProfiles.get(backLog.assignee) || !assigneeProfiles.get(backLog.assignee).photo"
+                                                 [title]="assigneeProfiles.get(backLog.assignee) ? (assigneeProfiles.get(backLog.assignee).firstName + ' ' + assigneeProfiles.get(backLog.assignee).lastName) : ''"
+                                                 class="task-profile-image"
+                                                 src="../../../assets/img/portrait/avatars/task-profile.png">
+                                        </div>
+                                    </div>
+                                    <span class="task-card-title">{{backLog.name}}</span>
+                                    <div class="p-col-12" style="position: absolute; left: 2px; bottom: 2px">
+                                        <span class="low-pr" *ngIf="backLog.priority ==0"><i
+                                                class="fa fa-lightbulb-o"></i></span>
+                                        <span class="middle-pr" *ngIf="backLog.priority ==1"><i
+                                                class="fa fa-line-chart"></i></span>
+                                        <span class="high-pr" *ngIf="backLog.priority ==2"><i
+                                                class="fa fa-ban"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div *ngIf="taskBackLogMore.more">
+                    <button class="btn btn-danger" (click)="getMoreTask(3)">بیشتر</button>
+                </div>
+            </div>
+
+            <div style="padding-right: 3px; padding-left: 0px" class="col-md-3 col-12">
+                <h5 class="ml-2 mt-2 text-bold-500 text-left"><i class="ft-thumbs-up mr-1  float-left"></i>تکمیل شده
+                </h5>
+                <div class='dragdrop-container' [dragula]='"task-group"' [dragulaModel]='completed'
+                     list-name="complete">
+                    <div *ngFor='let completed of completed' (mousedown)="setItem(completed)" class="task-card-main">
+                        <div [routerLink]="['/communication/task-detail']" [queryParams]="{ id: completed.id}">
+                            <div [ngClass]="resolveCardClass(completed.priority)">
+                                <div class="clearfix">
+                                    <div class="p-col-12 task-id-st">
+                                        <span>{{completed.id}}</span>
+                                        <div class="parent-img-list">
+                                            <img *ngIf="assigneeProfiles.get(completed.assignee) && assigneeProfiles.get(completed.assignee).photo"
+                                                 [title]="assigneeProfiles.get(completed.assignee) ? (assigneeProfiles.get(completed.assignee).firstName + ' ' + assigneeProfiles.get(completed.assignee).lastName) : ''"
+                                                 class="task-profile-image zoom-img"
+                                                 [src]=" downloadUrl + assigneeProfiles.get(completed.assignee).photo">
+                                            <img *ngIf="!assigneeProfiles.get(completed.assignee) || !assigneeProfiles.get(completed.assignee).photo"
+                                                 [title]="assigneeProfiles.get(completed.assignee) ? (assigneeProfiles.get(completed.assignee).firstName + ' ' + assigneeProfiles.get(completed.assignee).lastName) : ''"
+                                                 class="task-profile-image"
+                                                 src="../../../assets/img/portrait/avatars/task-profile.png">
+                                        </div>
+                                    </div>
+                                    <span class="task-card-title">{{completed.name}}</span>
+                                    <div class="p-col-12" style="position: absolute; left: 2px; bottom: 2px">
+                                        <span class="low-pr" *ngIf="completed.priority ==0"><i
+                                                class="fa fa-lightbulb-o"></i></span>
+                                        <span class="middle-pr" *ngIf="completed.priority ==1"><i
+                                                class="fa fa-line-chart"></i></span>
+                                        <span class="high-pr" *ngIf="completed.priority ==2"><i
+                                                class="fa fa-ban"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div *ngIf="taskCompleteMore.more">
+                    <button class="btn btn-danger" (click)="getMoreTask(4)">بیشتر</button>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

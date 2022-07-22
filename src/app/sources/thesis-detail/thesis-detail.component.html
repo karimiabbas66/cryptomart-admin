@@ -1,0 +1,62 @@
+<div class="p-grid p-col-12 bg-white px-4 pt-3" style="text-align: right">
+    <div class="p-col-12 page-title">مشخصات پایان نامه</div>
+    <div class="p-col-12">
+        <a title="مشاهده فایل پایان نامه" class="tbl-btn-new"
+           [routerLink]="['/sources/thesis-editor']" [queryParams]="{ id: thesisId, number: 1}">
+            <i class="fa ft-edit table-operation"></i>
+        </a>
+    </div>
+    <div class="p-col-12">
+        <aw-wizard #wizard navBarLayout="large-empty-symbols" navBarDirection="ltr">
+
+            <aw-wizard-step stepTitle="مرحله اول"
+                            [navigationSymbol]="{symbol: '&#xf249;', fontFamily: 'FontAwesome'}">
+                <app-thesis-info *ngIf="step >=1" [thesis]="thesisModel"
+                                 (thesisInfoEmitter)="onThesisInfo($event)">
+                </app-thesis-info>
+            </aw-wizard-step>
+
+            <aw-wizard-step stepTitle="انتخاب پدیدآورندگان"
+                            [navigationSymbol]="{ symbol: '&#xf007;', fontFamily: 'FontAwesome' }">
+                <app-thesis-involved *ngIf="step >=2" [thesis]="thesisModel"
+                                     (involvedEmitter)="onThesisInvolved($event)">
+                </app-thesis-involved>
+                <div class="form-group text-center space-20">
+                    <button uiSref="personal" type="button" class="btn btn-raised btn-secondary mr-1" awPreviousStep>
+                                  <span>
+                                      <i class="ft-chevron-right"></i>
+                                  </span> قبلی
+                    </button>
+                </div>
+            </aw-wizard-step>
+
+            <aw-wizard-step stepTitle="دانشگاه" [navigationSymbol]="{ symbol: '&#xf1ad;', fontFamily: 'FontAwesome' }">
+                <app-thesis-university *ngIf="step >= 3" [thesis]="thesisModel"
+                                       (thesisEmitter)="onThesisUniversity($event)">
+                </app-thesis-university>
+                <div class="form-group text-center space-20">
+                    <button uiSref="personal" type="button" class="btn btn-raised btn-secondary mr-1"
+                            awPreviousStep>
+                                  <span>
+                                      <i class="ft-chevron-right"></i>
+                                  </span> قبلی
+                    </button>
+                </div>
+            </aw-wizard-step>
+
+            <aw-wizard-step [stepTitle]="'بارگذاری فایل پایان نامه'"
+                            [navigationSymbol]="{ symbol: '&#xf093;', fontFamily: 'FontAwesome' }">
+                <app-thesis-file *ngIf="step >= 4" [file]="file" (fileEmitter)="onFileInfo($event)"></app-thesis-file>
+                <div class="form-group text-center space-20">
+                    <button uiSref="personal" type="button" class="btn btn-raised btn-secondary mr-1" awPreviousStep>
+                                  <span>
+                                      <i class="ft-chevron-right"></i>
+                                  </span> قبلی
+                    </button>
+                </div>
+
+            </aw-wizard-step>
+
+        </aw-wizard>
+    </div>
+</div>

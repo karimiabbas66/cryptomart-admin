@@ -1,0 +1,59 @@
+<div class="p-grid bg-white px-4 pt-3" style="text-align: right">
+    <div class="p-col-12 page-title">لیست شماره های نشریه</div>
+    <div class="p-col-12">
+        <div class="new-btn-container p-col-12 ui-sm-12">
+            <button title="شماره جدید" routerLink="/sources/journal-number-detail" type="button"
+                    [queryParams]="{ journalResourceId: journalId}"
+                    class="btn-new btn btn-raised"
+                    aria-label="Add">
+                <i class="ft-plus"></i>
+            </button>
+        </div>
+        <div class="p-col-12 ui-sm-12 table-responsive">
+            <table class="table table-striped text-center">
+                <thead>
+                <tr>
+                    <th>سال یا فصل یا ماه</th>
+                    <th>تعداد صفحات</th>
+                    <th>شماره در سال</th>
+                    <th>شماره پیاپی</th>
+                    <th>عملیات</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let item of journalNumbers" class="clickable-row">
+                    <td>
+                        <strong>{{ ' سال ' + item.whichYear + (item.yearNumber != null ? ' شماره ' + item.yearNumber : ' ') + '(' + (item.date | persianDate) + ')' }}</strong>
+                    </td>
+                    <td><strong>{{item.pageNumber}}</strong></td>
+                    <td><strong>{{item.yearNumber}}</strong></td>
+                    <td><strong>{{item.serialNumber}}</strong></td>
+                    <td>
+                        <a title="حذف" class="tbl-btn-del" (click)="removeJournalNumber(item.id)">
+                            <i class="fa ft-trash-2 table-operation"></i>
+                        </a>
+                        <a title="ویرایش" class="tbl-btn-new" [routerLink]="['/sources/journal-number-detail']"
+                           [queryParams]="{ journalNumberId: item.id, journalResourceId: item.journalsResourceId}">
+                            <i class="fa ft-edit table-operation"></i>
+                        </a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <div class="d-flex justify-content-between p-2">
+                <ngb-pagination [collectionSize]="totalJournalNumber" [page]="1" [pageSize]="tableSize"
+                                (pageChange)="getAllNumberForJournal($event)">
+                </ngb-pagination>
+            </div>
+        </div>
+        <div class="p-col-6" style="text-align: left">
+            <button class="btn btn-primary fix-back-btn" [routerLink]="['/sources/journal-list']" type="button">
+                <i class="ft-arrow-right"></i>
+                بازگشت
+            </button>
+        </div>
+    </div>
+</div>
+<div style="position: relative;">
+    <img *ngIf="showProgress" src="assets/img/gif/loading.gif" style="position: absolute;width: 10vw;left: 50%">
+</div>

@@ -1,0 +1,61 @@
+<div class="p-col-12 p-grid">
+    <!--  <div class="p-col-3 p-grid back-check border-title"><span class="profile-title">مشخصات ارسال کننده</span></div>-->
+    <!--  <div class="p-col-12 p-grid back-check border-title" style="border-radius: 5px">-->
+    <!--    <div class="p-col-6 p-grid" style="text-align: center">-->
+    <!--      <div class="p-col-12"><span class="profile-title">نام: </span> <span>{{profile.creatorFirstName}}</span></div>-->
+    <!--      <div class="p-col-12"><span class="profile-title">نام خانوادگی: </span><span>{{profile.creatorLastName}}</span></div>-->
+    <!--      <div class="p-col-12"><span class="profile-title">نام کاربری: </span><span>{{profile.userName}}</span></div>-->
+    <!--      <div class="p-col-12"><span class="profile-title">کد ملی: </span><span>{{profile.creatorNationalCode}}</span></div>-->
+    <!--    </div>-->
+
+    <!--    <div class="p-col-6" style="text-align: center; border-radius: 5px">-->
+    <!--      <div class="p-col-12"><span class="profile-title">همراه: </span><span>{{profile.mobile}}</span></div>-->
+    <!--      <div class="p-col-12"><span class="profile-title">عنوان: </span><span>{{profile.title}}</span></div>-->
+    <!--      <div class="p-col-12"><span class="profile-title">نوع: </span><span>{{profile.categoryEnum | ticketPipe}}</span></div>-->
+    <!--      <div class="p-col-12"><span class="profile-title">تاریخ ایجاد: </span><span>{{profile.createDate | persianDate}}</span></div>-->
+    <!--    </div>-->
+    <!--  </div>-->
+    <div class="p-col-12 p-grid" style="direction: rtl">
+        <div class="p-col-12 p-grid">
+            <div class="p-col-3 p-grid">
+                <input id="title" type="text" [(ngModel)]="announcement.title"
+                       class="round form-control" placeholder="عنوان"/>
+                <label for="title"></label>
+                <!--                    <div class="form-field__bar"></div>-->
+            </div>
+        </div>
+            <div class="p-col-12 p-grid">
+                <div class="p-col-3 p-grid">
+                    <label for="selector">نوع پیام</label>
+                    <select id="selector" #alarm class="custom-select" (change)="changeAlarmType(alarm.value)">
+                        <option value="1" [selected] = "alarmType === 1">خبر</option>
+                        <option value="2" [selected] = "alarmType === 2">هشدار</option>
+                        <option value="3" [selected] = "alarmType === 3">اضطراری</option>
+                    </select>
+                </div>
+            </div>
+        <div class="p-col-12 p-grid">
+            <label style="padding-right: inherit">متن اعلان</label>
+            <textarea [(ngModel)]="announcement.content" class="p-col-12" style="border-radius: 10px" rows="3"
+                      id="textArea" required></textarea>
+            <div class="p-col-6 p-grid" style="margin-top: 1px">
+                <button [disabled]="!announcement.title || !announcement.content || !announcement.targetUserIds" class="btn btn-primary fix-submit-btn" type="submit" (click)="onSend()">ارسال</button>
+            </div>
+            <div class="p-col-6 p-grid" style="margin-top: 1px">
+                <button [disabled]="!announcement.title || !announcement.content" class="btn btn-primary fix-submit-btn" type="submit" (click)="sendToAllUsers()">ارسال گروهی</button>
+            </div>
+            <div class="p-col-12 p-grid">
+                <div class="p-col-4">
+                    <app-profile-search [multiple]="false" [isAdmin]="false" (final)="setTargetId($event)"></app-profile-search>
+                </div>
+                <!--        <div class="p-col-4 text-center">-->
+                <!--          <div class="p-col-12">{{placeholder}}</div>-->
+                <!--          <app-uploader (fileUuid)="afterUploadLicenses($event)"-->
+                <!--                        [patch]="'license'"></app-uploader>-->
+                <!--        </div>-->
+                <div class="p-col-4">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

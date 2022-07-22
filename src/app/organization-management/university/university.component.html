@@ -1,0 +1,32 @@
+<div class="p-grid p-col-12">
+    <div class="p-col-12 page-title">واحدهای علمی</div>
+    <div class="p-col-12 p-grid">
+        <nav class="navbar navbar-expand-lg p-grid p-col-12">
+            <div (click)="changeState(1)" #first class="p-xl-3 p-lg-3 p-md-3 p-sm-6 p-col-12 justify-content-center text-center nav-item nav-selected">
+                <a style="font-size: 15px" class="navbar-brand" >نوع واحد علمی</a>
+            </div>
+            <div (click)="changeState(2)" #second class="p-xl-3 p-lg-3 p-md-3 p-sm-6 p-col-12 justify-content-center text-center nav-item">
+                <a style="font-size: 15px" class="navbar-brand" >واحد علمی</a>
+            </div>
+            <div (click)="changeState(3)" #third class="p-xl-3 p-lg-3 p-md-3 p-sm-6 p-col-12 justify-content-center text-center nav-item">
+                <a style="font-size: 15px" class="navbar-brand" >مدرک تحصیلی/تدریسی</a>
+            </div>
+            <div (click)="changeState(4)" #fourth class="p-xl-3 p-lg-3 p-md-3 p-sm-6 p-col-12 justify-content-center text-center nav-item">
+                <a style="font-size: 15px" class="navbar-brand" >رشته تحصیلی</a>
+            </div>
+        </nav>
+        <hr>
+    </div>
+    <div style="padding-top: 75px" *ngIf="showEducationRate" class="p-col-12 p-grid">
+        <app-education-rate style="width: 100%"></app-education-rate>
+    </div>
+    <div style="padding-top: 75px" *ngIf="showField" class="p-col-12 p-grid">
+        <app-education-field style="width: 100%"></app-education-field>
+    </div>
+    <div style="padding-top: 75px" *ngIf="showInstanceTypeDefine" class="p-col-12 p-grid">
+        <app-education-org-type style="width: 100%"></app-education-org-type>
+    </div>
+    <div style="padding-top: 75px" *ngIf="showInstanceDefine" class="p-col-12 p-grid">
+        <app-education-org style="width: 100%"></app-education-org>
+    </div>
+</div>

@@ -1,0 +1,207 @@
+<div class="p-grid" style="text-align: right">
+    <div class="p-col-12 page-title">مشخصات خبر</div>
+    <div class="p-col-12">
+        <form [formGroup]="newsDetailForm" class="editForm p-grid p-col-12" (ngSubmit)="edit()">
+            <div class="p-col-5 form-group">
+                <input id="title" class="round form-control" formControlName="title"
+                       [(ngModel)]="news.title"
+                       placeholder="عنوان خبر"/>
+                <small class="form-text text-muted danger" *ngIf="!newsDetailForm.get('title').valid
+         && (newsDetailForm.get('title').dirty
+               || newsDetailForm.get('title').touched)">
+                    این فیلد الزامی است.
+                </small>
+            </div>
+            <div class="p-col-7"></div>
+            <div class="p-col-6 margin-form">
+                <dp-date-picker
+                        dir="rtl"
+                        #startCalender
+                        [(ngModel)]="startDate"
+                        mode="day"
+                        placeholder="تاریخ شروع نمایش"
+                        formControlName="startDate"
+                        theme="dp-material">
+                </dp-date-picker>
+            </div>
+
+            <div class="p-col-6 margin-form">
+                <dp-date-picker
+                        dir="rtl"
+                        #endCalender
+                        [(ngModel)]="endDate"
+                        mode="day"
+                        placeholder="تاریخ پایان نمایش"
+                        formControlName="endDate"
+                        theme="dp-material">
+                </dp-date-picker>
+            </div>
+
+            <div class="form-group p-grid p-col-12">
+                <div class="p-grid p-col-12">
+                    <div class="p-col-6">
+                        <label class="d-block">نوع نمایش</label>
+                        <div class="custom-control custom-radio custom-control-inline float-left">
+                            <input [checked]='true' [(ngModel)]="selectedValue"
+                                   value=1
+                                   formControlName="loginType"
+                                   type="radio"
+                                   id="customRadioInline1"
+                                   class="custom-control-input">
+                            <label class="custom-control-label"
+                                   for="customRadioInline1">نمایش برای عموم</label>
+                        </div>
+                        <div class="custom-control custom-radio custom-control-inline  float-left">
+                            <input value=2
+                                   [(ngModel)]="selectedValue"
+                                   formControlName="loginType"
+                                   type="radio"
+                                   id="customRadioInline2"
+                                   class="custom-control-input">
+                            <label class="custom-control-label" for="customRadioInline2">نمایش برای اعضا</label>
+                        </div>
+                    </div>
+                    <div class="p-col-4">
+                        <div class="p-col-12" style="position: relative">
+                            <span style="position: absolute;color: gray; right: 0; bottom: 0">
+                                <i class="fa ft-minus-square"></i>
+                            </span>
+                            <span style="position: absolute;color: gray; left: 0; bottom: 0">
+                                <i class="fa ft-plus-square"></i>
+                            </span>
+                            <label for="vol">اولویت {{news.priority}}</label>
+                            <input formControlName="priority" class="slider" [(ngModel)]="news.priority" type="range"
+                                   id="vol"
+                                   name="vol" min="0" max="100">
+                        </div>
+                    </div>
+                    <div class="p-col-12">
+                        <div
+                                class="custom-control custom-checkbox custom-control-inline mb-3"
+                        >
+                            <input
+                                    type="checkbox"
+                                    id="customCheckboxInline1"
+                                    name="customCheckboxInline1"
+                                    class="custom-control-input"
+                                    [(ngModel)]="news.commentEnabled"
+                                    [ngModelOptions]="{standalone: true}"
+                            />
+                            <label
+                                    class="custom-control-label"
+                                    for="customCheckboxInline1"
+                            >
+                                مجوز افزودن کامنت از سمت اعضا
+                            </label>
+                        </div>
+                    </div>
+                    <div class="p-col-12">
+                        <div class="form-group">
+                            <label for="textArea">خلاصه خبر</label>
+
+                            <textarea [(ngModel)]="news.summary" class="form-control" rows="3" id="textArea"
+                                      formControlName="summary" required></textarea>
+                            <small class="form-text text-muted danger" *ngIf="!newsDetailForm.get('summary').valid && (newsDetailForm.get('summary').dirty
+               || newsDetailForm.get('summary').touched)">
+                                این فیلد الزامی است.
+                            </small>
+                        </div>
+                    </div>
+                    <div class="p-col-12">
+                        <div class="form-group">
+                            <label for="content">متن خبر</label>
+
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-12 col-lg-12">
+                                        <angular-editor id="content"
+                                                        formControlName="content"
+                                                        [style]="{minHeight: '200px'}"
+                                                        [config]="editorConfig"
+                                                        [(ngModel)]="news.content"></angular-editor>
+                                    </div>
+                                </div>
+                            </div>
+                            <small class="form-text text-muted danger"
+                                   *ngIf="!newsDetailForm.get('content').valid && (newsDetailForm.get('content').dirty
+               || newsDetailForm.get('content').touched)">
+                                این فیلد الزامی است.
+                            </small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="p-grid p-col-12">
+                <div class="p-col-6 page-title">
+                    <button class="btn btn-primary fix-submit-btn" (click)="openChangeImageDialog(bannerImage)"
+                            type="button" title="آپلود تصویر خبر">
+                        آپلود تصویر خبر
+                    </button>
+                </div>
+                <div class="p-col-6">
+                    <img *ngIf="news.imageId" style="max-height: 400px"
+                         [src]="downloadUrl + news.imageId">
+                </div>
+            </div>
+
+            <div class="p-grid p-col-12">
+
+                <div class="p-col-6 page-title">
+                    <button class="btn btn-primary fix-submit-btn" (click)="openChangeImageDialog(thumbimage)"
+                            type="button" title="آپلود بنر">
+                        آپلود تصویر بند انگشتی
+                    </button>
+                </div>
+                <div class="p-col-6">
+                    <img *ngIf="news.thumbnailImageId" style="max-height: 200px"
+                         [src]="downloadUrl + news.thumbnailImageId">
+                </div>
+            </div>
+            <div class="p-col-12 p-grid">
+                <div class="p-col-6" style="text-align: left">
+                    <button class="btn btn-primary fix-back-btn"
+                            [routerLink]="['/cms/news-list']"
+                            type="button">
+                        بازگشت
+                        <i class="ft-arrow-right"></i>
+                    </button>
+                </div>
+                <div class="p-col-6" style="text-align: right;">
+                    <button [disabled]="!newsDetailForm.valid"
+                            class="btn btn-primary fix-submit-btn"
+                            type="submit">
+                        ثبت
+                        <i class="ft-save"></i>
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<ng-template #thumbimage let-modal>
+    <div class="modal-header">
+        <h5 class="modal-title">عکس بند انگشتی خبر</h5>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true" style="color: black; float:left;">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body ">
+        <app-image-upload shape="rect" resizeWidth="512" [aspectRatio]="1.33" [enableRatio]="true"
+                          (resultImage)="setThumbimage($event)"></app-image-upload>
+    </div>
+</ng-template>
+
+<ng-template #bannerImage let-modal>
+    <div class="modal-header">
+        <h5 class="modal-title">عکس خبر</h5>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true" style="color: black; float:left;">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body ">
+        <app-image-upload shape="rect" resizeWidth="1024" [aspectRatio]="1.33" [enableRatio]="true"
+                          (resultImage)="setbannerimage($event)"></app-image-upload>
+    </div>
+</ng-template>

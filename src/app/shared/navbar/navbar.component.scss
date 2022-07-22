@@ -1,0 +1,145 @@
+@mixin set-background-color-button ($color){
+  .moving-tab{
+    background-color: $color;
+  }
+}
+@mixin set-background-color($color){
+  background-color: $color;
+}
+@mixin set-gradient-background-color($start-color, $end-color){
+  @include gradient-directional($start-color, $end-color);
+  $overlay-opacity: .9;
+}
+@mixin gradient-directional($start-color: $gray-700, $end-color: $gray-800, $deg: 45deg) {
+  background-image: linear-gradient($deg, $start-color, $end-color);
+  background-repeat: repeat-x;
+}
+
+$white:    #fff !default;
+$gray-100: #f8f9fa !default;
+$gray-200: #e9ecef !default;
+$gray-300: #dee2e6 !default;
+$gray-400: #ced4da !default;
+$gray-500: #adb5bd !default;
+$gray-600: #6c757d !default;
+$gray-700: #495057 !default;
+$gray-800: #343a40 !default;
+$gray-900: #212529 !default;
+$black:    #000 !default;
+.back-color{
+  // Background colors
+  color: black;
+  margin-bottom: 30px;
+  &[data-background-color="white"] {
+    @include set-background-color($white);
+  }
+
+  &[data-background-color="black"] {
+    @include set-background-color($black);
+  }
+
+  &[data-background-color="primary"] {
+    @include set-background-color(theme-color("primary"));
+  }
+
+  &[data-background-color="info"] {
+    @include set-background-color(theme-color("info"));
+  }
+
+  &[data-background-color="success"] {
+    @include set-background-color(theme-color("success"));
+  }
+
+  &[data-background-color="warning"] {
+    @include set-background-color(theme-color("warning"));
+  }
+
+  &[data-background-color="danger"] {
+    @include set-background-color(theme-color("danger"));
+  }
+
+  // Gradient Background Colors
+  &[data-background-color="pomegranate"] {
+    @include set-gradient-background-color(#9B3cb7, #FF396f);
+  }
+
+  &[data-background-color="king-yna"] {
+    @include set-gradient-background-color(#1a2a6c, #b21f1f);
+    .blue-grey.darken-4{
+      color: white !important;
+    }
+    .navbar-light .navbar-nav .nav-link{
+      color: white !important;
+    }
+  }
+
+  &[data-background-color="ibiza-sunset"] {
+    @include set-gradient-background-color(#ee0979, #ff6a00);
+  }
+
+  &[data-background-color="flickr"] {
+    @include set-gradient-background-color(#33001b, #ff0084);
+    .blue-grey.darken-4{
+      color: white !important;
+    }
+    .dropdown-toggle::after{
+      color: white !important;
+    }
+  }
+
+  &[data-background-color="purple-bliss"] {
+    @include set-gradient-background-color(#360033, #0b8793);
+    .blue-grey.darken-4{
+      color: white !important;
+    }
+    .dropdown-toggle::after{
+      color: white !important;
+    }
+  }
+
+  &[data-background-color="man-of-steel"] {
+    @include set-gradient-background-color(#780206, #061161);
+    .blue-grey.darken-4{
+      color: white !important;
+    }
+    .dropdown-toggle::after{
+      color: white !important;
+    }
+  }
+
+  &[data-background-color="purple-love"] {
+    @include set-gradient-background-color(#cc2b5e, #753a88);
+    .blue-grey.darken-4{
+      color: white !important;
+    }
+    .dropdown-toggle::after{
+      color: white !important;
+    }
+  }
+
+  &[data-background-color="primary"] {
+    @include set-gradient-background-color(#0b8793, #009DA0);
+  }
+
+  &[data-background-color="success"] {
+    @include set-gradient-background-color(#125f66, #0CC27E);
+    .blue-grey.darken-4{
+      color: white !important;
+    }
+    .dropdown-toggle::after{
+      color: white !important;
+    }
+  }
+
+  &[data-background-color="warning"] {
+    @include set-gradient-background-color(#c95d33, #FF8D60);
+  }
+
+  &[data-background-color="info"] {
+    @include set-gradient-background-color(#1ba3bb, #1BBCD8);
+  }
+
+  &[data-background-color="danger"] {
+    @include set-gradient-background-color(#e33c4f, #FF586B);
+  }
+}

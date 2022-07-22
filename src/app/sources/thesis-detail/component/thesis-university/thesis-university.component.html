@@ -1,0 +1,49 @@
+<div class="p-grid p-col-12" style="text-align: right; float: right;direction: rtl;">
+    <form [formGroup]="universityForm" class="editForm p-grid p-col-12">
+
+        <div class="p-col-4">
+            <ng-select notFoundText="موردی یافت نشد" id="educationId" formControlName="educationId"
+                       placeholder="واحد علمی" bindLabel="name" bindValue="unitId"
+                       [(ngModel)]="universityModel.educationId" [items]="units"
+                       (search)="searchUnits($event)"
+                       (scroll)="onScrollUnit($event)"
+                       (scrollToEnd)="onScrollToEndUnit()"
+                       [virtualScroll]="true"
+                       style="width: 100%;">
+            </ng-select>
+        </div>
+
+        <div class="p-col-4">
+            <input class="round form-control" id="college" formControlName="college"
+                   placeholder="دانشکده"
+                   [(ngModel)]="universityModel.college"/>
+        </div>
+        <div class="p-col-4">
+            <ng-select notFoundText="موردی یافت نشد" id="fieldId" formControlName="fieldId"
+                       placeholder="رشته" bindLabel="name" bindValue="fieldId"
+                       [(ngModel)]="universityModel.fieldId" [items]="educationFields"
+                       (search)="searchEducation($event)"
+                       (scroll)="onScrollEducation($event)"
+                       (scrollToEnd)="onScrollToEndEducation()"
+                       [virtualScroll]="true"
+
+                       style="width: 100%;">
+            </ng-select>
+        </div>
+    </form>
+</div>
+<div class="p-col-12 fg-actions d-flex text-center">
+    <div class="p-col-4"></div>
+    <div class="p-col-4 recover-pass">
+        <div class="p-col-12 text-center">
+            <button [disabled]="!universityForm.valid" type="button" (click)="addUniversity()"
+                    class="btn btn-raised btn-info"
+                    style="margin-bottom: 0;">
+                بعدی
+                <span>
+                  <i class="ft-chevron-left"></i>
+                </span>
+            </button>
+        </div>
+    </div>
+</div>

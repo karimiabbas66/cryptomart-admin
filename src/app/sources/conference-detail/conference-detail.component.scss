@@ -1,0 +1,50 @@
+.form-input{
+  width: 90%;
+  font-family:iransans;
+  font-weight: normal;
+  padding-right: 10px;
+}
+
+input{
+  margin-bottom: 15px;
+}
+button{
+  color: white !important;
+}
+
+::ng-deep  .dp-calendar-nav-right {
+  width: 25px;
+}
+::ng-deep .tag__text{
+  font-family: iransans, serif;
+  margin-left: 10px;
+}
+::ng-deep .bootstrap.ng2-tag-input{
+  width: 100% !important;
+}
+::ng-deep .ng2-tag-input__text-input{
+  min-width: 28.8vw !important;
+  font-family: iransans, serif !important;
+  font-weight: lighter !important;
+}
+::ng-deep .bootstrap.ng2-tag-input ::placeholder {
+  color: #bdc3c9;
+  font-size: 1rem;
+  font-weight: normal;
+}
+.circle-add {
+  margin-right: 0 !important;
+  margin-top: 0 !important;
+}
+.bg-primary{
+  background-image: linear-gradient(#ff8d60, #aa3304);
+  box-shadow: 3px 5px 6px gray;
+}
+.bg-success{
+  background-image: linear-gradient(#007bff, #03376c);
+  box-shadow: 3px 5px 6px gray;
+}
+.bg-warning{
+  background-image: linear-gradient(#20c997, #056c4d);
+  box-shadow: 3px 5px 6px gray;
+}

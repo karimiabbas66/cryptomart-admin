@@ -1,0 +1,8 @@
+button{
+  color: white !important;
+}
+
+::ng-deep aw-wizard-navigation-bar.horizontal ul.steps-indicator.steps-5 li {
+  position: relative;
+  direction: ltr;
+}

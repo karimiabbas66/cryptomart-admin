@@ -1,0 +1,53 @@
+
+<div class="p-grid bg-white px-4 pt-3" style="text-align: right">
+  <div class="p-col-12 page-title">لیست مالکان</div>
+  <div class="p-col-12">
+
+    <div class="new-btn-container p-col-12 ui-sm-12">
+      <button title="جدید" routerLink="/sources/owner-detail" type="button" class="btn-new btn btn-raised " aria-label="Add">
+        <i class="ft-plus"></i>
+      </button>
+    </div>
+
+    <div class="p-col-12 ui-sm-12 table-responsive">
+      <table class="table table-striped text-center">
+        <thead>
+        <tr>
+          <th>نام ناشر</th>
+          <th>نام خانوادگی</th>
+          <th>شماره ثابت</th>
+          <th>شماره همراه</th>
+          <th>آدرس</th>
+          <th>عملیات</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let item of ownerList" class='clickable-row'>
+          <td><strong>{{ item.firstName }}</strong></td>
+          <td><strong>{{ item.lastName }}</strong></td>
+          <td><strong>{{ item.phoneNumber }}</strong></td>
+          <td><strong>{{ item.mobileNumber }}</strong></td>
+          <td><strong>{{ item.address }}</strong></td>
+          <td>
+            <a title="ویرایش" class="tbl-btn-new"
+                    [routerLink]="['/sources/owner-detail']" [queryParams]="{ id: item.ownerId}">
+              <i class="fa ft-edit table-operation"></i>
+            </a>
+
+            <a  title="حذف" class="tbl-btn-del"  (click)="removeOwner(item.ownerId)">
+              <i class="fa ft-trash-2 table-operation"></i>
+            </a>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+      <div class="d-flex justify-content-between p-2">
+        <ngb-pagination [collectionSize]="totalRecords" [page]="1" [pageSize]="tableSize"
+                        (pageChange)="getOwnerList($event)">
+        </ngb-pagination>
+      </div>
+
+    </div>
+
+  </div>
+</div>
