@@ -126,67 +126,6 @@ export const ROUTES: RouteInfo[] = [
         ]
     },
     {
-        id:7,
-        path: '',
-        active:true,
-        title: 'FieldManagement',
-        icon: 'ft-grid',
-        class: 'has-sub',
-        badge: '3',
-        badgeClass: 'badge badge-pill badge-danger float-right mr-1 mt-1',
-        isExternalLink: false,
-        submenu: [
-            {
-                id:8,
-                active:true,
-                path: '/dashboard/field',
-                title: 'field',
-                icon: '',
-                class: '',
-                badge: '',
-                badgeClass: '',
-                isExternalLink: false,
-                submenu: []
-            },
-            {
-                id:9,
-                active:true,
-                path: '/dashboard/field-tree-visualize',
-                title: 'field-tree-visualize',
-                icon: '',
-                class: '',
-                badge: '',
-                badgeClass: '',
-                isExternalLink: false,
-                submenu: []
-            },
-            {
-                id:10,
-                active:true,
-                path: '/dashboard/field-map-visualize',
-                title: 'field-map-visualize',
-                icon: '',
-                class: '',
-                badge: '',
-                badgeClass: '',
-                isExternalLink: false,
-                submenu: []
-            },
-            {
-                id:26,
-                path: '/dashboard/change-field-request',
-                active:true,
-                title: 'change-field-request',
-                icon: '',
-                class: '',
-                badge: '',
-                badgeClass: '',
-                isExternalLink: false,
-                submenu: []
-            }
-        ]
-    },
-    {
         id:11,
         path: '',
         active:true,
@@ -238,127 +177,6 @@ export const ROUTES: RouteInfo[] = [
                 active:true,
                 path: '/cms/logo-list',
                 title: 'LogoList',
-                icon: '',
-                class: '',
-                badge: '',
-                badgeClass: '',
-                isExternalLink: false,
-                submenu: []
-            },
-        ]
-    },
-    {
-        id:15,
-        active:true,
-        path: '',
-        title: 'SourcesManagement',
-        icon: 'ft-book',
-        class: 'has-sub',
-        badge: '4',
-        badgeClass: 'badge badge-pill badge-danger float-right mr-1 mt-1',
-        isExternalLink: false,
-        submenu: [
-            {
-                id:16,
-                active:true,
-                path: '/sources/author-list',
-                title: 'AuthorList',
-                icon: '',
-                class: '',
-                badge: '',
-                badgeClass: '',
-                isExternalLink: false,
-                submenu: []
-            },
-            {
-                id:17,
-                active:true,
-                path: '/sources/publisher-list',
-                title: 'PublisherList',
-                icon: '',
-                class: '',
-                badge: '',
-                badgeClass: '',
-                isExternalLink: false,
-                submenu: []
-            },
-            {
-                id:19,
-                active:true,
-                path: '/sources/book-list',
-                title: 'BookList',
-                icon: '',
-                class: '',
-                badge: '',
-                badgeClass: '',
-                isExternalLink: false,
-                submenu: []
-            },
-            {
-                id:27,
-                active:true,
-                path: '/sources/article-list',
-                title: 'ArticleList',
-                icon: '',
-                class: '',
-                badge: '',
-                badgeClass: '',
-                isExternalLink: false,
-                submenu: []
-            },
-            {
-                id:29,
-                active:true,
-                path: '/sources/journal-list',
-                title: 'JournalList',
-                icon: '',
-                class: '',
-                badge: '',
-                badgeClass: '',
-                isExternalLink: false,
-                submenu: []
-            },
-            {
-                id:30,
-                active:true,
-                path: '/sources/thesis-list',
-                title: 'ThesisList',
-                icon: '',
-                class: '',
-                badge: '',
-                badgeClass: '',
-                isExternalLink: false,
-                submenu: []
-            },
-            {
-                id:31,
-                active:true,
-                path: '/sources/conference-list',
-                title: 'ConferenceList',
-                icon: '',
-                class: '',
-                badge: '',
-                badgeClass: '',
-                isExternalLink: false,
-                submenu: []
-            },
-            {
-                id:32,
-                active:true,
-                path: '/sources/magazine-list',
-                title: 'MagazineList',
-                icon: '',
-                class: '',
-                badge: '',
-                badgeClass: '',
-                isExternalLink: false,
-                submenu: []
-            },
-            {
-                id:36,
-                active:true,
-                path: '/sources/sheet-report-list',
-                title: 'SheetReportList',
                 icon: '',
                 class: '',
                 badge: '',
@@ -426,18 +244,6 @@ export const ROUTES: RouteInfo[] = [
                 badgeClass: '',
                 isExternalLink: false,
                 submenu: []
-            },
-            {
-                id:35,
-                path: '/communication/chat',
-                active:true,
-                title: 'Chat',
-                icon: '',
-                class: '',
-                badge: '',
-                badgeClass: '',
-                isExternalLink: false,
-                submenu: []
             }
         ]
     },
@@ -480,39 +286,6 @@ export const ROUTES: RouteInfo[] = [
     {
         path: '', title: 'Pages',active:true, icon: 'ft-copy', class: 'has-sub', badge: '', badgeClass: '', isExternalLink: false,
         submenu: [
-            {
-                path: '/pages/forgotpassword',
-                active:true,
-                title: 'Forgot Password',
-                icon: '',
-                class: '',
-                badge: '',
-                badgeClass: '',
-                isExternalLink: false,
-                submenu: []
-            },
-            {
-                path: '/pages/horizontaltimeline',
-                active:true,
-                title: 'Horizontal Timeline',
-                icon: '',
-                class: '',
-                badge: '',
-                badgeClass: '',
-                isExternalLink: false,
-                submenu: []
-            },
-            {
-                path: '/pages/verticaltimeline',
-                title: 'Vertical Timeline',
-                active:true,
-                icon: '',
-                class: '',
-                badge: '',
-                badgeClass: '',
-                isExternalLink: false,
-                submenu: []
-            },
             {path: '/pages/login',active:true, title: 'Login', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: []},
             {
                 path: '/pages/register',
@@ -536,67 +309,12 @@ export const ROUTES: RouteInfo[] = [
                 isExternalLink: false,
                 submenu: []
             },
-            {
-                active:true,
-                path: '/pages/lockscreen',
-                title: 'Lock Screen',
-                icon: '',
-                class: '',
-                badge: '',
-                badgeClass: '',
-                isExternalLink: false,
-                submenu: []
-            },
             {path: '/pages/invoice', active:true, title: 'Invoice', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: []},
             {path: '/pages/error', active:true, title: 'Error', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: []},
-            {
-                path: '/pages/comingsoon',
-                active:true,
-                title: 'Coming Soon',
-                icon: '',
-                class: '',
-                badge: '',
-                badgeClass: '',
-                isExternalLink: false,
-                submenu: []
-            },
-            {
-                path: '/pages/maintenance',
-                active:true,
-                title: 'Maintenance',
-                icon: '',
-                class: '',
-                badge: '',
-                badgeClass: '',
-                isExternalLink: false,
-                submenu: []
-            },
             {path: '/pages/gallery', active:true, title: 'Gallery', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: []},
             {path: '/pages/search', active:true, title: 'Search', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: []},
             {path: '/pages/faq', active:true, title: 'FAQ', icon: '', class: '', badge: '', badgeClass: '', isExternalLink: false, submenu: []},
         ]
-    },
-    {
-        active:true,
-        path: '/pages/faq',
-        title: 'Documentation',
-        icon: 'ft-book',
-        class: '',
-        badge: '',
-        badgeClass: '',
-        isExternalLink: true,
-        submenu: []
-    },
-    {
-        active:true,
-        path: '/pages/faq',
-        title: 'Support',
-        icon: 'ft-life-buoy',
-        class: '',
-        badge: '',
-        badgeClass: '',
-        isExternalLink: true,
-        submenu: []
     },
     {
         active:true,

@@ -1,6 +1,4 @@
 import {Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
-import {NgbPagination} from '@ng-bootstrap/ng-bootstrap';
-import {TimelineElement} from '../../../pages/full-pages/timeline/horizontal/component/timeline-element';
 import {Router} from '@angular/router';
 
 @Component({
@@ -26,7 +24,7 @@ export class NavbarProfileComponent implements OnInit {
   set eduType(event) {
     setTimeout(()=>{
       this.navigation(event.nav);
-    },1)
+    },1)  
   }
 
   constructor(private router: Router) { }
