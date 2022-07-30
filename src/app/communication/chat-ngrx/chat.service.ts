@@ -29,13 +29,13 @@ export class ChatService {
     }
     runIt()
     {
-        this.socket = io(this.uri,
-            {
-                query: `token=${localStorage.getItem('JWT_TOKEN')}&type=join`,
-            });
+        // this.socket = io(this.uri,
+        //     {
+        //         query: `token=${localStorage.getItem('JWT_TOKEN')}&type=join`,
+        //     });
     }
     disconnect(){
-        this.socket.disconnect();
+       // this.socket.disconnect();
     }
 
     getGroupInfo(groupId: any): Promise<any>{
