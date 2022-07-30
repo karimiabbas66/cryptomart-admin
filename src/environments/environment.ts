@@ -8,7 +8,7 @@ export const environment = {
     uploadServiceURI: 'http://185.208.172.207:8086/',
     coreServiceUrl: 'http://localhost:8081/',
     fieldServiceUrl: 'http://185.110.191.48:8082/',
-    userManagementServiceUrl: 'http://185.208.172.207:8080/',
+    userManagementServiceUrl: 'http://localhost:8891/',
     taskManagerServiceUrl: 'http://185.208.172.207:8083/',
     sourcesServiceUrl: 'http://185.208.172.207:8084/',
     commentServiceUrl: 'http://185.208.172.207:8091/',
